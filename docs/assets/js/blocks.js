@@ -13,6 +13,7 @@
     );
 
   function wireDemo(root) {
+    window.Linework?.refresh(root);
     root.addEventListener('click', (event) => {
       const placeholder = event.target.closest('a[href="#"]');
       if (placeholder) {
