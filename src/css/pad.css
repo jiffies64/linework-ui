@@ -58,10 +58,9 @@
   );
   opacity: 0;
   pointer-events: none;
-  transform: scaleX(var(--lw-pad-progress, 0));
-  transform-origin: 0 50%;
+  /* Clipped, not scaled: scaling resamples the 1px diagonals into broken dots. */
+  clip-path: inset(0 calc((1 - var(--lw-pad-progress, 0)) * 100%) 0 0);
   transition: opacity var(--lw-duration-2) var(--lw-ease);
-  will-change: transform;
 }
 
 .lw-pad__layout {
