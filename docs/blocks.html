@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-theme="trace">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blocks — Linework</title>
+  <meta name="description" content="Ten copy-paste marketing and application blocks drawn on the Linework drafting grid: hero, features, pricing, FAQ, testimonial, CTA, dashboard, sign in, settings and footer.">
+  <meta name="theme-color" content="#EEF0EC">
+  <script src="assets/js/theme-init.js"></script>
+  <link rel="stylesheet" href="../dist/linework.css">
+  <link rel="stylesheet" href="../dist/linework-blocks.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/blocks-page.css">
+  <script src="../dist/linework.global.js" defer></script>
+  <script src="assets/js/blocks-data.js" defer></script>
+  <script src="assets/js/blocks.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body class="site" data-page="blocks">
+  <a class="lw-skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <section class="blocks-hero">
+      <div class="site-wrap">
+        <div class="blocks-hero__meta">
+          <span>Sheet 02 / Blocks</span>
+          <span>Ten sections · Plain HTML · MIT</span>
+        </div>
+        <div class="blocks-hero__grid">
+          <h1 class="blocks-hero__title">Ten sections.<br>One set of rules.</h1>
+          <div class="blocks-hero__aside">
+            <p>Marketing pages and application screens, cut from the same sheet. Copy a block, keep the grid, redraw the words.</p>
+            <div class="blocks-hero__facts">
+              <div class="blocks-hero__fact"><strong>07</strong><span>Marketing</span></div>
+              <div class="blocks-hero__fact"><strong>03</strong><span>Application</span></div>
+              <div class="blocks-hero__fact"><strong>00</strong><span>Dependencies</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="site-wrap blocks-layout">
+        <aside class="blocks-aside">
+          <p class="blocks-aside__label">Drawing index</p>
+          <nav class="docs-nav blocks-index" id="blocks-index" data-block-index aria-label="Blocks in this collection"></nav>
+          <p class="blocks-aside__note">Each block is responsive at 1120 px max, uses your theme tokens, and ships with its full markup under <strong>View markup</strong>.</p>
+        </aside>
+
+        <div class="blocks-main">
+          <div class="filter-row" data-filter-group="blocks">
+            <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">All <span class="filter-chip__count">10</span></button>
+            <button type="button" class="filter-chip" data-filter="marketing" aria-pressed="false">Marketing <span class="filter-chip__count">07</span></button>
+            <button type="button" class="filter-chip" data-filter="application" aria-pressed="false">Application <span class="filter-chip__count">03</span></button>
+            <span class="filter-status" data-filter-status="blocks">10 blocks</span>
+          </div>
+
+          <div id="blocks-list" data-block-list data-filter-target="blocks"></div>
+
+          <div class="blocks-outro">
+            <div>
+              <h2 class="blocks-outro__title">Need the smaller parts?</h2>
+              <p class="blocks-outro__text">Every block is assembled from the same thirty-odd components: keys, fields, pads, lamps, tables and sheets. They are all documented, keyboardable and public.</p>
+            </div>
+            <a class="lw-btn" href="components.html">
+              Open the component library
+              <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+</body>
+</html>

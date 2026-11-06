@@ -1,0 +1,312 @@
+.lw-keycap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lw-space-4);
+  min-height: 20px;
+  padding: 1px 6px 2px;
+  border: var(--lw-hairline) solid var(--lw-pencil);
+  border-radius: 0;
+  background: var(--lw-paper);
+  color: var(--lw-pencil);
+  font-family: var(--lw-font-narrow);
+  font-size: var(--lw-text-sm);
+  font-weight: var(--lw-weight-regular);
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.lw-keycap--ink {
+  border-color: var(--lw-ink);
+  color: var(--lw-ink);
+}
+
+.lw-keycap--red {
+  border-color: var(--lw-redline);
+  color: var(--lw-redline-deep);
+}
+
+.lw-keycap--filled {
+  border-color: var(--lw-ink);
+  background: var(--lw-ink);
+  color: var(--lw-on-ink);
+}
+
+.lw-keycap--lg {
+  min-height: 32px;
+  padding: 4px 9px;
+  font-size: var(--lw-text-base);
+}
+
+.lw-keys {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lw-space-4);
+  font-family: var(--lw-font-narrow);
+  font-size: var(--lw-text-sm);
+  color: var(--lw-text-faint);
+}
+
+/* Redline is reserved for live state, so an unlit lamp is drawn in graphite. */
+.lw-lamp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lw-space-8);
+  min-height: 30px;
+  padding: var(--lw-space-4) 10px var(--lw-space-4) 10px;
+  border: var(--lw-hairline) solid var(--lw-ink);
+  border-radius: 0;
+  background: transparent;
+  color: var(--lw-pencil);
+  font-size: var(--lw-text-lg);
+  font-weight: var(--lw-weight-semibold);
+  line-height: 1.25;
+  white-space: nowrap;
+  transition:
+    background-color var(--lw-duration-2) var(--lw-ease),
+    border-color var(--lw-duration-2) var(--lw-ease),
+    color var(--lw-duration-2) var(--lw-ease);
+}
+
+.lw-lamp__dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  background: var(--lw-led-off);
+  transition: background-color var(--lw-duration-2) var(--lw-ease);
+}
+
+.lw-lamp.is-on,
+.lw-lamp[data-on="true"] {
+  border-color: var(--lw-redline-deep);
+  background: var(--lw-redline);
+  color: var(--lw-on-redline);
+}
+
+.lw-lamp.is-on .lw-lamp__dot,
+.lw-lamp[data-on="true"] .lw-lamp__dot {
+  background: currentColor;
+  animation: lw-live-pulse 2.4s var(--lw-ease) infinite;
+}
+
+.lw-lamp--sm {
+  min-height: 24px;
+  padding: 2px 8px 3px;
+  font-size: var(--lw-text-sm);
+  gap: var(--lw-space-6);
+}
+
+.lw-lamp--sm .lw-lamp__dot {
+  width: 6px;
+  height: 6px;
+}
+
+.lw-lamp--quiet {
+  border-color: var(--lw-border-quiet);
+  color: var(--lw-text-faint);
+}
+
+button.lw-lamp {
+  cursor: pointer;
+}
+
+button.lw-lamp:hover {
+  border-color: var(--lw-redline);
+}
+
+button.lw-lamp:active {
+  transform: translateY(1px);
+}
+
+@keyframes lw-live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Set .level on <lw-meter>, or add is-lit to the spans. */
+.lw-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 24px;
+}
+
+.lw-meter__bar {
+  width: 3px;
+  height: var(--lw-bar-height, 12px);
+  flex: none;
+  background: var(--lw-led-off);
+  transition: background-color var(--lw-duration-1) linear;
+}
+
+.lw-meter__bar.is-lit {
+  background: var(--lw-ink);
+}
+
+.lw-meter--redline .lw-meter__bar.is-lit {
+  background: var(--lw-redline);
+}
+
+.lw-meter--lg .lw-meter__bar {
+  width: 4px;
+}
+
+.lw-meter--lg {
+  gap: 3px;
+  height: 30px;
+}
+
+.lw-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lw-space-6);
+  padding: 2px 7px 3px;
+  border: var(--lw-hairline) solid currentColor;
+  border-radius: 0;
+  background: transparent;
+  color: var(--lw-ink);
+  font-family: var(--lw-font-narrow);
+  font-size: var(--lw-text-2xs);
+  font-weight: var(--lw-weight-semibold);
+  letter-spacing: var(--lw-tracking-label);
+  line-height: 1.3;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lw-stamp--red {
+  border-color: var(--lw-redline);
+  color: var(--lw-redline-deep);
+}
+
+.lw-stamp--ink {
+  border-color: var(--lw-ink);
+  background: var(--lw-ink);
+  color: var(--lw-on-ink);
+}
+
+.lw-stamp--blue {
+  border-color: var(--lw-blueprint);
+  color: var(--lw-blueprint);
+}
+
+.lw-stamp--quiet {
+  border-color: var(--lw-border-quiet);
+  color: var(--lw-text-faint);
+}
+
+.lw-stamp--lg {
+  padding: 4px 9px;
+  font-size: var(--lw-text-xs);
+}
+
+.lw-stamp--tilt {
+  transform: rotate(-2.4deg);
+}
+
+.lw-stamp__dot {
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+}
+
+.lw-progress {
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border: var(--lw-hairline) solid var(--lw-border-quiet);
+  background: var(--lw-paper-deep);
+}
+
+.lw-progress__bar {
+  height: 100%;
+  background: var(--lw-ink);
+  transition: width var(--lw-duration-3) var(--lw-ease);
+}
+
+.lw-progress--live {
+  border-color: var(--lw-redline);
+}
+
+.lw-progress--live .lw-progress__bar {
+  background: var(--lw-redline);
+}
+
+.lw-progress--hatch .lw-progress__bar {
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 3px,
+    var(--lw-redline) 3px 4px
+  );
+}
+
+.lw-progress--lg {
+  height: 10px;
+}
+
+.lw-skeleton {
+  min-height: 14px;
+  border: var(--lw-hairline) dashed var(--lw-border-quiet);
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 5px,
+    color-mix(in srgb, var(--lw-ink) 12%, transparent) 5px 6px
+  );
+  animation: lw-skeleton-pulse 1.8s var(--lw-ease) infinite;
+}
+
+@keyframes lw-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.lw-avatar {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  place-items: center;
+  border: var(--lw-hairline) solid var(--lw-ink);
+  border-radius: 0;
+  background: var(--lw-paper-lit);
+  color: var(--lw-ink);
+  font-family: var(--lw-font-narrow);
+  font-size: var(--lw-text-sm);
+  font-weight: var(--lw-weight-semibold);
+  letter-spacing: var(--lw-tracking-wide);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lw-avatar--sm {
+  width: 26px;
+  height: 26px;
+  font-size: var(--lw-text-2xs);
+}
+
+.lw-avatar--lg {
+  width: 44px;
+  height: 44px;
+  font-size: var(--lw-text-base);
+}
+
+.lw-ticks {
+  height: 7px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--lw-rule) 0 1px,
+    transparent 1px 8px
+  );
+}

@@ -1,0 +1,55 @@
+{
+  "name": "linework-ui",
+  "version": "1.0.0",
+  "description": "A drafting-table design system for the web: 35 components, 10 copy-paste blocks and three papers. Zero-dependency CSS, Web Components and design tokens.",
+  "keywords": [
+    "design-system",
+    "ui",
+    "css",
+    "components",
+    "blocks",
+    "web-components",
+    "design-tokens",
+    "accessibility",
+    "architecture",
+    "linework"
+  ],
+  "license": "MIT",
+  "author": "Linework contributors",
+  "type": "module",
+  "main": "./dist/linework.js",
+  "module": "./dist/linework.js",
+  "types": "./dist/linework.d.ts",
+  "style": "./dist/linework.css",
+  "exports": {
+    ".": {
+      "types": "./dist/linework.d.ts",
+      "import": "./dist/linework.js",
+      "default": "./dist/linework.js"
+    },
+    "./global": "./dist/linework.global.js",
+    "./style.css": "./dist/linework.css",
+    "./blocks.css": "./dist/linework-blocks.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./min.css": "./dist/linework.min.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css",
+    "./dist/linework.js",
+    "./dist/linework.global.js"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/serve.mjs",
+    "dev": "node scripts/serve.mjs",
+    "capture": "node scripts/capture.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

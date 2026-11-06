@@ -1,0 +1,8 @@
+node_modules/
+.preview/
+.dsh-tmp/
+*.log
+*.corrupt.bak
+*.encoding.bak
+.DS_Store
+Thumbs.db

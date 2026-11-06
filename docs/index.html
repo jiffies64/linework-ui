@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en" data-theme="trace">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linework — Interfaces drawn to scale</title>
+  <meta name="description" content="A drafting-table UI kit for the web: copy-paste blocks, 35 components and three papers, built in plain HTML, CSS and Web Components. No dependencies, no build step.">
+  <meta name="theme-color" content="#EEF0EC">
+  <script src="assets/js/theme-init.js"></script>
+  <link rel="stylesheet" href="../dist/linework.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="../dist/linework.global.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body class="site" data-page="home">
+  <a class="lw-skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <div class="site-note">
+    <div class="site-wrap site-note__inner">
+      <span class="site-note__dot" aria-hidden="true"></span>
+      <span><strong>New in v1.0:</strong> three papers, ten blocks, and a project console built from the same parts.</span>
+      <a href="blocks.html">Browse the blocks <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+
+  <main id="main">
+    <section class="hero">
+      <div class="site-wrap hero__inner">
+        <div class="hero__copy">
+          <p class="hero__eyebrow">A drafting-table UI kit · Sheet 01</p>
+          <h1 class="hero__title">
+            Interfaces<br>
+            drawn to
+            <span class="hero__underline">scale.<svg viewBox="0 0 300 22" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M2 16C64 7 158 5 297 11" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"/></svg></span>
+          </h1>
+          <p class="hero__lede">Copy-paste blocks and components for the web, drawn on graph paper with graphite hairlines and one red pencil. Plain HTML, CSS and Web Components. No dependencies, no build step.</p>
+          <div class="hero__actions">
+            <a class="lw-btn lw-btn--primary lw-btn--lg" href="blocks.html">
+              Browse the blocks
+              <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
+            </a>
+            <a class="lw-btn lw-btn--lg" href="docs.html">Read the docs</a>
+          </div>
+          <dl class="hero__specs">
+            <div class="hero__spec">
+              <dt class="hero__spec-label">Blocks</dt>
+              <dd class="hero__spec-value">10</dd>
+            </div>
+            <div class="hero__spec">
+              <dt class="hero__spec-label">Components</dt>
+              <dd class="hero__spec-value">35</dd>
+            </div>
+            <div class="hero__spec">
+              <dt class="hero__spec-label">Papers</dt>
+              <dd class="hero__spec-value">3</dd>
+            </div>
+            <div class="hero__spec">
+              <dt class="hero__spec-label">Dependencies</dt>
+              <dd class="hero__spec-value">0</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="hero__figure" aria-labelledby="hero-figure-caption">
+          <div class="hero__back" aria-hidden="true"></div>
+          <div class="hero-sheet">
+            <span class="lw-reg lw-reg--tl" aria-hidden="true"></span>
+            <span class="lw-reg lw-reg--tr" aria-hidden="true"></span>
+            <span class="lw-reg lw-reg--bl" aria-hidden="true"></span>
+            <span class="lw-reg lw-reg--br" aria-hidden="true"></span>
+            <div class="hero-sheet__cap">
+              <span><strong>Fig. 01</strong> — Studio sheet, <span data-paper-label-lower>trace</span></span>
+              <span>Scale 1:1</span>
+            </div>
+            <div class="hero-sheet__body">
+              <div class="hero-board">
+                <div class="hero-board__head">
+                  <span class="lw-lamp lw-lamp--sm is-on">
+                    <span class="lw-lamp__dot" aria-hidden="true"></span>
+                    In review
+                  </span>
+                  <span class="hero-board__name">studio / 06</span>
+                  <span class="hero-board__spacer"></span>
+                  <span class="lw-keycap">6 sheets</span>
+                </div>
+                <div class="hero-board__pads">
+                  <lw-pad name="North facade" keys="A-104" length="Rev 04" playing progress="0.42"></lw-pad>
+                  <lw-pad name="Atrium" keys="A-102" length="Draft"></lw-pad>
+                  <lw-pad name="East wing" keys="A-108" length="Approved"></lw-pad>
+                  <lw-pad name="Roof study" keys="A-111" length="Shared"></lw-pad>
+                </div>
+                <div class="hero-board__foot">
+                  <span class="lw-avatars" aria-label="Reviewers">
+                    <span class="lw-avatar lw-avatar--sm">MW</span>
+                    <span class="lw-avatar lw-avatar--sm">JK</span>
+                    <span class="lw-avatar lw-avatar--sm">AS</span>
+                    <span class="lw-avatars__more">+2</span>
+                  </span>
+                  <span class="hero-board__mic">3 reviewers</span>
+                  <span class="hero-board__spacer"></span>
+                  <a class="lw-btn lw-btn--primary lw-btn--sm" href="console.html">Open console</a>
+                </div>
+              </div>
+            </div>
+            <div class="hero-sheet__foot">
+              <div class="hero-sheet__cell">Sheet<strong>Studio 01</strong></div>
+              <div class="hero-sheet__cell">Parts<strong>14</strong></div>
+              <div class="hero-sheet__cell">Paper<strong data-paper-label>Trace</strong></div>
+            </div>
+          </div>
+          <figcaption class="hero-figure__caption" id="hero-figure-caption">Composed entirely from Linework parts</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="blocks">
+      <div class="site-wrap">
+        <div class="section-head" data-reveal>
+          <div class="section-head__aside">
+            <span class="section-head__index">01 — Blocks</span>
+            <p class="section-head__note">Ten sections. Copy the HTML, keep the grid.</p>
+          </div>
+          <div>
+            <h2 class="section-head__title">Sections, drawn and ready.</h2>
+            <p class="section-head__lede">Marketing pages and application screens cut from the same sheet. Every block is plain HTML with a little CSS, with no framework.</p>
+          </div>
+        </div>
+
+        <div class="block-grid">
+          <a class="block-card" href="blocks.html#hero" data-reveal style="--reveal-delay: 0ms">
+            <div class="block-card__head"><span><strong>01</strong> / Marketing</span><span>Hero</span></div>
+            <div class="block-card__media">
+              <img src="assets/img/blocks/hero.png" alt="Linework hero block preview" loading="lazy" data-hide-on-error>
+            </div>
+            <div class="block-card__foot">
+              <div>
+                <span class="block-card__name">Hero, with proof</span>
+                <span class="block-card__desc">A full sheet headline, actions, stats and a live figure.</span>
+              </div>
+              <span class="block-card__arrow"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-up-right"></use></svg></span>
+            </div>
+          </a>
+
+          <a class="block-card" href="blocks.html#features" data-reveal style="--reveal-delay: 60ms">
+            <div class="block-card__head"><span><strong>02</strong> / Marketing</span><span>Features</span></div>
+            <div class="block-card__media">
+              <img src="assets/img/blocks/features.png" alt="Linework feature grid block preview" loading="lazy" data-hide-on-error>
+            </div>
+            <div class="block-card__foot">
+              <div>
+                <span class="block-card__name">A field of features</span>
+                <span class="block-card__desc">Numbered cells, measured rules, room to read.</span>
+              </div>
+              <span class="block-card__arrow"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-up-right"></use></svg></span>
+            </div>
+          </a>
+
+          <a class="block-card" href="blocks.html#pricing" data-reveal style="--reveal-delay: 120ms">
+            <div class="block-card__head"><span><strong>03</strong> / Marketing</span><span>Pricing</span></div>
+            <div class="block-card__media">
+              <img src="assets/img/blocks/pricing.png" alt="Linework pricing block preview" loading="lazy" data-hide-on-error>
+            </div>
+            <div class="block-card__foot">
+              <div>
+                <span class="block-card__name">Plans in plan view</span>
+                <span class="block-card__desc">Three columns, one redline recommendation.</span>
+              </div>
+              <span class="block-card__arrow"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-up-right"></use></svg></span>
+            </div>
+          </a>
+
+          <a class="block-card" href="blocks.html#testimonial" data-reveal style="--reveal-delay: 120ms">
+            <div class="block-card__head"><span><strong>05</strong> / Marketing</span><span>Quote</span></div>
+            <div class="block-card__media">
+              <img src="assets/img/blocks/testimonial.png" alt="Linework testimonial block preview" loading="lazy" data-hide-on-error>
+            </div>
+            <div class="block-card__foot">
+              <div>
+                <span class="block-card__name">Words, set square</span>
+                <span class="block-card__desc">A testimonial with its provenance on the drawing.</span>
+              </div>
+              <span class="block-card__arrow"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-up-right"></use></svg></span>
+            </div>
+          </a>
+
+          <a class="block-card" href="blocks.html#dashboard" data-reveal style="--reveal-delay: 0ms">
+            <div class="block-card__head"><span><strong>07</strong> / Application</span><span>Dashboard</span></div>
+            <div class="block-card__media">
+              <img src="assets/img/blocks/dashboard.png" alt="Linework dashboard block preview" loading="lazy" data-hide-on-error>
+            </div>
+            <div class="block-card__foot">
+              <div>
+                <span class="block-card__name">A room with a view</span>
+                <span class="block-card__desc">App shell, stats, schedule and an activity ledger.</span>
+              </div>
+              <span class="block-card__arrow"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-up-right"></use></svg></span>
+            </div>
+          </a>
+
+          <a class="block-card" href="blocks.html#auth" data-reveal style="--reveal-delay: 60ms">
+            <div class="block-card__head"><span><strong>08</strong> / Application</span><span>Sign in</span></div>
+            <div class="block-card__media">
+              <img src="assets/img/blocks/auth.png" alt="Linework sign in block preview" loading="lazy" data-hide-on-error>
+            </div>
+            <div class="block-card__foot">
+              <div>
+                <span class="block-card__name">A door, clearly drawn</span>
+                <span class="block-card__desc">Split sign-in sheet with real form states.</span>
+              </div>
+              <span class="block-card__arrow"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-up-right"></use></svg></span>
+            </div>
+          </a>
+        </div>
+
+        <div class="section-foot">
+          <p>Every block ships with working markup, a copy key and no hidden JavaScript. Mix them, cut them, redraw the details.</p>
+          <a class="lw-btn" href="blocks.html">
+            Browse all 10 blocks
+            <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="components">
+      <div class="site-wrap">
+        <div class="section-head" data-reveal>
+          <div class="section-head__aside">
+            <span class="section-head__index">02 — Components</span>
+            <p class="section-head__note">The parts every block is made from.</p>
+          </div>
+          <div>
+            <h2 class="section-head__title">One kit of parts.</h2>
+            <p class="section-head__lede">Keys, fields, pads, lamps, meters, sheets and tables. Each one is a class you can read and a Web Component when it needs behaviour. All of them share the same ink.</p>
+          </div>
+        </div>
+
+        <div class="kit-grid">
+          <div class="kit-card" data-reveal>
+            <div class="kit-card__cap"><span>Actions</span><span>Fig. 02a</span></div>
+            <div class="kit-card__body">
+              <div class="lw-cluster">
+                <button type="button" class="lw-btn lw-btn--primary">New sheet</button>
+                <button type="button" class="lw-btn">Settings</button>
+                <button type="button" class="lw-btn lw-btn--danger">Archive</button>
+              </div>
+              <div class="lw-cluster">
+                <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon" aria-label="More options">
+                  <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg>
+                </button>
+                <span class="lw-keycap">Ctrl + Alt + Backspace</span>
+                <span class="lw-stamp lw-stamp--red">Live</span>
+              </div>
+            </div>
+            <div class="kit-card__foot"><strong>Keys, icon keys, groups</strong>Hover thickens the bottom wall. Press puts it back flush.</div>
+          </div>
+
+          <div class="kit-card" data-reveal style="--reveal-delay: 60ms">
+            <div class="kit-card__cap"><span>Fields</span><span>Fig. 02b</span></div>
+            <div class="kit-card__body">
+              <div class="lw-search">
+                <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg>
+                <input class="lw-input" type="search" placeholder="Search sheets" aria-label="Search sheets">
+              </div>
+              <label class="lw-led lw-led--redline">
+                <input class="lw-led__input" type="checkbox" checked>
+                <span class="lw-led__box"><span class="lw-led__fill"></span></span>
+                <span>Snap to grid</span>
+                <span class="lw-led__state">On</span>
+              </label>
+              <label class="lw-field__label" for="home-volume" style="margin-top:4px">Grid opacity</label>
+              <input class="lw-range" id="home-volume" type="range" min="0" max="1" step="0.01" value="0.64">
+            </div>
+            <div class="kit-card__foot"><strong>Inputs, toggles, ranges</strong>Native controls, dressed like the rest of the drawing.</div>
+          </div>
+
+          <div class="kit-card" data-reveal style="--reveal-delay: 120ms">
+            <div class="kit-card__cap"><span>Display</span><span>Fig. 02c</span></div>
+            <div class="kit-card__body">
+              <div class="lw-cluster">
+                <span class="lw-lamp lw-lamp--sm is-on"><span class="lw-lamp__dot"></span>In review</span>
+                <lw-meter bars="14" live label="Activity level"></lw-meter>
+              </div>
+              <div class="lw-cluster">
+                <span class="lw-stamp">Draft</span>
+                <span class="lw-stamp lw-stamp--ink">Added</span>
+                <span class="lw-stamp lw-stamp--blue">Open</span>
+              </div>
+              <div class="lw-progress"><div class="lw-progress__bar" style="width:62%"></div></div>
+              <div class="lw-dimension" role="img" aria-label="Width 1440 pixels">
+                <span class="lw-dimension__cap" aria-hidden="true"></span>
+                <span class="lw-dimension__rule" aria-hidden="true"></span>
+                <span class="lw-dimension__label">1440 px</span>
+                <span class="lw-dimension__rule" aria-hidden="true"></span>
+                <span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="kit-card__foot"><strong>Lamps, meters, dimensions</strong>Redline only for what is live. Graphite for everything else.</div>
+          </div>
+        </div>
+
+        <div class="section-foot">
+          <p>Thirty-five parts, documented, keyboard accessible and typed. The CSS is 12 kB gzipped; the behaviour is 10 kB.</p>
+          <a class="lw-btn" href="components.html">
+            Open the component library
+            <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="papers" data-theme-demo>
+      <div class="site-wrap">
+        <div class="section-head" data-reveal>
+          <div class="section-head__aside">
+            <span class="section-head__index">03 — Papers</span>
+            <p class="section-head__note">Trace, blueprint, vellum. Same rules.</p>
+          </div>
+          <div>
+            <h2 class="section-head__title">Same drawing.<br>Three papers.</h2>
+            <p class="section-head__lede">Trace for daylight, blueprint for the dark, vellum for long reading. Every colour, rule and border is a custom property, so you can swap the paper without touching a component.</p>
+          </div>
+        </div>
+
+        <div class="papers-grid">
+          <div data-reveal>
+            <div class="paper-options" role="group" aria-label="Choose a paper">
+              <button type="button" class="paper-option" data-paper="trace" aria-pressed="true">
+                <span class="paper-option__swatches" aria-hidden="true">
+                  <span style="background:#eef0ec"></span><span style="background:#23262b"></span><span style="background:#c93027"></span>
+                </span>
+                <span class="paper-option__name">Trace</span>
+                <span class="paper-option__note">Graphite on warm grey</span>
+              </button>
+              <button type="button" class="paper-option" data-paper="blueprint" aria-pressed="false">
+                <span class="paper-option__swatches" aria-hidden="true">
+                  <span style="background:#101b24"></span><span style="background:#e7edf1"></span><span style="background:#ff6f61"></span>
+                </span>
+                <span class="paper-option__name">Blueprint</span>
+                <span class="paper-option__note">Chalk on night blue</span>
+              </button>
+              <button type="button" class="paper-option" data-paper="vellum" aria-pressed="false">
+                <span class="paper-option__swatches" aria-hidden="true">
+                  <span style="background:#f2ede2"></span><span style="background:#26221b"></span><span style="background:#c23524"></span>
+                </span>
+                <span class="paper-option__name">Vellum</span>
+                <span class="paper-option__note">Ink on warm cream</span>
+              </button>
+            </div>
+            <p class="lw-note" style="margin-top:16px">One attribute on the root: <code class="lw-code">data-theme="blueprint"</code>.</p>
+          </div>
+
+          <div class="paper-preview" data-theme-preview data-theme="trace" data-reveal style="--reveal-delay:80ms">
+            <div class="paper-preview__cap">
+              <span>Preview — <strong data-paper-name>Trace</strong></span>
+              <span>Fig. 03 / 1:1</span>
+            </div>
+            <div class="paper-preview__body">
+              <div class="paper-preview__pads">
+                <lw-pad name="North facade" keys="A-104" length="Rev 04"></lw-pad>
+                <lw-pad name="Atrium" keys="A-102" length="Draft" playing progress="0.3"></lw-pad>
+              </div>
+              <div class="paper-preview__controls">
+                <button type="button" class="lw-btn lw-btn--primary lw-btn--sm">New sheet</button>
+                <label class="lw-led lw-led--redline">
+                  <input class="lw-led__input" type="checkbox" checked>
+                  <span class="lw-led__box"><span class="lw-led__fill"></span></span>
+                  <span>Snap</span>
+                </label>
+                <input class="lw-range" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Grid opacity" style="max-width:110px">
+                <span class="lw-stamp lw-stamp--red">Live</span>
+              </div>
+            </div>
+            <div class="paper-preview__foot">
+              <span>Graphite / redline / 24 px grid</span>
+              <span>Paper 03 of 03</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="showroom">
+      <div class="site-wrap">
+        <div class="section-head" data-reveal>
+          <div class="section-head__aside">
+            <span class="section-head__index">04 — Showroom</span>
+            <p class="section-head__note">A full application built with the kit.</p>
+          </div>
+          <div>
+            <h2 class="section-head__title">A working app, built from the kit.</h2>
+            <p class="section-head__lede">The project console is a complete web application built from the same CSS and Web Components you just scrolled past. A schedule that filters, a sheet that opens, approvals that move, and a redline that marks live state.</p>
+          </div>
+        </div>
+
+        <div class="showcase-grid">
+          <a class="showcase-card showcase-card--wide" href="console.html" data-reveal>
+            <div class="showcase-card__media">
+              <img src="assets/img/showroom/console.png" alt="The Linework project console" loading="lazy" data-hide-on-error>
+            </div>
+            <div class="showcase-card__cap">
+              <span class="showcase-card__name">Project console</span>
+              <span class="showcase-card__meta">Reference build / 2026</span>
+            </div>
+            <div class="showcase-card__foot">
+              <span>App shell, schedule, approvals, menus and drawers. Fully working, plain files.</span>
+              <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-up-right"></use></svg>
+            </div>
+          </a>
+
+          <div class="lw-plate" data-reveal style="--reveal-delay:80ms">
+            <div class="lw-plate__cap"><span>Build sheet</span><span>CN-01</span></div>
+            <div class="lw-plate__body">
+              <h3 class="lw-title" style="font-size:30px">Parts used</h3>
+              <dl class="lw-spec" style="margin-top:16px">
+                <dt>Tables</dt><dd>1 schedule</dd>
+                <dt>Sheets</dt><dd>3 drawers</dd>
+                <dt>Menus</dt><dd>1 per row</dd>
+                <dt>Lines of JS</dt><dd>~260</dd>
+                <dt>Dependencies</dt><dd>0</dd>
+              </dl>
+              <p class="lw-note" style="margin-top:16px">Written in plain JavaScript. No framework, no bundler, no network calls. One HTML file on top of the same two library files.</p>
+              <ul class="showroom-notes">
+                <li><span>01</span>Create a sheet from the schedule</li>
+                <li><span>02</span>Filter, search and archive</li>
+                <li><span>03</span>Approve a review</li>
+                <li><span>04</span>Switch the paper</li>
+              </ul>
+              <a class="lw-btn lw-btn--primary lw-btn--block showroom-plate__action" href="console.html">
+                Open the project console
+                <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="site-wrap manifesto">
+        <div data-reveal>
+          <span class="section-head__index">05 — The rule</span>
+          <p class="manifesto__quote" style="margin-top:20px">A drawing should read before it is used.</p>
+        </div>
+        <div class="manifesto__list" data-reveal style="--reveal-delay:80ms">
+          <div class="manifesto__item">
+            <span class="manifesto__num">01</span>
+            <div>
+              <h3>Every line has a job.</h3>
+              <p>Hairlines separate. Heavy rules define. Dashed lines mean construction or focus. Nothing is a shadow pretending to be structure.</p>
+            </div>
+          </div>
+          <div class="manifesto__item">
+            <span class="manifesto__num">02</span>
+            <div>
+              <h3>Redline means live.</h3>
+              <p>Playing, recording, destructive, focused. If it is red, something is happening. It is never decoration, and it never means “on brand”.</p>
+            </div>
+          </div>
+          <div class="manifesto__item">
+            <span class="manifesto__num">03</span>
+            <div>
+              <h3>Tokens all the way down.</h3>
+              <p>Paper, ink, rule, redline, spacing, motion. Override the values and every component follows.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section install-section blueprint-band" id="install" data-theme="blueprint">
+      <div class="site-wrap">
+        <div class="section-head" data-reveal>
+          <div class="section-head__aside">
+            <span class="section-head__index">06 — Install</span>
+            <p class="section-head__note">Two files. Then start copying.</p>
+          </div>
+          <div>
+            <h2 class="section-head__title">Start with one sheet.</h2>
+            <p class="section-head__lede">No package manager required. If you bundle, the package exports are ready. Link the CSS, load the behaviour, and write plain markup. React, Vue, Svelte, Astro and plain HTML all work.</p>
+          </div>
+        </div>
+
+        <div class="install-grid">
+          <div data-reveal>
+            <div class="install-steps">
+              <div class="install-step">
+                <span class="install-step__num">1</span>
+                <div>
+                  <h3>Link the sheet</h3>
+                  <p>The full system is one CSS file: tokens, layout and all components. Use the minified build in production.</p>
+                </div>
+              </div>
+              <div class="install-step">
+                <span class="install-step__num">2</span>
+                <div>
+                  <h3>Load the behaviour</h3>
+                  <p>Only the interactive parts: drawers, tabs, pads, meters, toasts. Everything degrades to sensible HTML without it.</p>
+                </div>
+              </div>
+              <div class="install-step">
+                <span class="install-step__num">3</span>
+                <div>
+                  <h3>Pick a paper</h3>
+                  <p>Trace by default. Set <code class="lw-code">data-theme</code> on the root for blueprint or vellum, or override any token.</p>
+                </div>
+              </div>
+            </div>
+            <div class="lw-cluster" style="margin-top:24px">
+              <a class="lw-btn lw-btn--primary" href="docs.html#quick-start">
+                Read the quick start
+                <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
+              </a>
+              <a class="lw-btn" href="../dist/linework.css" download>
+                <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg>
+                Download CSS
+              </a>
+              <a class="lw-btn" href="../dist/linework.global.js" download>
+                <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg>
+                Download JS
+              </a>
+            </div>
+          </div>
+
+          <div class="install-code" data-reveal style="--reveal-delay:80ms">
+            <span class="lw-reg lw-reg--tl" aria-hidden="true"></span>
+            <span class="lw-reg lw-reg--tr" aria-hidden="true"></span>
+            <span class="lw-reg lw-reg--bl" aria-hidden="true"></span>
+            <span class="lw-reg lw-reg--br" aria-hidden="true"></span>
+            <div class="install-code__cap">
+              <span>HTML — one sheet</span>
+              <button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#install-code" aria-label="Copy installation code">
+                <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg>
+                <span class="lw-copy-label">Copy</span>
+              </button>
+            </div>
+            <pre id="install-code"><code><span class="tok-tag">&lt;link</span> <span class="tok-attr">rel</span>=<span class="tok-str">"stylesheet"</span> <span class="tok-attr">href</span>=<span class="tok-str">"linework.css"</span><span class="tok-tag">&gt;</span>
+<span class="tok-tag">&lt;script</span> <span class="tok-attr">src</span>=<span class="tok-str">"linework.global.js"</span> <span class="tok-attr">defer</span><span class="tok-tag">&gt;&lt;/script&gt;</span>
+
+<span class="tok-tag">&lt;button</span> <span class="tok-attr">class</span>=<span class="tok-str">"lw-btn lw-btn--primary"</span><span class="tok-tag">&gt;</span>
+  New sheet
+<span class="tok-tag">&lt;/button&gt;</span>
+
+<span class="tok-tag">&lt;lw-pad</span> <span class="tok-attr">name</span>=<span class="tok-str">"Publish"</span> <span class="tok-attr">keys</span>=<span class="tok-str">"1"</span>
+        <span class="tok-attr">length</span>=<span class="tok-str">"1.2 s"</span><span class="tok-tag">&gt;&lt;/lw-pad&gt;</span></code></pre>
+            <div class="paper-preview__foot" style="padding:10px 16px">
+              <span>12 kB CSS · 10 kB JS · MIT</span>
+              <span>Zero dependencies</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="site-wrap">
+        <div class="section-head" data-reveal>
+          <div class="section-head__aside">
+            <span class="section-head__index">07 — Notes</span>
+            <p class="section-head__note">Short answers, on the drawing.</p>
+          </div>
+          <div>
+            <h2 class="section-head__title">Questions from the site.</h2>
+          </div>
+        </div>
+        <div class="faq" data-reveal>
+          <details class="faq__item">
+            <summary>Do I need React, Tailwind or a build step?</summary>
+            <div class="faq__answer"><p>No. The library is plain CSS and JavaScript. You can copy a block into an HTML file and open it. If you do use React, Vue, Svelte or Astro, the classes work as-is and the five Web Components are standard custom elements.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>How do the blocks stay reusable once I paste them?</summary>
+            <div class="faq__answer"><p>Blocks are built from documented components rather than one-off styles. Shared structure lives in classes like <code class="lw-code">lw-btn</code>, <code class="lw-code">lw-plate</code> and <code class="lw-code">lw-titleblock</code>; the block file only adds layout.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Can I use my own brand colours?</summary>
+            <div class="faq__answer"><p>Yes. Every colour is a token (<code class="lw-code">--lw-ink</code>, <code class="lw-code">--lw-redline</code>, <code class="lw-code">--lw-paper</code>). Override them in a theme block or on any container. The three papers are examples.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Is it accessible, or just visually sharp?</summary>
+            <div class="faq__answer"><p>Native controls underneath, visible focus rings drawn as dashed construction lines, keyboard support in tabs and drawers, reduced-motion handling, and AA-contrast text in all three papers. Accessibility notes are part of the documentation.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Is there a complete application example?</summary>
+            <div class="faq__answer"><p>Yes, the <a href="console.html">project console</a>. It is a full app shell with a schedule, approvals, menus, three drawers and a working create-sheet form, built from the same two library files as this page.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+</body>
+</html>

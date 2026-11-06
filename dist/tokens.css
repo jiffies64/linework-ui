@@ -1,0 +1,244 @@
+/*! Linework UI v1.0.0 | MIT | drafting-table design system */
+/*
+ * Every token is public API: override tokens, not rules.
+ * Themes: trace (default), blueprint, vellum. Set data-theme on <html> or any container.
+ */
+
+:root {
+  color-scheme: light;
+
+  --lw-paper: #eef0ec;
+  --lw-paper-lit: #f8f9f6;
+  --lw-paper-deep: #e4e7e1;
+  --lw-grid: #dfe3dd;
+  --lw-grid-major: #d5dad2;
+  --lw-rule: #bcc1ba;
+  --lw-led-off: #c2c7c0;
+  --lw-scrim: rgba(238, 240, 236, 0.82);
+
+  --lw-ink: #23262b;
+  --lw-ink-soft: #343940;
+  --lw-pencil: #5e636b;
+  --lw-faint: #636a72;
+
+  /* The only colour allowed to mean "live", "playing", "danger". */
+  --lw-redline: #c93027;
+  --lw-redline-deep: #9e241d;
+  --lw-redline-wash: rgba(201, 48, 39, 0.09);
+  --lw-on-redline: #f8f9f6;
+
+  /* Information only. Never used for state. */
+  --lw-blueprint: #2d4d67;
+
+  --lw-text: var(--lw-ink);
+  --lw-text-muted: var(--lw-pencil);
+  --lw-text-faint: var(--lw-faint);
+  --lw-surface: var(--lw-paper);
+  --lw-surface-raised: var(--lw-paper-lit);
+  --lw-border: var(--lw-ink);
+  --lw-border-quiet: var(--lw-rule);
+  --lw-accent: var(--lw-redline);
+  --lw-success: #39644a;
+  --lw-warning: #8a5c16;
+  --lw-info: var(--lw-blueprint);
+  --lw-danger: var(--lw-redline);
+  --lw-on-ink: var(--lw-paper);
+  --lw-focus: var(--lw-ink);
+
+  --lw-font-ui: Bahnschrift, "DIN Alternate", "Barlow Semi Condensed", "Segoe UI",
+    system-ui, sans-serif;
+  --lw-font-display: Bahnschrift, "DIN Alternate", "Segoe UI Light", "Helvetica Neue",
+    Arial, sans-serif;
+  --lw-font-narrow: "Bahnschrift SemiCondensed", "Bahnschrift Semi Condensed", Bahnschrift,
+    "Arial Narrow", "Segoe UI", sans-serif;
+  --lw-font-mono: "Cascadia Mono", "Cascadia Code", Consolas, "SFMono-Regular", Menlo,
+    monospace;
+
+  --lw-text-2xs: 10px;
+  --lw-text-xs: 11px;
+  --lw-text-sm: 12px;
+  --lw-text-md: 13px;
+  --lw-text-base: 14px;
+  --lw-text-lg: 15px;
+  --lw-text-xl: 17px;
+  --lw-text-2xl: 20px;
+  --lw-text-3xl: 26px;
+  --lw-text-4xl: 34px;
+  --lw-text-5xl: 46px;
+  --lw-text-6xl: 64px;
+  --lw-text-7xl: 88px;
+
+  --lw-weight-light: 300;
+  --lw-weight-regular: 400;
+  --lw-weight-medium: 500;
+  --lw-weight-semibold: 600;
+  --lw-weight-bold: 700;
+
+  --lw-leading-none: 1;
+  --lw-leading-tight: 1.12;
+  --lw-leading-snug: 1.32;
+  --lw-leading-normal: 1.55;
+  --lw-leading-loose: 1.7;
+
+  --lw-tracking-tight: -0.02em;
+  --lw-tracking-normal: 0;
+  --lw-tracking-wide: 0.06em;
+  --lw-tracking-label: 0.12em;
+
+  /* Suffix = pixels, on a 2px increment. */
+  --lw-space-0: 0;
+  --lw-space-2: 2px;
+  --lw-space-4: 4px;
+  --lw-space-6: 6px;
+  --lw-space-8: 8px;
+  --lw-space-10: 10px;
+  --lw-space-12: 12px;
+  --lw-space-14: 14px;
+  --lw-space-16: 16px;
+  --lw-space-20: 20px;
+  --lw-space-24: 24px;
+  --lw-space-28: 28px;
+  --lw-space-32: 32px;
+  --lw-space-40: 40px;
+  --lw-space-48: 48px;
+  --lw-space-64: 64px;
+  --lw-space-80: 80px;
+  --lw-space-96: 96px;
+
+  --lw-hairline: 1px;
+  --lw-stroke: 1.5px;
+  --lw-radius: 0;
+  --lw-grid-size: 24px;
+  --lw-control-height-sm: 30px;
+  --lw-control-height: 38px;
+  --lw-control-height-lg: 46px;
+  --lw-icon-size: 16px;
+  --lw-focus-width: 1.5px;
+  --lw-focus-offset: 3px;
+  --lw-sheet-margin: 10px;
+  --lw-sheet-width: 460px;
+  --lw-header-height: 64px;
+  --lw-titleblock-height: 86px;
+  --lw-wrap: 1440px;
+  --lw-wrap-narrow: 1120px;
+  --lw-gutter: clamp(20px, 3vw, 40px);
+
+  --lw-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --lw-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --lw-duration-1: 90ms;
+  --lw-duration-2: 140ms;
+  --lw-duration-3: 200ms;
+  --lw-duration-4: 320ms;
+  --lw-duration-5: 600ms;
+
+  /* No shadows: elevation is a line and a scrim. */
+  --lw-shadow: none;
+  --lw-z-sheet: 60;
+  --lw-z-toast: 90;
+  --lw-z-tooltip: 95;
+
+  --lw-graph-image: linear-gradient(to right, var(--lw-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--lw-grid) 1px, transparent 1px);
+  --lw-graph-size: var(--lw-grid-size) var(--lw-grid-size);
+  --lw-graph-major-image: linear-gradient(
+      to right,
+      var(--lw-grid-major) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--lw-grid-major) 1px, transparent 1px);
+  --lw-graph-major-size: calc(var(--lw-grid-size) * 5) calc(var(--lw-grid-size) * 5);
+}
+
+[data-theme="blueprint"] {
+  color-scheme: dark;
+
+  --lw-paper: #101b24;
+  --lw-paper-lit: #162430;
+  --lw-paper-deep: #0b141b;
+  --lw-grid: #1e303d;
+  --lw-grid-major: #273c4b;
+  --lw-rule: #3a5263;
+  --lw-led-off: #415b6c;
+  --lw-scrim: rgba(6, 12, 17, 0.78);
+
+  --lw-ink: #e7edf1;
+  --lw-ink-soft: #d3dee6;
+  --lw-pencil: #a9bac5;
+  --lw-faint: #8599a6;
+
+  --lw-redline: #ff6f61;
+  --lw-redline-deep: #e85346;
+  --lw-redline-wash: rgba(255, 111, 97, 0.12);
+  --lw-on-redline: #101b24;
+
+  --lw-blueprint: #8cb6d4;
+  --lw-success: #93c7a5;
+  --lw-warning: #e0b36a;
+  --lw-on-ink: #101b24;
+  --lw-focus: var(--lw-ink);
+}
+
+[data-theme="vellum"] {
+  color-scheme: light;
+
+  --lw-paper: #f2ede2;
+  --lw-paper-lit: #faf7ef;
+  --lw-paper-deep: #e9e2d3;
+  --lw-grid: #e2dbcb;
+  --lw-grid-major: #d7cebb;
+  --lw-rule: #c8bfac;
+  --lw-led-off: #c7bead;
+  --lw-scrim: rgba(242, 237, 226, 0.82);
+
+  --lw-ink: #26221b;
+  --lw-ink-soft: #383227;
+  --lw-pencil: #5b5346;
+  --lw-faint: #6e6557;
+
+  --lw-redline: #c23524;
+  --lw-redline-deep: #942618;
+  --lw-redline-wash: rgba(194, 53, 36, 0.09);
+  --lw-on-redline: #faf7ef;
+
+  --lw-blueprint: #38536b;
+  --lw-success: #46634b;
+  --lw-warning: #7e5718;
+  --lw-on-ink: #f2ede2;
+  --lw-focus: var(--lw-ink);
+}
+
+/*
+ * Semantic aliases have to be recomputed on every theme scope, not just :root.
+ * A custom property declared on :root inherits its computed value, so a nested
+ * [data-theme="blueprint"] would otherwise keep trace-paper text aliases.
+ */
+:root,
+[data-theme] {
+  --lw-text: var(--lw-ink);
+  --lw-text-muted: var(--lw-pencil);
+  --lw-text-faint: var(--lw-faint);
+  --lw-surface: var(--lw-paper);
+  --lw-surface-raised: var(--lw-paper-lit);
+  --lw-border: var(--lw-ink);
+  --lw-border-quiet: var(--lw-rule);
+  --lw-accent: var(--lw-redline);
+  --lw-info: var(--lw-blueprint);
+  --lw-danger: var(--lw-redline);
+  --lw-focus: var(--lw-ink);
+
+  /* Patterns derive from the local grid colours, so recompute on every scope. */
+  --lw-graph-image: linear-gradient(to right, var(--lw-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--lw-grid) 1px, transparent 1px);
+  --lw-graph-size: var(--lw-grid-size) var(--lw-grid-size);
+  --lw-graph-major-image: linear-gradient(
+      to right,
+      var(--lw-grid-major) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--lw-grid-major) 1px, transparent 1px);
+  --lw-graph-major-size: calc(var(--lw-grid-size) * 5) calc(var(--lw-grid-size) * 5);
+}
+
+[data-theme] {
+  color: var(--lw-text);
+}

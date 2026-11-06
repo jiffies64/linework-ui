@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en" data-theme="trace">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guide — Linework</title>
+  <meta name="description" content="Install Linework, change its paper, use its Web Components and JavaScript API, and keep it accessible. The complete guide to the drafting-table UI kit.">
+  <meta name="theme-color" content="#EEF0EC">
+  <script src="assets/js/theme-init.js"></script>
+  <link rel="stylesheet" href="../dist/linework.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/docs-pages.css">
+  <script src="../dist/linework.global.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body class="site" data-page="docs">
+  <a class="lw-skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <section class="docs-hero">
+      <div class="site-wrap">
+        <div class="docs-hero__meta"><span>Library / Guide</span><span>Rev 1.0 · 2026</span></div>
+        <div class="docs-hero__grid">
+          <h1 class="docs-hero__title">The guide.</h1>
+          <div class="docs-hero__aside">
+            <p>Everything needed to draw with Linework: two files, thirty-five parts, three papers and a small set of rules.</p>
+            <div class="docs-hero__facts">
+              <div class="docs-hero__fact"><strong>02</strong><span>Files</span></div>
+              <div class="docs-hero__fact"><strong>05</strong><span>Elements</span></div>
+              <div class="docs-hero__fact"><strong>31</strong><span>Icons</span></div>
+              <div class="docs-hero__fact"><strong>MIT</strong><span>Licence</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="site-wrap docs-shell">
+      <aside class="docs-side">
+        <p class="docs-side__label">Contents</p>
+        <nav class="docs-nav lw-sidenav" aria-label="Guide contents">
+          <p class="lw-sidenav__label">Start</p>
+          <a class="lw-sidenav__item" href="#quick-start"><span class="lw-sidenav__count">01</span>Quick start</a>
+          <a class="lw-sidenav__item" href="#files"><span class="lw-sidenav__count">02</span>Files &amp; install</a>
+          <p class="lw-sidenav__label">Design</p>
+          <a class="lw-sidenav__item" href="#tokens"><span class="lw-sidenav__count">03</span>Tokens</a>
+          <a class="lw-sidenav__item" href="#themes"><span class="lw-sidenav__count">04</span>Papers</a>
+          <a class="lw-sidenav__item" href="#typography"><span class="lw-sidenav__count">05</span>Typography</a>
+          <p class="lw-sidenav__label">Behaviour</p>
+          <a class="lw-sidenav__item" href="#elements"><span class="lw-sidenav__count">06</span>Web components</a>
+          <a class="lw-sidenav__item" href="#api"><span class="lw-sidenav__count">07</span>JavaScript API</a>
+          <a class="lw-sidenav__item" href="#frameworks"><span class="lw-sidenav__count">08</span>Frameworks</a>
+          <p class="lw-sidenav__label">Quality</p>
+          <a class="lw-sidenav__item" href="#accessibility"><span class="lw-sidenav__count">09</span>Accessibility</a>
+          <a class="lw-sidenav__item" href="#principles"><span class="lw-sidenav__count">10</span>Principles</a>
+          <a class="lw-sidenav__item" href="#licence"><span class="lw-sidenav__count">11</span>Licence</a>
+        </nav>
+        <p class="docs-side__note">Looking for something to copy? <a href="blocks.html">Browse the blocks</a> or <a href="components.html">the components</a>.</p>
+      </aside>
+
+      <div class="docs-main">
+        <section class="docs-section" id="quick-start">
+          <div class="docs-section__head">
+            <span class="docs-section__num">01</span>
+            <div>
+              <h2 class="docs-section__title">Quick start</h2>
+              <p class="docs-section__note">Link the sheet, load the behaviour, write markup. No configuration file, no build step, no framework.</p>
+            </div>
+          </div>
+
+          <div class="guide-steps">
+            <div class="guide-step">
+              <span class="guide-step__num">1</span>
+              <div><h3>Link the stylesheet</h3><p>One file carries tokens, layout, components and utilities. Load the minified build in production.</p></div>
+            </div>
+            <div class="guide-step">
+              <span class="guide-step__num">2</span>
+              <div><h3>Load the behaviour</h3><p>Only the interactive parts: drawers, tabs, pads, meters, menus and toasts. CSS-only components work without it.</p></div>
+            </div>
+            <div class="guide-step">
+              <span class="guide-step__num">3</span>
+              <div><h3>Use the class, or the element</h3><p>Markup is plain HTML. Use <code class="lw-code">lw-pad</code> when you want behaviour; use <code class="lw-code">.lw-btn</code> when you do not.</p></div>
+            </div>
+          </div>
+
+          <div class="guide-code">
+            <div class="guide-code__cap">
+              <span>HTML — a complete sheet</span>
+              <button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-start" aria-label="Copy quick start code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button>
+            </div>
+            <pre id="code-start"><code>&lt;!doctype html&gt;
+&lt;html lang="en" data-theme="trace"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;link rel="stylesheet" href="linework.css"&gt;
+  &lt;script src="linework.global.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="lw-graph"&gt;
+  &lt;main class="lw-wrap" style="padding: 48px"&gt;
+    &lt;h1 class="lw-display"&gt;Drawn to scale.&lt;/h1&gt;
+    &lt;button class="lw-btn lw-btn--primary"&gt;New sheet&lt;/button&gt;
+    &lt;lw-pad name="Publish" keys="1" length="1.2 s"&gt;&lt;/lw-pad&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+
+          <div class="guide-note"><strong>No build step required.</strong> If you do use a bundler, import <code class="lw-code">linework-ui/style.css</code> and <code class="lw-code">linework-ui</code>. Both paths are real files in the package. Nothing is injected at runtime except the icon sprite and toasts.</div>
+        </section>
+
+        <section class="docs-section" id="files">
+          <div class="docs-section__head">
+            <span class="docs-section__num">02</span>
+            <div>
+              <h2 class="docs-section__title">Files &amp; install</h2>
+              <p class="docs-section__note">The kit is deliberately small. These are the only files you need to understand.</p>
+            </div>
+          </div>
+
+          <div class="guide-prose">
+            <p>Download the two files from the <a href="../dist/linework.css" download>CSS</a> and <a href="../dist/linework.global.js" download>JavaScript</a>, or vendor the package. The blocks page additionally loads <code class="lw-code">linework-blocks.css</code> for the composed section layouts.</p>
+          </div>
+
+          <div class="guide-table-wrap"><table class="guide-table">
+            <thead><tr><th>File</th><th>What it is</th><th>Load it when</th></tr></thead>
+            <tbody>
+              <tr><td>linework.css</td><td>Tokens, base, layout, every component, utilities. 15.3 kB raw / 11.8 kB gzipped.</td><td>Always.</td></tr>
+              <tr><td>linework.min.css</td><td>The same sheet with comments and whitespace removed. 68.7 kB raw / 11.8 kB gzipped.</td><td>Production.</td></tr>
+              <tr><td>tokens.css</td><td>Only the custom properties, for teams with their own CSS.</td><td>You are bringing your own rules.</td></tr>
+              <tr><td>linework-blocks.css</td><td>Layout for the ten copy-paste blocks.</td><td>You copy a block from the gallery.</td></tr>
+              <tr><td>linework.js</td><td>ES module: Web Components, icons, toasts, menus, theming and copy. ~10 kB gzipped.</td><td>Bundler or module script.</td></tr>
+              <tr><td>linework.global.js</td><td>The same behaviour as a classic script, exposing <code>window.Linework</code>.</td><td>No-build HTML.</td></tr>
+              <tr><td>linework.d.ts</td><td>Types for the API and custom elements.</td><td>TypeScript projects.</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="guide-code">
+            <div class="guide-code__cap"><span>Package — imports</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-import" aria-label="Copy import snippet"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+            <pre id="code-import"><code>// CSS (pick one)
+import 'linework-ui/style.css';
+import 'linework-ui/min.css';
+
+// Behaviour (ES module)
+import Linework from 'linework-ui';
+
+// Optional blocks
+import 'linework-ui/blocks.css';</code></pre>
+          </div>
+
+          <div class="guide-note guide-note--blue"><strong>Serving locally?</strong> The documentation and previews are static files. Run <code class="lw-code">npm start</code> at the repository root, or open the pages through any static server. <code>file://</code> works for the global build, but clipboard access may be restricted by the browser.</div>
+        </section>
+
+        <section class="docs-section" id="tokens">
+          <div class="docs-section__head">
+            <span class="docs-section__num">03</span>
+            <div>
+              <h2 class="docs-section__title">Tokens</h2>
+              <p class="docs-section__note">Every colour, type size, space, border and duration is a custom property on <code class="lw-code">:root</code>.</p>
+            </div>
+          </div>
+
+          <div class="guide-split">
+            <div class="guide-prose">
+              <p>Override tokens in your own stylesheet. Do not override component internals unless you are changing a rule deliberately. Tokens are the contract.</p>
+              <div class="guide-code">
+                <div class="guide-code__cap"><span>CSS — a private paper</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-tokens" aria-label="Copy tokens code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+                <pre id="code-tokens"><code>:root {
+  --lw-paper: #f4f1e8;
+  --lw-paper-lit: #fbf8f0;
+  --lw-ink: #1e1c18;
+  --lw-pencil: #5c5549;
+  --lw-redline: #c53a2a;
+  --lw-redline-deep: #9b2b1f;
+
+  --lw-font-ui: "Barlow Semi Condensed",
+    "Segoe UI", system-ui, sans-serif;
+  --lw-radius: 0; /* please keep it */
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="guide-table-wrap"><table class="guide-table">
+                <thead><tr><th>Token</th><th>Role</th></tr></thead>
+                <tbody>
+                  <tr><td>--lw-paper</td><td>Sheet background; the default surface.</td></tr>
+                  <tr><td>--lw-ink</td><td>Graphite text, borders, filled keys.</td></tr>
+                  <tr><td>--lw-pencil</td><td>Secondary text; readable but quiet.</td></tr>
+                  <tr><td>--lw-rule</td><td>Hairline rules and quiet borders.</td></tr>
+                  <tr><td>--lw-grid</td><td>The 24 px graph-paper line.</td></tr>
+                  <tr><td>--lw-redline</td><td>Live, playing, destructive, focus.</td></tr>
+                  <tr><td>--lw-font-ui</td><td>Bahnschrift-first interface stack.</td></tr>
+                  <tr><td>--lw-space-8</td><td>8 px. The scale is named in pixels.</td></tr>
+                  <tr><td>--lw-duration-2</td><td>140 ms, the standard interaction.</td></tr>
+                  <tr><td>--lw-focus-width</td><td>1.5 px dashed construction line.</td></tr>
+                </tbody>
+              </table></div>
+              <div class="guide-note"><strong>Spacing is named by value:</strong> <code class="lw-code">--lw-space-2</code> is 2 px, <code class="lw-code">--lw-space-14</code> is 14 px, and so on. That makes the CSS readable without a lookup table.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="themes">
+          <div class="docs-section__head">
+            <span class="docs-section__num">04</span>
+            <div>
+              <h2 class="docs-section__title">Papers &amp; theming</h2>
+              <p class="docs-section__note">Three papers ship in the box: trace, blueprint and vellum. Apply one with <code class="lw-code">data-theme</code> on the root, or on any container if only one figure should change paper.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid demo-grid--three">
+            <div class="demo-plate" data-theme="trace">
+              <div class="demo-plate__cap"><span><strong>Trace</strong> — default</span><span class="demo-plate__tag">data-theme="trace"</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <span class="lw-lamp lw-lamp--sm is-on"><span class="lw-lamp__dot"></span>On air</span>
+                <button type="button" class="lw-btn lw-btn--primary lw-btn--sm">Primary key</button>
+                <label class="lw-led lw-led--redline"><input class="lw-led__input" type="checkbox" checked><span class="lw-led__box"><span class="lw-led__fill"></span></span><span>Mic</span></label>
+                <span class="lw-stamp lw-stamp--red">Live</span>
+              </div>
+            </div>
+            <div class="demo-plate" data-theme="blueprint">
+              <div class="demo-plate__cap"><span><strong>Blueprint</strong> — dark</span><span class="demo-plate__tag">data-theme="blueprint"</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <span class="lw-lamp lw-lamp--sm is-on"><span class="lw-lamp__dot"></span>On air</span>
+                <button type="button" class="lw-btn lw-btn--primary lw-btn--sm">Primary key</button>
+                <label class="lw-led lw-led--redline"><input class="lw-led__input" type="checkbox" checked><span class="lw-led__box"><span class="lw-led__fill"></span></span><span>Mic</span></label>
+                <span class="lw-stamp lw-stamp--red">Live</span>
+              </div>
+            </div>
+            <div class="demo-plate" data-theme="vellum">
+              <div class="demo-plate__cap"><span><strong>Vellum</strong> — warm</span><span class="demo-plate__tag">data-theme="vellum"</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <span class="lw-lamp lw-lamp--sm is-on"><span class="lw-lamp__dot"></span>On air</span>
+                <button type="button" class="lw-btn lw-btn--primary lw-btn--sm">Primary key</button>
+                <label class="lw-led lw-led--redline"><input class="lw-led__input" type="checkbox" checked><span class="lw-led__box"><span class="lw-led__fill"></span></span><span>Mic</span></label>
+                <span class="lw-stamp lw-stamp--red">Live</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-split" style="margin-top:20px">
+            <div class="guide-prose">
+              <p>Set the paper on the root for a whole application; set it on a figure when one Figure should be a blueprint. The tokens cascade, so a nested theme is a complete, local change.</p>
+              <div class="guide-code">
+                <div class="guide-code__cap"><span>JavaScript — remember the paper</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-theme" aria-label="Copy theme code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+                <pre id="code-theme"><code>import Linework from 'linework-ui';
+
+// Reads/writes data-theme and remembers the choice.
+Linework.setTheme('blueprint');
+Linework.getTheme();        // "blueprint"
+Linework.cycleTheme();      // next paper
+
+// Buttons can do it declaratively:
+// &lt;button data-lw-theme="blueprint"&gt;
+// &lt;button data-lw-theme="cycle"&gt;</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="guide-note"><strong>Redline is a rule, not a variable.</strong> A custom theme can change the hue to your brand, but it should still mean live, playing or destructive. If everything is red, nothing is.</div>
+              <div class="guide-note guide-note--blue"><strong>Persistence:</strong> the theme button/API stores the choice in <code class="lw-code">localStorage</code> under <code class="lw-code">linework-theme</code>. Pass <code class="lw-code">{ persist: false }</code> for a one-off preview.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="typography">
+          <div class="docs-section__head">
+            <span class="docs-section__num">05</span>
+            <div>
+              <h2 class="docs-section__title">Typography</h2>
+              <p class="docs-section__note">Bahnschrift is the native voice of a technical drawing. The stack falls back through DIN Alternate and modern grotesques when it is not installed.</p>
+            </div>
+          </div>
+
+          <div class="guide-split">
+            <div class="guide-prose">
+              <p>The UI uses Bahnschrift first; it ships with Windows 10 and 11. macOS has DIN Alternate. For a consistent cross-platform look, load an open DIN-like face such as <strong>Barlow Semi Condensed</strong> and put it at the front of <code class="lw-code">--lw-font-ui</code>.</p>
+              <div class="guide-code">
+                <div class="guide-code__cap"><span>CSS — an open substitute</span></div>
+                <pre><code>@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --lw-font-ui: "Barlow Semi Condensed", Bahnschrift,
+    "Segoe UI", system-ui, sans-serif;
+  --lw-font-display: "Barlow Semi Condensed", Bahnschrift,
+    "Helvetica Neue", sans-serif;
+}</code></pre>
+              </div>
+            </div>
+            <div class="guide-prose">
+              <ul class="guide-list">
+                <li><strong>Display and titles</strong> use the display stack at weight 300, tracked slightly tight. Never use display type below 24 px.</li>
+                <li><strong>Labels</strong> use the narrow stack, uppercase, 0.12 em tracking, at 11 px.</li>
+                <li><strong>Body</strong> is 14–17 px with a 1.55 line height. Long reading caps at about 72 characters.</li>
+                <li><strong>Figures</strong> use the monospace stack with tabular numerals so columns of dimensions line up.</li>
+              </ul>
+              <div class="guide-note">Fonts are not bundled. Bahnschrift and DIN Alternate are system fonts; Barlow is open source under the SIL Open Font License.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="elements">
+          <div class="docs-section__head">
+            <span class="docs-section__num">06</span>
+            <div>
+              <h2 class="docs-section__title">Web components</h2>
+              <p class="docs-section__note">Five small custom elements cover the things markup cannot do alone. Everything else is a class. All five use light DOM, so your CSS still reaches inside.</p>
+            </div>
+          </div>
+
+          <div class="guide-table-wrap"><table class="guide-table">
+            <thead><tr><th>Element</th><th>What it does</th><th>Key attributes / methods</th></tr></thead>
+            <tbody>
+              <tr><td>lw-drawer</td><td>A native &lt;dialog&gt; side sheet with focus trap, Escape, backdrop and a close key.</td><td><code>label</code>, <code>width</code>, <code>dismissible</code>, <code>open</code>; <code>.open()</code>, <code>.close()</code>, <code>.isOpen</code></td></tr>
+              <tr><td>lw-tabs</td><td>Roving tabindex, arrow keys and panel wiring for a normal tab list.</td><td><code>selected</code>; <code>.select(index)</code>, <code>.selectedIndex</code>; <code>lw-change</code></td></tr>
+              <tr><td>lw-pad</td><td>An action pad with pressed state, countdown, hatch progress and optional menu key.</td><td><code>name</code>, <code>keys</code>, <code>length</code>, <code>duration</code>, <code>playing</code>, <code>progress</code>, <code>menu</code>; <code>.play()</code>, <code>.stop()</code></td></tr>
+              <tr><td>lw-meter</td><td>An ARIA meter drawn as a row of ticks; optional live demo animation.</td><td><code>bars</code>, <code>level</code>, <code>live</code>, <code>tone</code>, <code>label</code></td></tr>
+              <tr><td>lw-toast-stack</td><td>The live region and popover stack used by <code>Linework.toast()</code>.</td><td>Created automatically; <code>.show()</code></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="guide-split" style="margin-top:20px">
+            <div class="guide-code">
+              <div class="guide-code__cap"><span>HTML — a drawer</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-drawer" aria-label="Copy drawer code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+              <pre id="code-drawer"><code>&lt;button class="lw-btn"
+        data-lw-open="new-sheet"&gt;
+  New sheet
+&lt;/button&gt;
+
+&lt;lw-drawer id="new-sheet"
+           label="New sheet" width="460"&gt;
+  &lt;div class="lw-drawer__head"&gt;
+    &lt;h2 class="lw-drawer__title"&gt;New sheet&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div class="lw-drawer__body"&gt;
+    ...
+  &lt;/div&gt;
+  &lt;div class="lw-drawer__foot"&gt;
+    &lt;button class="lw-btn lw-btn--primary"
+            data-lw-close&gt;Done&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/lw-drawer&gt;</code></pre>
+            </div>
+            <div class="guide-code">
+              <div class="guide-code__cap"><span>HTML — an action pad</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-pad" aria-label="Copy pad code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+              <pre id="code-pad"><code>&lt;lw-pad name="Publish"
+        keys="1"
+        length="1.2 s"
+        duration="1.2"&gt;
+&lt;/lw-pad&gt;
+
+&lt;script&gt;
+  const pad = document.querySelector('lw-pad');
+
+  pad.addEventListener('lw-press', (event) =&gt; {
+    // Take over the operation. Without preventDefault,
+    // the pad runs its own visual timer.
+    event.preventDefault();
+    pad.play(1.2);
+  });
+&lt;/script&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="guide-prose">
+            <h3>Events</h3>
+            <p><code class="lw-code">lw-press</code> is cancelable and bubbles before anything happens. <code class="lw-code">lw-play</code>, <code class="lw-code">lw-stop</code> and <code class="lw-code">lw-end</code> describe the pad lifecycle. <code class="lw-code">lw-open</code> and <code class="lw-code">lw-close</code> fire on drawers; <code class="lw-code">lw-change</code> fires on tabs.</p>
+          </div>
+        </section>
+
+        <section class="docs-section" id="api">
+          <div class="docs-section__head">
+            <span class="docs-section__num">07</span>
+            <div>
+              <h2 class="docs-section__title">JavaScript API</h2>
+              <p class="docs-section__note">A small namespace, available as <code class="lw-code">window.Linework</code> from the global build or the default export of the module.</p>
+            </div>
+          </div>
+
+          <div class="guide-table-wrap"><table class="guide-table">
+            <thead><tr><th>Method</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td>Linework.toast(options)</td><td>Shows a toast. <code>{ title, message, tone, duration }</code>. Returns the element.</td></tr>
+              <tr><td>Linework.setTheme(name, opts?)</td><td>Sets <code>data-theme</code>. Persists unless <code>{ persist: false }</code>.</td></tr>
+              <tr><td>Linework.getTheme()</td><td>Returns the current paper name.</td></tr>
+              <tr><td>Linework.cycleTheme()</td><td>Trace → blueprint → vellum → trace.</td></tr>
+              <tr><td>Linework.copy(text)</td><td>Copies text; resolves to a boolean. Uses the Clipboard API with a legacy fallback.</td></tr>
+              <tr><td>Linework.open(target)</td><td>Opens a drawer or native dialog by id, selector or element.</td></tr>
+              <tr><td>Linework.close(target)</td><td>Closes the same.</td></tr>
+              <tr><td>Linework.refresh(root?)</td><td>Repaints range fills. Call after adding controls dynamically.</td></tr>
+              <tr><td>Linework.icons</td><td><code>.names</code>, <code>.install()</code>, <code>.markup(name)</code>.</td></tr>
+              <tr><td>Linework.formatDuration(seconds)</td><td>Formats <code>3.1 s</code> or <code>1:04</code>, matching pad labels.</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="docs-section__subtitle">Declarative data attributes</div>
+          <div class="guide-table-wrap"><table class="guide-table">
+            <thead><tr><th>Attribute</th><th>Behaviour</th></tr></thead>
+            <tbody>
+              <tr><td>data-lw-open</td><td>Opens a drawer or native dialog by id or selector. Works on buttons and links.</td></tr>
+              <tr><td>data-lw-close</td><td>Closes the closest native dialog or drawer.</td></tr>
+              <tr><td>data-lw-theme</td><td><code>trace</code>, <code>blueprint</code>, <code>vellum</code> or <code>cycle</code>.</td></tr>
+              <tr><td>data-lw-copy</td><td>Copies the literal string in the attribute.</td></tr>
+              <tr><td>data-lw-copy-target</td><td>Copies the text or value of an element by selector.</td></tr>
+              <tr><td>data-lw-menu</td><td>Opens the popover menu by id or the next <code>.lw-menu</code> sibling, positioned to the trigger.</td></tr>
+              <tr><td>data-lw-tip</td><td>A supplementary CSS tooltip. Always pair with an accessible name.</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="guide-code">
+            <div class="guide-code__cap"><span>JavaScript — everyday use</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-api" aria-label="Copy API code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+            <pre id="code-api"><code>Linework.toast({
+  title: 'Added',
+  message: 'North facade is now on the schedule.',
+  tone: 'success', // default | blue | success | warning
+});
+
+Linework.open('#new-sheet');
+Linework.setTheme('vellum');</code></pre>
+          </div>
+        </section>
+
+        <section class="docs-section" id="frameworks">
+          <div class="docs-section__head">
+            <span class="docs-section__num">08</span>
+            <div>
+              <h2 class="docs-section__title">Frameworks</h2>
+              <p class="docs-section__note">The CSS is framework-agnostic. The five custom elements are standard; use them as tags in every modern framework, or just use the classes.</p>
+            </div>
+          </div>
+
+          <div class="guide-split">
+            <div class="guide-code">
+              <div class="guide-code__cap"><span>React — a pad wrapper</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-react" aria-label="Copy React code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+              <pre id="code-react"><code>import { useEffect, useRef } from 'react';
+import 'linework-ui/style.css';
+import Linework from 'linework-ui';
+
+export function ActionPad({ item }) {
+  const ref = useRef(null);
+
+  useEffect(() =&gt; {
+    Linework.icons.install();
+    const pad = ref.current;
+    const onPress = () =&gt; {
+      // drive your own operation here
+    };
+    pad?.addEventListener('lw-press', onPress);
+    return () =&gt; pad?.removeEventListener('lw-press', onPress);
+  }, []);
+
+  return &lt;lw-pad ref={ref} name={item.name}
+                 keys={item.keys} /&gt;;
+}</code></pre>
+            </div>
+            <div class="guide-prose">
+              <p>React 19 passes custom-element props through as properties; React 18 stringifies them as attributes, which is exactly what Linework reads. For events, attach listeners to a ref, or wrap the element in a small component as above.</p>
+              <ul class="guide-list">
+                <li><strong>Vue</strong>: use <code class="lw-code">&lt;lw-pad :name="item.name" @lw-press="run"&gt;</code>. Add <code class="lw-code">compilerOptions.isCustomElement</code> for the <code class="lw-code">lw-</code> prefix to silence warnings.</li>
+                <li><strong>Svelte</strong>: custom elements are native tags; bind events with <code class="lw-code">on:lw-press</code> in Svelte 4 or <code class="lw-code">onlw-press</code> in Svelte 5.</li>
+                <li><strong>Astro</strong>: render the tags as static HTML and load the global script once in the layout. The components enhance on the client.</li>
+              </ul>
+              <div class="guide-note"><strong>SSR:</strong> importing <code class="lw-code">linework-ui</code> is guarded for Node; the custom elements register only in a browser. The tags render as unknown elements on the server and upgrade after hydration.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="accessibility">
+          <div class="docs-section__head">
+            <span class="docs-section__num">09</span>
+            <div>
+              <h2 class="docs-section__title">Accessibility</h2>
+              <p class="docs-section__note">Linework starts with native controls and adds the visual layer on top.</p>
+            </div>
+          </div>
+
+          <div class="guide-split">
+            <div class="guide-prose">
+              <h3>Built in</h3>
+              <ul class="guide-check">
+                <li>Native buttons, inputs, selects, checkboxes, radios and <code class="lw-code">&lt;details&gt;</code>; no div-buttons.</li>
+                <li>Visible keyboard focus: a 1.5 px dashed construction line with an offset.</li>
+                <li>Native modal dialogs for sheets and dialogs: top layer, focus trap, Escape, backdrop.</li>
+                <li>Roving tabindex and Home/End/arrow keys in tabs and menus.</li>
+                <li>Toasts in a polite live region, above native dialogs via popovers, paused on hover or focus.</li>
+                <li>ARIA meters with a value, a label and a non-visual name for icon-only keys.</li>
+                <li>Reduced-motion support for animation and smooth scrolling.</li>
+                <li>AA contrast for body text, labels and controls in all three papers.</li>
+              </ul>
+            </div>
+            <div class="guide-prose">
+              <h3>Your side of the contract</h3>
+              <ul class="guide-check">
+                <li>Give every field a real label and every icon-only button an <code class="lw-code">aria-label</code>.</li>
+                <li>Never use redline as the only signal. Pair colour with text, a stamp or a dot.</li>
+                <li>Use the redline for large text and borders; use redline-deep for small red type.</li>
+                <li>Do not remove focus outlines. If you restyle them, keep a 3:1 contrast ring.</li>
+                <li>Test with your own copy, zoom at 200%, and a screen reader once per release.</li>
+              </ul>
+              <div class="guide-note"><strong>Keyboard map:</strong> <span class="guide-kbd"><span class="lw-keycap">Tab</span> move</span> <span class="guide-kbd"><span class="lw-keycap">Space</span> press</span> <span class="guide-kbd"><span class="lw-keycap">Esc</span> close</span> <span class="guide-kbd"><span class="lw-keycap">← →</span> tabs/menus</span></div>
+            </div>
+          </div>
+
+          <div class="guide-table-wrap"><table class="guide-table">
+            <thead><tr><th>Pairing</th><th>Contrast</th><th>Approved for</th></tr></thead>
+            <tbody>
+              <tr><td>Ink on paper</td><td>&gt; 12:1</td><td>Body, labels, controls, everything.</td></tr>
+              <tr><td>Pencil on paper</td><td>&gt; 5.5:1</td><td>Secondary body text and notes.</td></tr>
+              <tr><td>Paper on redline</td><td>&gt; 4.5:1</td><td>Danger keys and the on-air lamp.</td></tr>
+              <tr><td>Redline on paper</td><td>&gt; 4.6:1</td><td>Large text, borders and state. Use redline-deep for small text.</td></tr>
+            </tbody>
+          </table></div>
+        </section>
+
+        <section class="docs-section" id="principles">
+          <div class="docs-section__head">
+            <span class="docs-section__num">10</span>
+            <div>
+              <h2 class="docs-section__title">Principles</h2>
+              <p class="docs-section__note">Six rules for keeping the drawing readable after the first sprint.</p>
+            </div>
+          </div>
+          <ul class="guide-list">
+            <li><strong>A line has a job.</strong> Hairlines separate. Heavy rules define. Dashed lines mean construction or focus. Remove any line that does none of these.</li>
+            <li><strong>Structure before surface.</strong> If the layout needs a gradient to make sense, the layout is not finished.</li>
+            <li><strong>Redline means live.</strong> Playing, recording, destructive, focused, pending. Never decoration.</li>
+            <li><strong>Sharp corners, real borders.</strong> Elevation is a border and a scrim, never a shadow.</li>
+            <li><strong>Use tokens.</strong> If a colour or space appears twice as a literal, it belongs in a token.</li>
+            <li><strong>Native first.</strong> Buttons, dialogs, details and inputs already work. Draw them; do not rebuild them.</li>
+          </ul>
+        </section>
+
+        <section class="docs-section" id="licence">
+          <div class="docs-section__head">
+            <span class="docs-section__num">11</span>
+            <div>
+              <h2 class="docs-section__title">Licence</h2>
+              <p class="docs-section__note">Free to use, change and ship.</p>
+            </div>
+          </div>
+          <div class="guide-split">
+            <div class="guide-prose">
+              <p>Linework code is released under the <strong>MIT licence</strong>. Use it in commercial and private work, keep the copyright notice, and do not hold the authors liable. The blocks, components, tokens and site are all published under the same terms.</p>
+              <p>No third-party assets are bundled; type comes from system fonts.</p>
+            </div>
+            <div class="lw-plate">
+              <div class="lw-plate__cap"><span>Licence summary</span><span>01 / 01</span></div>
+              <div class="lw-plate__body">
+                <dl class="lw-spec lw-spec--mono">
+                  <dt>Code</dt><dd>MIT</dd>
+                  <dt>Blocks</dt><dd>MIT</dd>
+                  <dt>Media</dt><dd>None bundled</dd>
+                  <dt>Fonts</dt><dd>System only</dd>
+                  <dt>Attribution</dt><dd>Not required, appreciated</dd>
+                  <dt>Warranty</dt><dd>None</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="docs-cta">
+          <div>
+            <h2 class="docs-cta__title">Now draw something.</h2>
+            <p class="docs-cta__text">Start with a block, redraw the words, keep the grid. Every part is live on the components sheet.</p>
+          </div>
+          <div class="lw-cluster">
+            <a class="lw-btn" href="components.html">Components</a>
+            <a class="lw-btn lw-btn--primary" href="blocks.html">Blocks<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+</body>
+</html>

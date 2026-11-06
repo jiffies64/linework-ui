@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en" data-theme="trace">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Components — Linework</title>
+  <meta name="description" content="The Linework component library: keys, fields, LED toggles, pads, dimension lines, lamps, meters, stamps, tabs, tables, sheets, dialogs, menus, toasts, tooltips and application patterns.">
+  <meta name="theme-color" content="#EEF0EC">
+  <script src="assets/js/theme-init.js"></script>
+  <link rel="stylesheet" href="../dist/linework.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/docs-pages.css">
+  <script src="../dist/linework.global.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body class="site" data-page="components">
+  <a class="lw-skip-link" href="#main">Skip to content</a>
+  <header id="site-header" class="site-header"></header>
+
+  <main id="main">
+    <section class="docs-hero">
+      <div class="site-wrap">
+        <div class="docs-hero__meta"><span>Library / Components</span><span>Sheet 03 · Rev 1.0</span></div>
+        <div class="docs-hero__grid">
+          <h1 class="docs-hero__title">A kit of parts,<br>in the open.</h1>
+          <div class="docs-hero__aside">
+            <p>Most things are live on this sheet. Press it, toggle it, open it, copy the class, or open <strong>View markup</strong> under any plate to take the HTML with you.</p>
+            <div class="docs-hero__facts">
+              <div class="docs-hero__fact"><strong>35</strong><span>Components</span></div>
+              <div class="docs-hero__fact"><strong>05</strong><span>Elements</span></div>
+              <div class="docs-hero__fact"><strong>03</strong><span>Papers</span></div>
+              <div class="docs-hero__fact"><strong>00</strong><span>Deps</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="site-wrap docs-shell">
+      <aside class="docs-side">
+        <p class="docs-side__label">On this sheet</p>
+        <nav class="docs-nav lw-sidenav" aria-label="Components">
+          <p class="lw-sidenav__label">Foundations</p>
+          <a class="lw-sidenav__item" href="#foundations"><span class="lw-sidenav__count">01</span>Tokens &amp; type</a>
+          <a class="lw-sidenav__item" href="#icons"><span class="lw-sidenav__count">02</span>Icons</a>
+          <p class="lw-sidenav__label">Input &amp; action</p>
+          <a class="lw-sidenav__item" href="#buttons"><span class="lw-sidenav__count">03</span>Keys</a>
+          <a class="lw-sidenav__item" href="#fields"><span class="lw-sidenav__count">04</span>Fields</a>
+          <a class="lw-sidenav__item" href="#choices"><span class="lw-sidenav__count">05</span>Choices</a>
+          <p class="lw-sidenav__label">Content</p>
+          <a class="lw-sidenav__item" href="#pads"><span class="lw-sidenav__count">06</span>Pads</a>
+          <a class="lw-sidenav__item" href="#display"><span class="lw-sidenav__count">07</span>Status &amp; data</a>
+          <p class="lw-sidenav__label">Structure</p>
+          <a class="lw-sidenav__item" href="#navigation"><span class="lw-sidenav__count">08</span>Navigation</a>
+          <a class="lw-sidenav__item" href="#overlays"><span class="lw-sidenav__count">09</span>Overlays</a>
+          <a class="lw-sidenav__item" href="#feedback"><span class="lw-sidenav__count">10</span>Feedback</a>
+          <a class="lw-sidenav__item" href="#application"><span class="lw-sidenav__count">11</span>Application</a>
+        </nav>
+        <p class="docs-side__note">Need installation, tokens and the API? <a href="docs.html">Read the guide</a>.</p>
+      </aside>
+
+      <div class="docs-main">
+        <section class="docs-section" id="foundations">
+          <div class="docs-section__head">
+            <span class="docs-section__num">01</span>
+            <div>
+              <h2 class="docs-section__title">Foundations</h2>
+              <p class="docs-section__note">Paper, ink and redline. Every value is a custom property. Override the values to change the system.</p>
+            </div>
+          </div>
+
+          <div class="docs-section__subtitle">Colour tokens</div>
+          <div class="token-grid">
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-paper)"></div><div class="token-card__text"><span class="token-card__name">Paper</span><span class="token-card__value">--lw-paper</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-paper-lit)"></div><div class="token-card__text"><span class="token-card__name">Paper lit</span><span class="token-card__value">--lw-paper-lit</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-paper-deep)"></div><div class="token-card__text"><span class="token-card__name">Paper deep</span><span class="token-card__value">--lw-paper-deep</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-ink)"></div><div class="token-card__text"><span class="token-card__name">Ink</span><span class="token-card__value">--lw-ink</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-pencil)"></div><div class="token-card__text"><span class="token-card__name">Pencil</span><span class="token-card__value">--lw-pencil</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-faint)"></div><div class="token-card__text"><span class="token-card__name">Faint</span><span class="token-card__value">--lw-faint</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-rule)"></div><div class="token-card__text"><span class="token-card__name">Rule</span><span class="token-card__value">--lw-rule</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-grid)"></div><div class="token-card__text"><span class="token-card__name">Grid</span><span class="token-card__value">--lw-grid</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-redline)"></div><div class="token-card__text"><span class="token-card__name">Redline</span><span class="token-card__value">--lw-redline</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-redline-deep)"></div><div class="token-card__text"><span class="token-card__name">Redline deep</span><span class="token-card__value">--lw-redline-deep</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-blueprint)"></div><div class="token-card__text"><span class="token-card__name">Blueprint</span><span class="token-card__value">--lw-blueprint</span></div></div>
+            <div class="token-card"><div class="token-card__swatch" style="background:var(--lw-led-off)"></div><div class="token-card__text"><span class="token-card__name">LED off</span><span class="token-card__value">--lw-led-off</span></div></div>
+          </div>
+
+          <div class="docs-section__subtitle">Type scale</div>
+          <div class="type-specimen">
+            <div class="type-row">
+              <div class="type-row__meta"><strong>Display</strong>.lw-display · 88 px · 300</div>
+              <div class="type-row__sample type-demo-display">Interfaces drawn to scale.</div>
+            </div>
+            <div class="type-row">
+              <div class="type-row__meta"><strong>Title</strong>.lw-title · 34 px · 300</div>
+              <div class="type-row__sample type-demo-title">A room with a view</div>
+            </div>
+            <div class="type-row">
+              <div class="type-row__meta"><strong>Body</strong>default · 15 px · 400</div>
+              <div class="type-row__sample type-demo-body">Structure reads before surface. The line tells you where to look, and the note tells you why it matters.</div>
+            </div>
+            <div class="type-row">
+              <div class="type-row__meta"><strong>Label</strong>.lw-label · 11 px · narrow caps</div>
+              <div class="type-row__sample type-demo-label">Grid opacity · Fig. 03</div>
+            </div>
+            <div class="type-row">
+              <div class="type-row__meta"><strong>Small print</strong>.lw-smallprint · 12 px · narrow</div>
+              <div class="type-row__sample lw-smallprint">Esc closes the sheet. Drawn in Bahnschrift, with a system fallback.</div>
+            </div>
+            <div class="type-row">
+              <div class="type-row__meta"><strong>Figures</strong>.lw-mono · 12 px</div>
+              <div class="type-row__sample type-demo-mono">01 — 1440 × 900 — REV 04</div>
+            </div>
+          </div>
+
+          <div class="docs-section__subtitle">Grid &amp; texture</div>
+          <div class="texture-grid">
+            <div class="texture texture--graph"><span class="texture__label">Graph paper / 24 px</span></div>
+            <div class="texture texture--hatch"><span class="texture__label" style="color:var(--lw-ink)">Redline hatch</span></div>
+            <div class="texture texture--dash"><span class="lw-label">Construction / focus</span><span class="texture__label">Dashed 1 px</span></div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="icons">
+          <div class="docs-section__head">
+            <span class="docs-section__num">02</span>
+            <div>
+              <h2 class="docs-section__title">Icons</h2>
+              <p class="docs-section__note">Thirty-one drafting icons, one weight, square caps. They are supplementary: always pair an icon with a visible label or an <code class="lw-code">aria-label</code>.</p>
+            </div>
+          </div>
+          <div class="demo-plate">
+            <div class="demo-plate__cap"><span><strong>Icon set</strong> — 24 × 24, stroke 1.5</span><span class="demo-plate__tag">.lw-icon</span></div>
+            <div class="icon-grid" data-icon-list></div>
+            <div class="demo-plate__foot">Use <code class="lw-code">&lt;svg class="lw-icon"&gt;&lt;use href="#lw-i-search"&gt;&lt;/use&gt;&lt;/svg&gt;</code>. The sprite is installed by linework.js.</div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="buttons">
+          <div class="docs-section__head">
+            <span class="docs-section__num">03</span>
+            <div>
+              <h2 class="docs-section__title">Keys</h2>
+              <p class="docs-section__note">Hovering thickens the bottom wall, as if the key stood proud of the sheet. Pressing puts it back flush. Sharp corners, always.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="demo-plate demo-plate--wide">
+              <div class="demo-plate__cap"><span><strong>Variants</strong></span><span class="demo-plate__tag">.lw-btn</span></div>
+              <div class="demo-plate__body">
+                <button type="button" class="lw-btn">Default</button>
+                <button type="button" class="lw-btn lw-btn--primary">Primary</button>
+                <button type="button" class="lw-btn lw-btn--danger">Danger</button>
+                <button type="button" class="lw-btn lw-btn--quiet">Quiet</button>
+                <button type="button" class="lw-btn lw-btn--danger-quiet">Quiet danger</button>
+                <button type="button" class="lw-btn lw-btn--link">Text link</button>
+                <button type="button" class="lw-btn" disabled>Disabled</button>
+                <button type="button" class="lw-btn is-loading">Working</button>
+              </div>
+              <div class="demo-plate__foot">Primary is for the one next action. Danger is for deleting, stopping or leaving. Redline never decorates.</div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Sizes &amp; icons</strong></span><span class="demo-plate__tag">--sm · --lg · --icon</span></div>
+              <div class="demo-plate__body">
+                <button type="button" class="lw-btn lw-btn--sm">Small</button>
+                <button type="button" class="lw-btn">Default</button>
+                <button type="button" class="lw-btn lw-btn--lg">Large</button>
+                <button type="button" class="lw-btn lw-btn--icon" aria-label="Settings"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-settings"></use></svg></button>
+                <button type="button" class="lw-btn lw-btn--icon lw-btn--sm" aria-label="Copy"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg></button>
+                <button type="button" class="lw-btn"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg>New sheet</button>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Groups &amp; legends</strong></span><span class="demo-plate__tag">.lw-btn-group</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-btn-group">
+                  <button type="button" class="lw-btn">Day</button>
+                  <button type="button" class="lw-btn">Week</button>
+                  <button type="button" class="lw-btn">Month</button>
+                </div>
+                <button type="button" class="lw-btn lw-btn--danger lw-btn--block">Stop all<span class="lw-btn__legend">Ctrl + Alt + Backspace</span></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="fields">
+          <div class="docs-section__head">
+            <span class="docs-section__num">04</span>
+            <div>
+              <h2 class="docs-section__title">Fields</h2>
+              <p class="docs-section__note">Native inputs, drawn as boxes. Focus shows a dashed construction line outside the border; invalid fields borrow the redline.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Text, search, select</strong></span><span class="demo-plate__tag">.lw-input · .lw-search</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-name">Project name</label>
+                  <input class="lw-input" id="c-name" type="text" value="North facade">
+                  <span class="lw-field__hint">Shown on the schedule and in search.</span>
+                </div>
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-search">Search sheets</label>
+                  <div class="lw-search">
+                    <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg>
+                    <input class="lw-input" id="c-search" type="search" placeholder="Search 6 sheets">
+                    <span class="lw-keycap lw-search__hint">/</span>
+                  </div>
+                </div>
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-device">Default paper</label>
+                  <div class="lw-select-wrap">
+                    <select class="lw-select" id="c-device">
+                      <option>Trace — default</option>
+                      <option>Blueprint — dark</option>
+                      <option>Vellum — warm</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-note">Note for the next reviewer</label>
+                  <textarea class="lw-textarea" id="c-note" placeholder="What still needs a decision?"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>States &amp; actions</strong></span><span class="demo-plate__tag">aria-invalid · :disabled</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-error">Shortcut</label>
+                  <input class="lw-input" id="c-error" type="text" value="Ctrl+1" aria-invalid="true" aria-describedby="c-error-note">
+                  <span class="lw-field__error" id="c-error-note">Another app already uses this combination.</span>
+                </div>
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-disabled">Workspace</label>
+                  <input class="lw-input" id="c-disabled" type="text" value="Atelier North" disabled>
+                  <span class="lw-field__hint">Owner-managed; ask an owner to change it.</span>
+                </div>
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-output">Workspace path</label>
+                  <div class="lw-input-row">
+                    <input class="lw-input" id="c-output" type="text" value="Atelier North / Studio / Sheets" readonly>
+                    <button type="button" class="lw-btn" data-lw-copy-target="#c-output"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button>
+                  </div>
+                </div>
+                <div class="lw-field">
+                  <div class="lw-field__meta"><label class="lw-field__label" for="c-bio">Short note</label><span>24 / 80</span></div>
+                  <textarea class="lw-textarea" id="c-bio" rows="3" style="min-height:70px">Measure twice. Comment once.</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="choices">
+          <div class="docs-section__head">
+            <span class="docs-section__num">05</span>
+            <div>
+              <h2 class="docs-section__title">Choices</h2>
+              <p class="docs-section__note">An LED square instead of a pill switch. Checkboxes and radios stay native underneath, so keyboard and screen readers behave.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>On / off &amp; selection</strong></span><span class="demo-plate__tag">.lw-led · .lw-check</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <label class="lw-led lw-led--redline">
+                  <input class="lw-led__input" type="checkbox" checked>
+                  <span class="lw-led__box"><span class="lw-led__fill"></span></span>
+                  <span>Snap to grid</span><span class="lw-led__state">On</span>
+                </label>
+                <label class="lw-led">
+                  <input class="lw-led__input" type="checkbox">
+                  <span class="lw-led__box"><span class="lw-led__fill"></span></span>
+                  <span>Guides</span><span class="lw-led__state">Off</span>
+                </label>
+                <hr class="demo-divider">
+                <label class="lw-check"><input class="lw-check__input" type="checkbox" checked><span class="lw-check__box"></span><span>Show rulers on the sheet</span></label>
+                <label class="lw-check"><input class="lw-check__input" type="checkbox"><span class="lw-check__box"></span><span>Open the overview on start</span></label>
+                <hr class="demo-divider">
+                <div class="lw-choices">
+                  <label class="lw-radio"><input class="lw-radio__input" type="radio" name="c-paper" checked><span class="lw-radio__box"></span><span>Trace</span></label>
+                  <label class="lw-radio"><input class="lw-radio__input" type="radio" name="c-paper"><span class="lw-radio__box"></span><span>Blueprint</span></label>
+                  <label class="lw-radio"><input class="lw-radio__input" type="radio" name="c-paper"><span class="lw-radio__box"></span><span>Vellum</span></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Ranges &amp; segments</strong></span><span class="demo-plate__tag">.lw-range · .lw-segments</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-volume">Grid opacity</label>
+                  <input class="lw-range" id="c-volume" type="range" min="0" max="1" step="0.01" value="0.64">
+                  <div class="lw-scale"><span>0</span><span>50</span><span>100</span></div>
+                </div>
+                <div class="lw-field">
+                  <label class="lw-field__label" for="c-monitor">Line weight</label>
+                  <input class="lw-range" id="c-monitor" type="range" min="0" max="1" step="0.01" value="0.3">
+                </div>
+                <hr class="demo-divider">
+                <div>
+                  <p class="lw-label" style="margin-bottom:8px">Density</p>
+                  <div class="lw-segments" role="group" aria-label="Density">
+                    <button type="button" class="lw-segments__item" aria-pressed="false">Compact</button>
+                    <button type="button" class="lw-segments__item" aria-pressed="true">Default</button>
+                    <button type="button" class="lw-segments__item" aria-pressed="false">Room</button>
+                  </div>
+                </div>
+                <div>
+                  <p class="lw-label" style="margin-bottom:8px">Paper</p>
+                  <div class="lw-segments lw-segments--block" role="group" aria-label="Paper">
+                    <button type="button" class="lw-segments__item" aria-pressed="true">Trace</button>
+                    <button type="button" class="lw-segments__item" aria-pressed="false">Blueprint</button>
+                    <button type="button" class="lw-segments__item" aria-pressed="false">Vellum</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="pads">
+          <div class="docs-section__head">
+            <span class="docs-section__num">06</span>
+            <div>
+              <h2 class="docs-section__title">Pads &amp; dimensions</h2>
+              <p class="docs-section__note">A pad drawn as a room in plan. While it runs, the walls and dimension turn red and section hatching sweeps the elapsed part. Every pad is a real button.</p>
+            </div>
+          </div>
+
+          <div class="demo-plate demo-plate--wide">
+            <div class="demo-plate__cap"><span><strong>The board</strong> — click a pad</span><span class="demo-plate__tag">lw-pad</span></div>
+            <div class="demo-plate__body demo-plate__body--graph" style="display:block">
+              <div class="lw-pads">
+                <lw-pad name="Publish" keys="1" length="1.2 s" duration="1.2" menu></lw-pad>
+                <lw-pad name="Archive" keys="2" length="0.8 s" duration="0.8"></lw-pad>
+                <lw-pad name="Sync" keys="3" length="2.4 s" duration="2.4"></lw-pad>
+                <lw-pad name="Send for review" keys="4" length="1.6 s" duration="1.6"></lw-pad>
+              </div>
+            </div>
+            <div class="demo-plate__foot">Attributes: <code class="lw-code">name</code>, <code class="lw-code">keys</code>, <code class="lw-code">length</code>, <code class="lw-code">duration</code>, <code class="lw-code">playing</code>, <code class="lw-code">progress</code>, <code class="lw-code">menu</code>. Events: <code class="lw-code">lw-press</code>, <code class="lw-code">lw-play</code>, <code class="lw-code">lw-stop</code>, <code class="lw-code">lw-end</code>. The keycap is a visual legend; shortcuts belong to the application. The pad is a visual timer only; wire it to your own task.</div>
+          </div>
+
+          <div class="demo-grid" style="margin-top:16px">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Dimension lines</strong></span><span class="demo-plate__tag">.lw-dimension</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-dimension" role="img" aria-label="Length 3.1 seconds">
+                  <span class="lw-dimension__cap" aria-hidden="true"></span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__label">3.1 s</span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+                </div>
+                <div class="lw-dimension lw-dimension--live" role="img" aria-label="Remaining 2.2 seconds">
+                  <span class="lw-dimension__cap" aria-hidden="true"></span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__label">2.2 s</span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+                </div>
+                <div class="lw-dimension lw-dimension--ink" role="img" aria-label="Width 1440 pixels">
+                  <span class="lw-dimension__cap" aria-hidden="true"></span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__label">1440 px</span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Keys &amp; keycaps</strong></span><span class="demo-plate__tag">.lw-keycap</span></div>
+              <div class="demo-plate__body">
+                <span class="lw-keycap">Ctrl+1</span>
+                <span class="lw-keycap lw-keycap--ink">Cmd K</span>
+                <span class="lw-keycap lw-keycap--red">Esc</span>
+                <span class="lw-keycap lw-keycap--filled">F5</span>
+                <span class="lw-keycap lw-keycap--lg">Space</span>
+                <span class="lw-keys"><span class="lw-keycap">Ctrl</span>+<span class="lw-keycap">Alt</span>+<span class="lw-keycap">Backspace</span></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="display">
+          <div class="docs-section__head">
+            <span class="docs-section__num">07</span>
+            <div>
+              <h2 class="docs-section__title">Status &amp; data</h2>
+              <p class="docs-section__note">Lamps, stamps, meters and progress. Redline appears only when something is live, pending or at risk; everything else is graphite.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Lamps &amp; stamps</strong></span><span class="demo-plate__tag">.lw-lamp · .lw-stamp</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-cluster">
+                  <span class="lw-lamp is-on"><span class="lw-lamp__dot"></span>On air</span>
+                  <span class="lw-lamp"><span class="lw-lamp__dot"></span>Standby</span>
+                </div>
+                <div class="lw-cluster">
+                  <span class="lw-stamp">Draft</span>
+                  <span class="lw-stamp lw-stamp--red">Live</span>
+                  <span class="lw-stamp lw-stamp--ink">Approved</span>
+                  <span class="lw-stamp lw-stamp--blue">MIT</span>
+                  <span class="lw-stamp lw-stamp--quiet">Archived</span>
+                  <span class="lw-stamp lw-stamp--tilt">Reviewed</span>
+                </div>
+                <div class="lw-cluster">
+                  <span class="lw-avatars">
+                    <span class="lw-avatar">MW</span>
+                    <span class="lw-avatar">JK</span>
+                    <span class="lw-avatar">AS</span>
+                    <span class="lw-avatars__more">+4</span>
+                  </span>
+                  <span class="lw-smallprint">Atelier North</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Meters &amp; progress</strong></span><span class="demo-plate__tag">lw-meter · .lw-progress</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-row">
+                  <span class="lw-label">Activity</span>
+                  <lw-meter bars="20" live label="Activity level"></lw-meter>
+                </div>
+                <div>
+                  <div class="lw-field__meta"><span class="lw-label">Approval</span><span class="lw-smallprint">3 of 4</span></div>
+                  <div class="lw-progress"><div class="lw-progress__bar" style="width:75%"></div></div>
+                </div>
+                <div>
+                  <div class="lw-field__meta"><span class="lw-label">Playing</span><span class="lw-smallprint">42%</span></div>
+                  <div class="lw-progress lw-progress--live lw-progress--hatch"><div class="lw-progress__bar" style="width:42%"></div></div>
+                </div>
+                <div class="lw-skeleton" style="height:12px;width:80%"></div>
+                <div class="lw-row"><span class="lw-spinner" aria-hidden="true"></span><span class="lw-smallprint">Drawing revision 04…</span></div>
+                <div class="lw-sparkbars" aria-hidden="true"><span style="--v:30%"></span><span style="--v:45%"></span><span style="--v:38%"></span><span style="--v:62%"></span><span style="--v:55%"></span><span style="--v:74%"></span><span style="--v:68%" class="is-red"></span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="navigation">
+          <div class="docs-section__head">
+            <span class="docs-section__num">08</span>
+            <div>
+              <h2 class="docs-section__title">Navigation</h2>
+              <p class="docs-section__note">Tabs are arrow-key navigable; breadcrumbs and pagination keep the page addressable.</p>
+            </div>
+          </div>
+
+          <div class="demo-plate demo-plate--wide">
+            <div class="demo-plate__cap"><span><strong>Tabs</strong> — try the arrow keys</span><span class="demo-plate__tag">lw-tabs</span></div>
+            <div class="demo-plate__body">
+              <lw-tabs style="width:100%">
+                <div class="lw-tablist">
+                  <button class="lw-tab"><span class="lw-tab__num">01</span>Overview</button>
+                  <button class="lw-tab"><span class="lw-tab__num">02</span>Components</button>
+                  <button class="lw-tab"><span class="lw-tab__num">03</span>Tokens</button>
+                </div>
+                <div class="lw-tabpanel"><p class="lw-note">Thirty-five parts on one sheet. Everything here is live: press, type, drag, open a sheet.</p></div>
+                <div class="lw-tabpanel"><p class="lw-note">Keys, fields, pads, tables and sheets. Behaviour comes from five small Web Components.</p></div>
+                <div class="lw-tabpanel"><p class="lw-note">Every colour, space and duration is a custom property. Override the values; the rules stay true.</p></div>
+              </lw-tabs>
+            </div>
+          </div>
+
+          <div class="demo-grid" style="margin-top:16px">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Breadcrumb &amp; pagination</strong></span><span class="demo-plate__tag">.lw-breadcrumb · .lw-pagination</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <nav class="lw-breadcrumb" aria-label="Breadcrumb example">
+                  <ol><li><a href="#">Atelier North</a></li><li><a href="#">Sheets</a></li><li aria-current="page">North facade</li></ol>
+                </nav>
+                <nav class="lw-pagination" aria-label="Pagination example">
+                  <button type="button" aria-label="Previous page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-chevron-right" style="transform:rotate(180deg)"></use></svg></button>
+                  <button type="button" aria-current="page">1</button>
+                  <button type="button">2</button>
+                  <button type="button">3</button>
+                  <span class="lw-pagination__gap" style="display:grid;place-items:center;min-width:34px;color:var(--lw-faint)">…</span>
+                  <button type="button">12</button>
+                  <button type="button" aria-label="Next page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-chevron-right"></use></svg></button>
+                </nav>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Side navigation</strong></span><span class="demo-plate__tag">.lw-sidenav</span></div>
+              <div class="demo-plate__body demo-plate__body--flush">
+                <nav class="lw-sidenav" aria-label="Side navigation example" style="padding:8px 0">
+                  <p class="lw-sidenav__label">Workspace</p>
+                  <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-grid"></use></svg>Overview</a>
+                  <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Sheets<span class="lw-sidenav__count">284</span></a>
+                  <a class="lw-sidenav__item" href="#" aria-current="page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Reviews<span class="lw-sidenav__count">04</span></a>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="overlays">
+          <div class="docs-section__head">
+            <span class="docs-section__num">09</span>
+            <div>
+              <h2 class="docs-section__title">Overlays</h2>
+              <p class="docs-section__note">Sheets and dialogs are native <code class="lw-code">&lt;dialog&gt;</code> elements: top layer, focus trapped, Escape and backdrop for free. Toasts use popovers so they stay above them.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Sheets &amp; dialogs</strong></span><span class="demo-plate__tag">lw-drawer · .lw-dialog</span></div>
+              <div class="demo-plate__body">
+                <button type="button" class="lw-btn" data-lw-open="c-drawer"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Open a sheet</button>
+                <button type="button" class="lw-btn lw-btn--danger-quiet" data-lw-open="c-dialog">Delete a sheet</button>
+              </div>
+              <div class="demo-plate__foot">The drawer is a side sheet; the dialog is centred. Both close with Escape or the visible close control.</div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Menu &amp; tooltip</strong></span><span class="demo-plate__tag">data-lw-menu · data-lw-tip</span></div>
+              <div class="demo-plate__body">
+                <button type="button" class="lw-btn" data-lw-menu="#c-menu">Pad options</button>
+                <div class="lw-popover lw-menu" id="c-menu" popover>
+                  <button type="button" class="lw-menu__item"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-keyboard"></use></svg>Set key…</button>
+                  <button type="button" class="lw-menu__item"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-volume"></use></svg>Volume</button>
+                  <hr class="lw-menu__sep">
+                  <button type="button" class="lw-menu__item lw-menu__item--danger"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-trash"></use></svg>Remove pad</button>
+                </div>
+                <button type="button" class="lw-btn lw-btn--icon" aria-label="Settings" data-lw-tip="Settings" data-lw-tip-pos="right"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-settings"></use></svg></button>
+                <button type="button" class="lw-btn lw-btn--icon" aria-label="Copy link" data-lw-tip="Copy link"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-link"></use></svg></button>
+              </div>
+              <div class="demo-plate__foot">Tooltips are supplementary by design. The control itself always carries an accessible name.</div>
+            </div>
+          </div>
+
+          <lw-drawer id="c-drawer" label="Example side sheet" width="430">
+            <div class="lw-drawer__head"><h2 class="lw-drawer__title">Add a sheet</h2></div>
+            <div class="lw-drawer__body">
+              <button type="button" class="lw-btn"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-folder"></use></svg>Choose files on this PC</button>
+              <p class="lw-note" style="margin-top:12px">Or drop drawings anywhere on the sheet. PDF, PNG, SVG and DWG work.</p>
+              <div class="lw-field" style="margin-top:20px">
+                <label class="lw-field__label" for="c-drawer-search">Templates</label>
+                <div class="lw-search"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg><input class="lw-input" id="c-drawer-search" type="search" placeholder="Search templates"></div>
+              </div>
+              <div class="lw-list" style="margin-top:12px">
+                <div class="lw-list__row"><span class="lw-keycap">01</span><span class="lw-list__title">North facade</span><span class="lw-list__value">Rev 04</span><button type="button" class="lw-btn lw-btn--sm">Add</button></div>
+                <div class="lw-list__row"><span class="lw-keycap">02</span><span class="lw-list__title">Atrium / concept</span><span class="lw-list__value">Draft</span><button type="button" class="lw-btn lw-btn--sm">Add</button></div>
+              </div>
+            </div>
+            <div class="lw-drawer__foot"><button type="button" class="lw-btn lw-btn--primary" data-lw-close>Done</button></div>
+          </lw-drawer>
+
+          <dialog class="lw-dialog lw-dialog--sm" id="c-dialog" aria-labelledby="c-dialog-title">
+            <div class="lw-dialog__head"><h2 class="lw-dialog__title" id="c-dialog-title">Delete this sheet?</h2></div>
+            <div class="lw-dialog__body"><p class="lw-note">North facade and its fourteen revisions will move to the archive. Links will stop working.</p></div>
+            <div class="lw-dialog__foot"><button type="button" class="lw-btn" data-lw-close>Cancel</button><button type="button" class="lw-btn lw-btn--danger" data-lw-close>Delete sheet</button></div>
+          </dialog>
+        </section>
+
+        <section class="docs-section" id="feedback">
+          <div class="docs-section__head">
+            <span class="docs-section__num">10</span>
+            <div>
+              <h2 class="docs-section__title">Feedback</h2>
+              <p class="docs-section__note">Short confirmations, quiet empty states, visible waiting. Toasts sit in the bottom centre, above native dialogs, and pause their timer on hover.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Toasts</strong></span><span class="demo-plate__tag">Linework.toast() · lw-toast-stack</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-cluster">
+                  <button type="button" class="lw-btn" data-toast data-toast-title="Added" data-toast-message="North facade is now on the schedule." data-toast-tone="success">Success</button>
+                  <button type="button" class="lw-btn" data-toast data-toast-title="Settings saved" data-toast-message="The workspace inherits the new paper." data-toast-tone="blue">Info</button>
+                  <button type="button" class="lw-btn" data-toast data-toast-title="Shortcut taken" data-toast-message="Another app already uses Ctrl+Alt+Backspace." data-toast-tone="warning">Warning</button>
+                </div>
+                <p class="demo-note">One live region, maximum four on screen. Each toast pauses when hovered or focused, then resumes.</p>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Empty state</strong></span><span class="demo-plate__tag">.lw-empty</span></div>
+              <div class="demo-plate__body">
+                <div class="lw-empty" style="width:100%;padding:28px 20px">
+                  <div class="lw-empty__frame"><span class="lw-title" style="font-size:24px">No sheets yet</span></div>
+                  <p class="lw-empty__text">Draw a new sheet, or start from a template in the project library.</p>
+                  <div class="lw-empty__actions"><button type="button" class="lw-btn lw-btn--primary lw-btn--sm" data-lw-open="c-drawer">New sheet</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="application">
+          <div class="docs-section__head">
+            <span class="docs-section__num">11</span>
+            <div>
+              <h2 class="docs-section__title">Application</h2>
+              <p class="docs-section__note">The patterns that make a dashboard read: measured stats, a schedule table, activity, settings rows and an accordion that is just <code class="lw-code">&lt;details&gt;</code> in a good coat.</p>
+            </div>
+          </div>
+
+          <div class="demo-plate demo-plate--wide">
+            <div class="demo-plate__cap"><span><strong>Stats &amp; activity</strong></span><span class="demo-plate__tag">.lw-stats · .lw-activity</span></div>
+            <div class="demo-plate__body demo-plate__body--stack">
+              <div class="lw-stats">
+                <div class="lw-stat"><span class="lw-stat__label">Open reviews <span class="lw-stamp lw-stamp--red">Live</span></span><span class="lw-stat__value">04</span><span class="lw-stat__foot"><span class="lw-delta">↑ 2</span> this week</span></div>
+                <div class="lw-stat"><span class="lw-stat__label">Sheets this month</span><span class="lw-stat__value">28</span><span class="lw-stat__foot"><span class="lw-delta">↑ 12%</span> on September</span></div>
+                <div class="lw-stat"><span class="lw-stat__label">Approval time</span><span class="lw-stat__value">2.4 <span class="lw-smallprint">days</span></span><span class="lw-stat__foot"><span class="lw-delta">↓ 0.6</span> faster</span></div>
+              </div>
+              <ul class="lw-activity">
+                <li class="lw-activity__item lw-activity__item--live"><div><p class="lw-activity__title"><strong>Jonas</strong> left a redline on North facade.</p><p class="lw-activity__meta">18 min ago</p></div></li>
+                <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Ada</strong> approved East wing / tender.</p><p class="lw-activity__meta">1 hr ago</p></div></li>
+                <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Mara</strong> created Roof study / draft.</p><p class="lw-activity__meta">3 hrs ago</p></div></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="demo-plate demo-plate--wide" style="margin-top:16px">
+            <div class="demo-plate__cap"><span><strong>Schedule table</strong></span><span class="demo-plate__tag">.lw-table</span></div>
+            <div class="demo-plate__body demo-plate__body--flush">
+              <div class="lw-table-wrap">
+                <table class="lw-table">
+                  <thead><tr><th>Sheet</th><th>Owner</th><th>Updated</th><th>Status</th><th class="lw-table__actions">Actions</th></tr></thead>
+                  <tbody>
+                    <tr><td class="lw-table__strong">North facade</td><td>Mara Weiss</td><td class="lw-table__muted">2 hours ago</td><td><span class="lw-stamp lw-stamp--red">In review</span></td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for North facade"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+                    <tr><td class="lw-table__strong">Atrium / concept 2</td><td>Jonas Keller</td><td class="lw-table__muted">Yesterday</td><td><span class="lw-stamp lw-stamp--quiet">Draft</span></td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for Atrium / concept 2"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+                    <tr><td class="lw-table__strong">East wing / tender</td><td>Ada Sorensen</td><td class="lw-table__muted">12 Oct</td><td><span class="lw-stamp lw-stamp--ink">Approved</span></td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for East wing / tender"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-grid" style="margin-top:16px">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Settings rows</strong></span><span class="demo-plate__tag">.lw-setting-row</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-setting-row">
+                  <div class="lw-setting-row__text"><p class="lw-setting-row__title">New comments</p><p class="lw-setting-row__note">A quiet ping when someone marks up your sheet.</p></div>
+                  <div class="lw-setting-row__control"><label class="lw-led lw-led--redline"><input class="lw-led__input" type="checkbox" checked aria-label="New comments"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span>On</span></label></div>
+                </div>
+                <div class="lw-setting-row">
+                  <div class="lw-setting-row__text"><p class="lw-setting-row__title">Weekly digest</p><p class="lw-setting-row__note">One short sheet on Monday morning.</p></div>
+                  <div class="lw-setting-row__control"><label class="lw-led"><input class="lw-led__input" type="checkbox" aria-label="Weekly digest"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span>Off</span></label></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Accordion</strong></span><span class="demo-plate__tag">.lw-accordion / details</span></div>
+              <div class="demo-plate__body">
+                <div class="lw-accordion" style="width:100%">
+                  <details class="lw-accordion__item" open>
+                    <summary class="lw-accordion__summary">Can guests approve?</summary>
+                    <div class="lw-accordion__body"><p>Yes. Guests can comment and approve, but cannot create new sheets.</p></div>
+                  </details>
+                  <details class="lw-accordion__item">
+                    <summary class="lw-accordion__summary">Is there an offline mode?</summary>
+                    <div class="lw-accordion__body"><p>Sheets you have opened stay readable; notes queue until you reconnect.</p></div>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-grid" style="margin-top:16px">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Dropzone</strong></span><span class="demo-plate__tag">.lw-dropzone</span></div>
+              <div class="demo-plate__body">
+                <div class="lw-dropzone" style="width:100%">
+                  <svg class="lw-icon lw-dropzone__icon" aria-hidden="true"><use href="#lw-i-download"></use></svg>
+                  <span class="lw-dropzone__title">Drop drawings here</span>
+                  <span class="lw-smallprint">PDF, PNG, SVG, DWG · up to 25 MB</span>
+                </div>
+              </div>
+            </div>
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Callout</strong></span><span class="demo-plate__tag">.lw-callout</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-callout lw-callout--redline"><span class="lw-callout__label">Redline</span><p>Redline marks state: if it is on the sheet, something is live, waiting or at risk.</p></div>
+                <div class="lw-callout lw-callout--blue"><span class="lw-callout__label">Note</span><p>Everything on this page is drawn with the same classes. Nothing is a screenshot.</p></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="docs-cta">
+          <div>
+            <h2 class="docs-cta__title">Start with a block.</h2>
+            <p class="docs-cta__text">Ten assembled sections, each one built from the parts above. Copy the markup or open a preview and redraw the words.</p>
+          </div>
+          <a class="lw-btn lw-btn--primary" href="blocks.html">Browse the blocks<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg></a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="site-footer" class="site-footer"></footer>
+</body>
+</html>

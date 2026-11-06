@@ -1,0 +1,91 @@
+/* Give the wrapper an aria-label for screen readers. */
+.lw-dimension {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-width: 0;
+  color: var(--lw-pencil);
+  font-family: var(--lw-font-narrow);
+  font-size: var(--lw-text-sm);
+  line-height: 1;
+}
+
+.lw-dimension__cap {
+  width: 8px;
+  height: 16px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 16' fill='none' stroke='black' stroke-width='1'%3E%3Cpath d='M4 1V15M.5 11.5L7.5 4.5M4 8H8'/%3E%3C/svg%3E")
+    center / 8px 16px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 16' fill='none' stroke='black' stroke-width='1'%3E%3Cpath d='M4 1V15M.5 11.5L7.5 4.5M4 8H8'/%3E%3C/svg%3E")
+    center / 8px 16px no-repeat;
+}
+
+.lw-dimension__cap--end {
+  transform: scaleX(-1);
+}
+
+.lw-dimension__rule {
+  height: 1px;
+  flex: 1 1 0;
+  min-width: 8px;
+  background: currentColor;
+}
+
+.lw-dimension__label {
+  flex: none;
+  margin-bottom: 1px;
+  color: inherit;
+  font-size: var(--lw-text-sm);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.lw-dimension__label--strong {
+  font-family: var(--lw-font-ui);
+  font-size: var(--lw-text-base);
+  font-weight: var(--lw-weight-semibold);
+}
+
+.lw-dimension--ink {
+  color: var(--lw-ink);
+}
+
+.lw-dimension--live {
+  color: var(--lw-redline);
+}
+
+.lw-dimension--live .lw-dimension__label {
+  font-family: var(--lw-font-ui);
+  font-size: var(--lw-text-base);
+  font-weight: var(--lw-weight-semibold);
+}
+
+.lw-dimension--vertical {
+  flex-direction: column;
+  width: auto;
+  height: 100%;
+}
+
+.lw-dimension--vertical .lw-dimension__cap {
+  transform: rotate(90deg);
+}
+
+.lw-dimension--vertical .lw-dimension__cap--end {
+  transform: rotate(-90deg);
+}
+
+.lw-dimension--vertical .lw-dimension__rule {
+  width: 1px;
+  height: auto;
+  min-width: 0;
+  min-height: 8px;
+}
+
+.lw-dimension--vertical .lw-dimension__label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin: 0 0 0 2px;
+}

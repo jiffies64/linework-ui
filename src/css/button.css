@@ -1,0 +1,257 @@
+.lw-btn {
+  --lw-btn-bg: var(--lw-paper);
+  --lw-btn-fg: var(--lw-ink);
+  --lw-btn-line: var(--lw-ink);
+  --lw-btn-raise: var(--lw-ink);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lw-space-8);
+  min-height: var(--lw-control-height);
+  padding: var(--lw-space-6) var(--lw-space-14) var(--lw-space-8);
+  border: var(--lw-hairline) solid var(--lw-btn-line);
+  border-radius: var(--lw-radius);
+  background: var(--lw-btn-bg);
+  color: var(--lw-btn-fg);
+  font-family: var(--lw-font-ui);
+  font-size: var(--lw-text-base);
+  font-weight: var(--lw-weight-semibold);
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--lw-duration-1) var(--lw-ease),
+    border-color var(--lw-duration-1) var(--lw-ease),
+    color var(--lw-duration-1) var(--lw-ease),
+    box-shadow var(--lw-duration-1) var(--lw-ease),
+    transform var(--lw-duration-1) var(--lw-ease);
+}
+
+.lw-btn:hover {
+  box-shadow: inset 0 -2px 0 0 var(--lw-btn-raise);
+}
+
+.lw-btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.lw-btn:focus-visible {
+  outline: var(--lw-focus-width) dashed var(--lw-ink);
+  outline-offset: var(--lw-focus-offset);
+}
+
+.lw-btn[disabled],
+.lw-btn[aria-disabled="true"],
+.lw-btn.is-disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.lw-btn[disabled]:hover,
+.lw-btn[aria-disabled="true"]:hover {
+  box-shadow: none;
+}
+
+.lw-btn .lw-icon {
+  --lw-icon-size: 15px;
+}
+
+.lw-btn--primary {
+  --lw-btn-bg: var(--lw-ink);
+  --lw-btn-fg: var(--lw-on-ink);
+  --lw-btn-line: var(--lw-ink);
+  --lw-btn-raise: var(--lw-on-ink);
+}
+
+.lw-btn--primary:hover {
+  --lw-btn-bg: var(--lw-ink-soft);
+}
+
+.lw-btn--danger {
+  --lw-btn-bg: var(--lw-redline);
+  --lw-btn-fg: var(--lw-on-redline);
+  --lw-btn-line: var(--lw-redline-deep);
+  --lw-btn-raise: var(--lw-on-redline);
+}
+
+.lw-btn--danger:hover {
+  --lw-btn-bg: var(--lw-redline-deep);
+}
+
+.lw-btn--quiet {
+  --lw-btn-bg: transparent;
+  --lw-btn-fg: var(--lw-pencil);
+  --lw-btn-line: transparent;
+  --lw-btn-raise: transparent;
+  padding-inline: var(--lw-space-10);
+}
+
+.lw-btn--quiet:hover {
+  --lw-btn-bg: color-mix(in srgb, var(--lw-ink) 7%, transparent);
+  --lw-btn-fg: var(--lw-ink);
+}
+
+.lw-btn--quiet:active,
+.lw-btn--quiet:hover:active {
+  --lw-btn-bg: color-mix(in srgb, var(--lw-ink) 11%, transparent);
+}
+
+.lw-btn--danger-quiet {
+  --lw-btn-bg: transparent;
+  --lw-btn-fg: var(--lw-redline-deep);
+  --lw-btn-line: transparent;
+  --lw-btn-raise: transparent;
+}
+
+.lw-btn--danger-quiet:hover {
+  --lw-btn-bg: var(--lw-redline-wash);
+  --lw-btn-fg: var(--lw-redline-deep);
+}
+
+.lw-btn--link {
+  --lw-btn-bg: transparent;
+  --lw-btn-fg: var(--lw-ink);
+  --lw-btn-line: transparent;
+  --lw-btn-raise: transparent;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: var(--lw-weight-regular);
+}
+
+.lw-btn--link:hover {
+  color: var(--lw-redline);
+  box-shadow: none;
+}
+
+.lw-btn--sm {
+  min-height: var(--lw-control-height-sm);
+  padding: var(--lw-space-4) var(--lw-space-10) var(--lw-space-6);
+  font-size: var(--lw-text-md);
+  gap: var(--lw-space-6);
+}
+
+.lw-btn--lg {
+  min-height: var(--lw-control-height-lg);
+  padding: var(--lw-space-10) var(--lw-space-20) var(--lw-space-12);
+  font-size: var(--lw-text-lg);
+}
+
+.lw-btn--icon {
+  width: var(--lw-control-height);
+  min-width: var(--lw-control-height);
+  height: var(--lw-control-height);
+  padding: 0;
+}
+
+.lw-btn--icon.lw-btn--sm {
+  width: var(--lw-control-height-sm);
+  min-width: var(--lw-control-height-sm);
+  height: var(--lw-control-height-sm);
+}
+
+.lw-btn--icon.lw-btn--lg {
+  width: var(--lw-control-height-lg);
+  min-width: var(--lw-control-height-lg);
+  height: var(--lw-control-height-lg);
+}
+
+.lw-btn--icon .lw-icon {
+  --lw-icon-size: 17px;
+}
+
+.lw-btn--block {
+  width: 100%;
+}
+
+.lw-btn--tall {
+  align-items: center;
+  min-height: 58px;
+  white-space: normal;
+}
+
+.lw-btn__legend {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--lw-font-narrow);
+  font-size: var(--lw-text-xs);
+  font-weight: var(--lw-weight-regular);
+  letter-spacing: 0.03em;
+  opacity: 0.78;
+}
+
+.lw-btn-group {
+  display: inline-flex;
+  align-items: stretch;
+}
+
+.lw-btn-group > .lw-btn {
+  border-right-width: 0;
+}
+
+.lw-btn-group > .lw-btn:last-child {
+  border-right-width: var(--lw-hairline);
+}
+
+.lw-btn-group > .lw-btn:focus-visible {
+  z-index: 1;
+}
+
+.lw-btn--reveal {
+  opacity: 0;
+  transition:
+    opacity var(--lw-duration-2) var(--lw-ease),
+    background-color var(--lw-duration-1) var(--lw-ease);
+}
+
+:where(.lw-reveal-host:hover, .lw-reveal-host:focus-within) .lw-btn--reveal,
+.lw-btn--reveal:focus-visible {
+  opacity: 1;
+}
+
+/* On touch there is no hover, so hidden-on-hover controls stay visible. */
+@media (hover: none) {
+  .lw-btn--reveal {
+    opacity: 1;
+  }
+}
+
+.lw-btn.is-loading {
+  pointer-events: none;
+}
+
+.lw-btn.is-loading::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 4px,
+    var(--lw-btn-fg) 4px 5px
+  );
+  background-size: 14px 3px;
+  animation: lw-busy 700ms linear infinite;
+}
+
+@keyframes lw-busy {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 14px 0;
+  }
+}

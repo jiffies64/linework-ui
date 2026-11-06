@@ -1,0 +1,117 @@
+.lw-tabs {
+  min-width: 0;
+}
+
+.lw-tablist {
+  display: inline-flex;
+  max-width: 100%;
+  overflow-x: auto;
+  border: var(--lw-hairline) solid var(--lw-border);
+  background: var(--lw-paper);
+  scrollbar-width: none;
+}
+
+.lw-tablist::-webkit-scrollbar {
+  display: none;
+}
+
+.lw-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lw-space-6);
+  min-height: 34px;
+  padding: var(--lw-space-6) var(--lw-space-14) var(--lw-space-8);
+  border: 0;
+  border-right: var(--lw-hairline) solid var(--lw-border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--lw-pencil);
+  font-family: var(--lw-font-ui);
+  font-size: var(--lw-text-base);
+  font-weight: var(--lw-weight-semibold);
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--lw-duration-1) var(--lw-ease),
+    color var(--lw-duration-1) var(--lw-ease);
+}
+
+.lw-tab:last-child {
+  border-right: 0;
+}
+
+.lw-tab:hover {
+  background: var(--lw-paper-lit);
+  color: var(--lw-ink);
+}
+
+.lw-tab[aria-selected="true"] {
+  background: var(--lw-ink);
+  color: var(--lw-on-ink);
+}
+
+.lw-tab:focus-visible {
+  z-index: 2;
+  outline: var(--lw-focus-width) dashed var(--lw-ink);
+  outline-offset: -3px;
+}
+
+.lw-tab[aria-selected="true"]:focus-visible {
+  outline-color: var(--lw-on-ink);
+}
+
+.lw-tab__num {
+  font-family: var(--lw-font-mono);
+  font-size: var(--lw-text-2xs);
+  font-weight: var(--lw-weight-regular);
+  opacity: 0.65;
+}
+
+.lw-tabpanel {
+  margin-top: var(--lw-space-16);
+  animation: lw-panel-in var(--lw-duration-2) var(--lw-ease) both;
+}
+
+.lw-tabpanel[hidden] {
+  display: none !important;
+}
+
+@keyframes lw-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.lw-tabs--underline .lw-tablist {
+  border: 0;
+  border-bottom: var(--lw-hairline) solid var(--lw-border);
+  background: transparent;
+}
+
+.lw-tabs--underline .lw-tab {
+  border-right: 0;
+  padding-inline: var(--lw-space-12);
+}
+
+.lw-tabs--underline .lw-tab[aria-selected="true"] {
+  background: transparent;
+  color: var(--lw-ink);
+  box-shadow: inset 0 -2px 0 0 var(--lw-ink);
+}
+
+.lw-tabs--underline .lw-tab[aria-selected="true"]::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: var(--lw-redline);
+}

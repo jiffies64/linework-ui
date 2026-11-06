@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-theme="trace">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Block preview — Linework</title>
+  <meta name="theme-color" content="#EEF0EC">
+  <script src="assets/js/theme-init.js"></script>
+  <link rel="stylesheet" href="../dist/linework.css">
+  <link rel="stylesheet" href="../dist/linework-blocks.css">
+  <style>
+    html, body { min-height: 100%; }
+    body { margin: 0; background: var(--lw-paper); }
+    .preview-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 44px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--lw-border);
+      background: var(--lw-paper);
+      color: var(--lw-pencil);
+      font-family: var(--lw-font-narrow);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .preview-bar a {
+      color: var(--lw-ink);
+      text-decoration: none;
+    }
+    .preview-bar a:hover { color: var(--lw-redline); }
+    .preview-bar__spacer { margin-left: auto; }
+    .preview-bar__name { color: var(--lw-ink); font-weight: 600; }
+    .preview-bar[hidden] { display: none; }
+    .is-embed .preview-bar { display: none; }
+    @media (max-width: 720px) {
+      .preview-bar { padding-inline: 12px; font-size: 10px; }
+      .preview-bar__hint { display: none; }
+    }
+  </style>
+  <script src="../dist/linework.global.js" defer></script>
+  <script src="assets/js/blocks-data.js" defer></script>
+  <script src="assets/js/blocks.js" defer></script>
+</head>
+<body>
+  <header class="preview-bar">
+    <a href="blocks.html">← All blocks</a>
+    <span class="preview-bar__name" id="preview-name">Block preview</span>
+    <span class="preview-bar__spacer"></span>
+    <span class="preview-bar__hint">Linework blocks / plain HTML</span>
+  </header>
+  <main id="block-mount" data-block-preview></main>
+</body>
+</html>

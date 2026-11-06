@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en" data-theme="trace">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier — Linework showroom</title>
+  <meta name="description" content="A project console built entirely from Linework: app shell, schedule, approvals, menus, drawers and a create-sheet form. No dependencies.">
+  <meta name="theme-color" content="#EEF0EC">
+  <script src="assets/js/theme-init.js"></script>
+  <link rel="stylesheet" href="../dist/linework.css">
+  <link rel="stylesheet" href="assets/css/console.css">
+  <script src="../dist/linework.global.js" defer></script>
+  <script src="assets/js/console.js" defer></script>
+</head>
+<body class="cn-body">
+  <a class="lw-skip-link" href="#main">Skip to the console</a>
+
+  <div class="cn-app">
+    <header class="cn-header">
+      <a class="lw-brand" href="index.html" aria-label="Linework home">
+        <svg class="lw-brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <path d="M7 4v21h21" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 7h21v21" fill="none" stroke="currentColor" stroke-width="1" opacity=".28"/>
+          <path d="M10.5 21.5 21.5 10.5" fill="none" stroke="var(--lw-redline)" stroke-width="2"/>
+          <circle cx="21.5" cy="10.5" r="2" fill="var(--lw-redline)"/>
+        </svg>
+        <span class="lw-brand__name">linework</span>
+      </a>
+      <span class="cn-brand__divider" aria-hidden="true"></span>
+      <span class="cn-brand__app">atelier / console</span>
+      <span class="cn-save">All changes saved</span>
+
+      <div class="lw-search cn-search">
+        <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg>
+        <input class="lw-input" id="console-search" type="search" placeholder="Search sheets" aria-label="Search sheets" autocomplete="off">
+        <span class="lw-keycap lw-search__hint">/</span>
+      </div>
+
+      <div class="cn-header__actions">
+        <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon cn-nav-button" data-lw-open="console-nav" aria-label="Open console navigation"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-menu"></use></svg></button>
+        <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon" data-lw-theme="cycle" aria-label="Change paper theme" data-lw-tip="Change paper" data-lw-tip-pos="bottom">
+          <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-theme"></use></svg>
+        </button>
+        <button type="button" class="lw-btn lw-btn--primary" data-lw-open="new-sheet" aria-label="New sheet">
+          <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg>
+          <span>New sheet</span>
+        </button>
+        <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon cn-avatar-button" data-lw-menu="#account-menu" aria-label="Account menu">
+          <span class="lw-avatar">MW</span>
+        </button>
+        <div class="lw-popover lw-menu" id="account-menu" popover>
+          <button type="button" class="lw-menu__item" data-account-action="profile">Profile</button>
+          <button type="button" class="lw-menu__item" data-account-action="settings">Workspace settings</button>
+          <hr class="lw-menu__sep">
+          <button type="button" class="lw-menu__item lw-menu__item--danger" data-account-action="signout">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="cn-shell">
+      <aside class="cn-sidebar">
+        <div class="cn-workspace">
+          <span class="cn-workspace__mark">A</span>
+          <span class="cn-workspace__name">Atelier North<span class="cn-workspace__sub">Studio workspace</span></span>
+          <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-chevron-down"></use></svg>
+        </div>
+
+        <nav class="lw-sidenav" aria-label="Workspace">
+          <p class="lw-sidenav__label">Workspace</p>
+          <a class="lw-sidenav__item" href="#overview" aria-current="page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-grid"></use></svg>Overview</a>
+          <a class="lw-sidenav__item" href="#sheets"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Sheets<span class="lw-sidenav__count">284</span></a>
+          <a class="lw-sidenav__item" href="#approvals"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Approvals<span class="lw-sidenav__count" id="sidebar-approvals">03</span></a>
+          <a class="lw-sidenav__item" href="#activity"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-clock"></use></svg>Activity</a>
+        </nav>
+
+        <div class="cn-side-group">
+          <p class="lw-sidenav__label">Teams</p>
+          <div class="cn-team">Facade<span>86</span></div>
+          <div class="cn-team">Interiors<span>112</span></div>
+          <div class="cn-team">Landscape<span>41</span></div>
+        </div>
+
+        <div class="cn-plan">
+          <p class="cn-plan__label">Studio plan</p>
+          <p class="cn-plan__value">18 of 25 seats</p>
+          <div class="lw-progress"><div class="lw-progress__bar" style="width:72%"></div></div>
+          <button type="button" class="lw-btn lw-btn--sm lw-btn--block" data-manage-plan>Manage plan</button>
+        </div>
+
+        <div class="cn-side-foot"><span>Console 1.0</span><a href="components.html">Parts used</a></div>
+      </aside>
+
+      <main class="cn-main" id="main">
+        <div class="cn-main__inner">
+          <nav class="lw-breadcrumb cn-breadcrumb" aria-label="Breadcrumb">
+            <ol><li><a href="#">Atelier North</a></li><li aria-current="page">Overview</li></ol>
+          </nav>
+
+          <header class="cn-pagehead" id="overview">
+            <div>
+              <p class="cn-eyebrow">Overview / Wednesday 8 October</p>
+              <h1>Studio overview.</h1>
+              <p class="cn-pagehead__note">Good morning, Mara. <span id="waiting-count">3</span> reviews are waiting on your desk.</p>
+            </div>
+            <div class="cn-pagehead__actions">
+              <button type="button" class="lw-btn lw-btn--sm" data-export><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg>Export</button>
+              <button type="button" class="lw-btn lw-btn--primary lw-btn--sm" data-lw-open="new-sheet"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg>New sheet</button>
+            </div>
+          </header>
+
+          <div class="lw-stats cn-stats">
+            <div class="lw-stat">
+              <span class="lw-stat__label">Open reviews</span>
+              <span class="lw-stat__value"><span id="open-reviews">04</span></span>
+              <span class="lw-stat__foot"><span class="lw-delta">↑ 2</span> this week</span>
+            </div>
+            <div class="lw-stat">
+              <span class="lw-stat__label">Sheets this month</span>
+              <span class="lw-stat__value" id="stat-sheets">28</span>
+              <span class="lw-stat__foot"><span class="lw-delta">↑ 12%</span> on September</span>
+            </div>
+            <div class="lw-stat">
+              <span class="lw-stat__label">Approval time</span>
+              <span class="lw-stat__value">2.4 <span class="lw-smallprint">days</span></span>
+              <span class="lw-stat__foot"><span class="lw-delta">↓ 0.6</span> faster</span>
+            </div>
+            <div class="lw-stat">
+              <span class="lw-stat__label">On-time delivery</span>
+              <span class="lw-stat__value">96<span class="lw-smallprint">%</span></span>
+              <span class="lw-stat__foot">Last 90 days</span>
+            </div>
+          </div>
+
+          <div class="cn-grid">
+            <section class="cn-panel" id="sheets" aria-labelledby="sheets-title">
+              <div class="cn-panel__head">
+                <h2 class="cn-panel__title" id="sheets-title">Recent sheets <span class="cn-panel__sub">Across 3 teams</span></h2>
+                <span class="cn-panel__sub">Ordered by updated</span>
+              </div>
+              <div class="cn-filters" role="group" aria-label="Filter sheets by status">
+                <button type="button" class="cn-filter is-active" data-status-filter="all" aria-pressed="true">All <span class="cn-filter__count" data-count-for="all">05</span></button>
+                <button type="button" class="cn-filter" data-status-filter="review" aria-pressed="false">In review <span class="cn-filter__count" data-count-for="review">02</span></button>
+                <button type="button" class="cn-filter" data-status-filter="approved" aria-pressed="false">Approved <span class="cn-filter__count" data-count-for="approved">01</span></button>
+                <button type="button" class="cn-filter" data-status-filter="draft" aria-pressed="false">Draft <span class="cn-filter__count" data-count-for="draft">02</span></button>
+              </div>
+              <div class="lw-table-wrap">
+                <table class="lw-table cn-table">
+                  <thead>
+                    <tr><th>Sheet</th><th>Lead</th><th>Updated</th><th>Status</th><th><span class="lw-vh">Actions</span></th></tr>
+                  </thead>
+                  <tbody id="sheet-rows">
+                    <tr data-sheet-row data-name="North facade" data-code="A-104" data-status="review" data-owner="Mara Weiss" data-initials="MW" data-updated="2 hours ago" data-due="18 October 2026" data-team="Facade" data-note="Handrail junction still to be resolved before sign-off.">
+                      <td><button type="button" class="cn-sheet-name" data-open-sheet><span><span class="cn-sheet-name__title">North facade</span><span class="cn-sheet-code">A-104 · Rev 04</span></span></button></td>
+                      <td><span class="cn-owner"><span class="lw-avatar">MW</span>Mara</span></td>
+                      <td class="lw-table__muted">2 hours ago</td>
+                      <td><span class="lw-stamp lw-stamp--red">In review</span></td>
+                      <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-menu="#sheet-menu" data-row-menu aria-label="Actions for North facade"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                    </tr>
+                    <tr data-sheet-row data-name="Atrium / concept 2" data-code="A-102" data-status="draft" data-owner="Jonas Keller" data-initials="JK" data-updated="Yesterday" data-due="22 October 2026" data-team="Interiors" data-note="Daylight study needs a final section before sign-off.">
+                      <td><button type="button" class="cn-sheet-name" data-open-sheet><span><span class="cn-sheet-name__title">Atrium / concept 2</span><span class="cn-sheet-code">A-102 · Rev 02</span></span></button></td>
+                      <td><span class="cn-owner"><span class="lw-avatar">JK</span>Jonas</span></td>
+                      <td class="lw-table__muted">Yesterday</td>
+                      <td><span class="lw-stamp lw-stamp--quiet">Draft</span></td>
+                      <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-menu="#sheet-menu" data-row-menu aria-label="Actions for Atrium concept 2"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                    </tr>
+                    <tr data-sheet-row data-name="East wing / tender" data-code="A-108" data-status="approved" data-owner="Ada Sorensen" data-initials="AS" data-updated="12 Oct" data-due="10 October 2026" data-team="Facade" data-note="Tender set approved; no open items.">
+                      <td><button type="button" class="cn-sheet-name" data-open-sheet><span><span class="cn-sheet-name__title">East wing / tender</span><span class="cn-sheet-code">A-108 · Rev 06</span></span></button></td>
+                      <td><span class="cn-owner"><span class="lw-avatar">AS</span>Ada</span></td>
+                      <td class="lw-table__muted">12 Oct</td>
+                      <td><span class="lw-stamp lw-stamp--ink">Approved</span></td>
+                      <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-menu="#sheet-menu" data-row-menu aria-label="Actions for East wing tender"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                    </tr>
+                    <tr data-sheet-row data-name="Roof study / draft" data-code="A-111" data-status="draft" data-owner="Mara Weiss" data-initials="MW" data-updated="9 Oct" data-due="24 October 2026" data-team="Interiors" data-note="Drainage falls still to be checked against the roof plan.">
+                      <td><button type="button" class="cn-sheet-name" data-open-sheet><span><span class="cn-sheet-name__title">Roof study / draft</span><span class="cn-sheet-code">A-111 · Rev 01</span></span></button></td>
+                      <td><span class="cn-owner"><span class="lw-avatar">MW</span>Mara</span></td>
+                      <td class="lw-table__muted">9 Oct</td>
+                      <td><span class="lw-stamp lw-stamp--quiet">Draft</span></td>
+                      <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-menu="#sheet-menu" data-row-menu aria-label="Actions for Roof study draft"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                    </tr>
+                    <tr data-sheet-row data-name="Terrace / lighting" data-code="A-115" data-status="review" data-owner="Jonas Keller" data-initials="JK" data-updated="8 Oct" data-due="20 October 2026" data-team="Landscape" data-note="Lighting circuit schedule needs one more pass.">
+                      <td><button type="button" class="cn-sheet-name" data-open-sheet><span><span class="cn-sheet-name__title">Terrace / lighting</span><span class="cn-sheet-code">A-115 · Rev 03</span></span></button></td>
+                      <td><span class="cn-owner"><span class="lw-avatar">JK</span>Jonas</span></td>
+                      <td class="lw-table__muted">8 Oct</td>
+                      <td><span class="lw-stamp lw-stamp--red">In review</span></td>
+                      <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-menu="#sheet-menu" data-row-menu aria-label="Actions for Terrace lighting"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="cn-empty" id="sheet-empty" hidden>No sheet matches that search or filter.</p>
+              <div class="cn-tablefoot"><span id="sheet-count" role="status" aria-live="polite">5 sheets</span><span>Drawn from the same schedule component</span></div>
+            </section>
+
+            <aside class="cn-rail">
+              <section class="cn-panel" id="approvals" aria-labelledby="approvals-title">
+                <div class="cn-panel__head">
+                  <h2 class="cn-panel__title" id="approvals-title">Waiting on you</h2>
+                  <span class="lw-stamp lw-stamp--red" id="approval-count">03 open</span>
+                </div>
+                <div class="cn-approval" data-approval-name="North facade">
+                  <div class="cn-approval__top">
+                    <div><p class="cn-approval__name">North facade</p><p class="cn-approval__meta">From Jonas Keller · Rev 04</p></div>
+                    <span class="lw-stamp">Due today</span>
+                  </div>
+                  <div class="cn-approval__actions">
+                    <button type="button" class="lw-btn lw-btn--sm" data-approve aria-label="Approve North facade">Approve</button>
+                    <button type="button" class="lw-btn lw-btn--sm lw-btn--quiet" data-open-sheet-by-name="North facade" aria-label="Open North facade">Open</button>
+                  </div>
+                </div>
+                <div class="cn-approval" data-approval-name="Terrace / lighting">
+                  <div class="cn-approval__top">
+                    <div><p class="cn-approval__name">Terrace / lighting</p><p class="cn-approval__meta">From Mara Weiss · Rev 03</p></div>
+                    <span class="lw-stamp">Due tomorrow</span>
+                  </div>
+                  <div class="cn-approval__actions">
+                    <button type="button" class="lw-btn lw-btn--sm" data-approve aria-label="Approve Terrace / lighting">Approve</button>
+                    <button type="button" class="lw-btn lw-btn--sm lw-btn--quiet" data-open-sheet-by-name="Terrace / lighting" aria-label="Open Terrace / lighting">Open</button>
+                  </div>
+                </div>
+                <div class="cn-approval" data-approval-name="Atrium / concept 2">
+                  <div class="cn-approval__top">
+                    <div><p class="cn-approval__name">Atrium / concept 2</p><p class="cn-approval__meta">From Ada Sorensen · Rev 02</p></div>
+                    <span class="lw-stamp">Due 22 Oct</span>
+                  </div>
+                  <div class="cn-approval__actions">
+                    <button type="button" class="lw-btn lw-btn--sm" data-approve aria-label="Approve Atrium / concept 2">Approve</button>
+                    <button type="button" class="lw-btn lw-btn--sm lw-btn--quiet" data-open-sheet-by-name="Atrium / concept 2" aria-label="Open Atrium / concept 2">Open</button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="cn-panel" id="activity" aria-labelledby="activity-title">
+                <div class="cn-panel__head">
+                  <h2 class="cn-panel__title" id="activity-title">Activity</h2>
+                  <span class="cn-panel__sub">Today</span>
+                </div>
+                <div class="cn-activity">
+                  <ul class="lw-activity">
+                    <li class="lw-activity__item lw-activity__item--live"><div><p class="lw-activity__title"><strong>Jonas</strong> left a redline on North facade.</p><p class="lw-activity__meta">18 min ago</p></div></li>
+                    <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Ada</strong> approved East wing / tender.</p><p class="lw-activity__meta">1 hr ago</p></div></li>
+                    <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Mara</strong> created Roof study / draft.</p><p class="lw-activity__meta">3 hrs ago</p></div></li>
+                    <li class="lw-activity__item"><div><p class="lw-activity__title">Version 04 archived.</p><p class="lw-activity__meta">Yesterday</p></div></li>
+                  </ul>
+                </div>
+              </section>
+
+              <div class="cn-rail__dimension">
+                <div class="lw-dimension" role="img" aria-label="Console width 1440 pixels">
+                  <span class="lw-dimension__cap" aria-hidden="true"></span>
+                  <span class="lw-dimension__rule" aria-hidden="true"></span>
+                  <span class="lw-dimension__label">1440 px</span>
+                  <span class="lw-dimension__rule" aria-hidden="true"></span>
+                  <span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <p class="cn-main__foot">Console / CN-01 · Built with Linework · Plain HTML, CSS and JavaScript · No dependencies</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="lw-popover lw-menu" id="sheet-menu" popover>
+    <button type="button" class="lw-menu__item" data-sheet-action="open"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Open sheet</button>
+    <button type="button" class="lw-menu__item" data-sheet-action="duplicate"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg>Duplicate</button>
+    <hr class="lw-menu__sep">
+    <button type="button" class="lw-menu__item lw-menu__item--danger" data-sheet-action="archive"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-trash"></use></svg>Archive</button>
+  </div>
+
+  <lw-drawer id="new-sheet" label="New sheet" width="480">
+    <div class="lw-drawer__head"><h2 class="lw-drawer__title">New sheet</h2></div>
+    <div class="lw-drawer__body">
+      <form id="new-sheet-form" novalidate>
+        <div class="lw-field">
+          <label class="lw-field__label" for="ns-name">Sheet name <span class="lw-field__req">*</span></label>
+          <input class="lw-input" id="ns-name" name="name" type="text" placeholder="e.g. South terrace / lighting" required autofocus autocomplete="off" aria-describedby="ns-name-error">
+          <span class="lw-field__hint">The code is assigned when the sheet is created.</span>
+          <span class="lw-field__error" id="ns-name-error" hidden>Give the sheet a name before creating it.</span>
+        </div>
+        <div class="lw-field-grid" style="margin-top:14px">
+          <div class="lw-field">
+            <label class="lw-field__label" for="ns-project">Project</label>
+            <div class="lw-select-wrap">
+              <select class="lw-select" id="ns-project">
+                <option>Atelier North</option>
+                <option>Field office</option>
+                <option>Competition</option>
+              </select>
+            </div>
+          </div>
+          <div class="lw-field">
+            <label class="lw-field__label" for="ns-lead">Lead</label>
+            <div class="lw-select-wrap">
+              <select class="lw-select" id="ns-lead">
+                <option value="MW">Mara Weiss</option>
+                <option value="JK">Jonas Keller</option>
+                <option value="AS">Ada Sorensen</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="lw-field" style="margin-top:14px">
+          <label class="lw-field__label" for="ns-template">Template</label>
+          <div class="lw-select-wrap">
+            <select class="lw-select" id="ns-template">
+              <option>Blank sheet</option>
+              <option>Plan</option>
+              <option>Section</option>
+              <option>Schedule</option>
+            </select>
+          </div>
+        </div>
+        <div class="lw-field" style="margin-top:14px">
+          <label class="lw-field__label" for="ns-note">Note for the team</label>
+          <textarea class="lw-textarea" id="ns-note" rows="3" placeholder="What is this sheet for?"></textarea>
+        </div>
+        <label class="lw-led" style="margin-top:16px">
+          <input class="lw-led__input" id="ns-notify" type="checkbox" checked>
+          <span class="lw-led__box"><span class="lw-led__fill"></span></span>
+          <span>Notify the reviewers</span>
+        </label>
+      </form>
+    </div>
+    <div class="lw-drawer__foot" style="justify-content:space-between">
+      <span class="lw-smallprint">Demo only · nothing leaves this page</span>
+      <div class="lw-cluster">
+        <button type="button" class="lw-btn" data-lw-close>Cancel</button>
+        <button type="submit" class="lw-btn lw-btn--primary" form="new-sheet-form">Create sheet</button>
+      </div>
+    </div>
+  </lw-drawer>
+
+  <lw-drawer id="sheet-detail" label="Sheet detail" width="560">
+    <div class="lw-drawer__head"><h2 class="lw-drawer__title" id="detail-title">North facade</h2></div>
+    <div class="lw-drawer__body">
+      <div class="cn-detail__status" id="detail-status"><span class="lw-stamp lw-stamp--red">In review</span></div>
+      <div class="cn-drawing" style="margin-top:14px">
+        <svg viewBox="0 0 640 280" role="img" aria-labelledby="plan-title plan-desc">
+          <title id="plan-title">Floor plan for the selected sheet</title>
+          <desc id="plan-desc">Three rooms with one redline revision on the atrium wall.</desc>
+          <g fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="36" y="34" width="568" height="180"/>
+            <path d="M212 34v180M420 34v180M420 138h184M36 138h96M420 94h-70"/>
+            <path d="M420 94v44" stroke="var(--lw-redline)" stroke-width="2.4" stroke-dasharray="7 4"/>
+            <rect x="252" y="150" width="96" height="44" fill="none"/>
+            <path d="M252 172h96" stroke-dasharray="3 3"/>
+          </g>
+          <g fill="currentColor" font-family="monospace" font-size="9" letter-spacing="1.2">
+            <text x="48" y="52">STUDIO</text>
+            <text x="224" y="52">ATRIUM</text>
+            <text x="432" y="52">TERRACE</text>
+            <text x="432" y="196">SERVICE</text>
+            <text x="54" y="130" id="detail-plan-code">A-104</text>
+          </g>
+          <g stroke="currentColor" stroke-width="1">
+            <path d="M36 236v8M604 236v8M36 240h568"/>
+          </g>
+          <text x="320" y="256" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--lw-pencil)" letter-spacing="1">24.0 m</text>
+          <path d="M452 86 494 64" stroke="var(--lw-redline)" stroke-width="1" />
+          <text x="500" y="62" font-family="monospace" font-size="8" fill="var(--lw-redline)">REV 04</text>
+        </svg>
+        <div class="cn-drawing__label">Fig. 01 — <span id="detail-code">A-104</span> / Level 02 · Scale 1:50</div>
+      </div>
+      <dl class="lw-spec cn-detail__grid">
+        <dt>Lead</dt><dd id="detail-owner">Mara Weiss</dd>
+        <dt>Updated</dt><dd id="detail-updated">2 hours ago</dd>
+        <dt>Due</dt><dd id="detail-due">18 October 2026</dd>
+        <dt>Team</dt><dd id="detail-team">Facade</dd>
+      </dl>
+
+      <div class="cn-detail__section">
+        <h3>Redline note</h3>
+        <div class="lw-callout lw-callout--redline">
+          <span class="lw-callout__label">Open item</span>
+          <p id="detail-note">Handrail junction still to be resolved before sign-off.</p>
+        </div>
+      </div>
+      <div class="cn-detail__section">
+        <h3>Reviewers</h3>
+        <div class="cn-detail__person"><span class="lw-avatar lw-avatar--sm">MW</span>Mara Weiss <span class="lw-stamp lw-stamp--ink">Approved</span></div>
+        <div class="cn-detail__person"><span class="lw-avatar lw-avatar--sm">AS</span>Ada Sorensen <span class="lw-stamp lw-stamp--ink">Approved</span></div>
+        <div class="cn-detail__person"><span class="lw-avatar lw-avatar--sm">JK</span>Jonas Keller <span class="lw-stamp lw-stamp--red">Waiting</span></div>
+      </div>
+    </div>
+    <div class="lw-drawer__foot" style="justify-content:space-between">
+      <span class="lw-smallprint">Last saved 2 hours ago</span>
+      <div class="lw-cluster">
+        <button type="button" class="lw-btn" data-lw-close>Close</button>
+        <button type="button" class="lw-btn lw-btn--primary" data-editor>Open in editor</button>
+      </div>
+    </div>
+  </lw-drawer>
+
+
+  <lw-drawer id="console-nav" label="Console navigation" width="340">
+    <div class="lw-drawer__head"><h2 class="lw-drawer__title">Console</h2></div>
+    <div class="lw-drawer__body">
+      <p class="lw-note" style="margin-bottom:14px">Atelier North · Studio workspace</p>
+      <nav class="lw-sidenav" aria-label="Console sections">
+        <a class="lw-sidenav__item" href="#overview" data-lw-close><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-grid"></use></svg>Overview</a>
+        <a class="lw-sidenav__item" href="#sheets" data-lw-close><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Recent sheets</a>
+        <a class="lw-sidenav__item" href="#approvals" data-lw-close><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Approvals<span class="lw-sidenav__count">03</span></a>
+        <a class="lw-sidenav__item" href="#activity" data-lw-close><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-clock"></use></svg>Activity</a>
+      </nav>
+      <div class="lw-cluster" style="margin-top:20px">
+        <button type="button" class="lw-btn lw-btn--sm" data-console-settings><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-settings"></use></svg>Settings</button>
+        <button type="button" class="lw-btn lw-btn--sm lw-btn--primary" data-lw-open="new-sheet" data-lw-close><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg>New sheet</button>
+      </div>
+      <p class="lw-note" style="margin-top:16px">All changes saved · This showroom stores nothing.</p>
+    </div>
+    <div class="lw-drawer__foot"><button type="button" class="lw-btn lw-btn--primary" data-lw-close>Done</button></div>
+  </lw-drawer>
+
+  <lw-drawer id="console-settings" label="Settings" width="440">
+    <div class="lw-drawer__head"><h2 class="lw-drawer__title">Settings</h2></div>
+    <div class="lw-drawer__body">
+      <fieldset class="lw-fieldset">
+        <legend class="lw-fieldset__legend">Paper</legend>
+        <p class="lw-fieldset__note">The console is a drawing too. Change the paper without touching a component.</p>
+        <div class="lw-segments lw-segments--block" role="group" aria-label="Choose a paper" style="margin-top:4px">
+          <button type="button" class="lw-segments__item" data-cn-theme="trace" aria-pressed="true">Trace</button>
+          <button type="button" class="lw-segments__item" data-cn-theme="blueprint" aria-pressed="false">Blueprint</button>
+          <button type="button" class="lw-segments__item" data-cn-theme="vellum" aria-pressed="false">Vellum</button>
+        </div>
+      </fieldset>
+      <fieldset class="lw-fieldset">
+        <legend class="lw-fieldset__legend">Console</legend>
+        <div class="lw-setting-row">
+          <div class="lw-setting-row__text"><p class="lw-setting-row__title">Default project</p><p class="lw-setting-row__note">Used when a new sheet is created.</p></div>
+          <div class="lw-setting-row__control">
+            <div class="lw-select-wrap" style="min-width:150px"><select class="lw-select" aria-label="Default project"><option>Atelier North</option><option>Field office</option></select></div>
+          </div>
+        </div>
+        <div class="lw-setting-row">
+          <div class="lw-setting-row__text"><p class="lw-setting-row__title">Review reminders</p><p class="lw-setting-row__note">A quiet note the morning something is due.</p></div>
+          <div class="lw-setting-row__control"><label class="lw-led"><input class="lw-led__input" type="checkbox" checked aria-label="Review reminders"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span class="lw-led__state">On</span></label></div>
+        </div>
+      </fieldset>
+      <fieldset class="lw-fieldset">
+        <legend class="lw-fieldset__legend">About</legend>
+        <p class="lw-note">This console is a reference build for Linework. It stores nothing, calls nothing and plays nothing. Every control is a component from the library.</p>
+        <div class="lw-cluster" style="margin-top:12px">
+          <a class="lw-btn lw-btn--sm" href="components.html">Components</a>
+          <a class="lw-btn lw-btn--sm" href="blocks.html">Blocks</a>
+        </div>
+      </fieldset>
+    </div>
+    <div class="lw-drawer__foot" style="justify-content:space-between">
+      <span class="lw-smallprint">Theme persists; the rest is a demo.</span>
+      <button type="button" class="lw-btn lw-btn--primary" id="console-settings-save" data-lw-close>Done</button>
+    </div>
+  </lw-drawer>
+
+  <dialog class="lw-dialog lw-dialog--sm" id="archive-dialog" aria-labelledby="archive-title">
+    <div class="lw-dialog__head"><h2 class="lw-dialog__title" id="archive-title">Archive this sheet?</h2></div>
+    <div class="lw-dialog__body">
+      <p class="lw-note"><strong id="archive-name">This sheet</strong> will move to the archive. Existing links keep working, and it can be restored from there.</p>
+    </div>
+    <div class="lw-dialog__foot">
+      <button type="button" class="lw-btn" data-lw-close>Cancel</button>
+      <button type="button" class="lw-btn lw-btn--danger" id="confirm-archive">Archive sheet</button>
+    </div>
+  </dialog>
+</body>
+</html>
