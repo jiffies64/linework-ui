@@ -68,12 +68,54 @@ export interface LwToastStackElement extends HTMLElement {
   show(options?: ToastOptions | string): HTMLElement | null;
 }
 
+export interface LwDrawerEventDetail {
+  drawer?: LwDrawerElement;
+}
+
+export interface LwTabsChangeDetail {
+  index: number;
+  tab: HTMLElement;
+  panel: HTMLElement | undefined;
+}
+
+export interface LwPadEventDetail {
+  pad: LwPadElement;
+}
+
+export interface LwPadMenuDetail extends LwPadEventDetail {
+  anchor: HTMLElement;
+}
+
+export interface LwPadPlayDetail extends LwPadEventDetail {
+  duration: number;
+}
+
+export interface LwPadStopDetail extends LwPadEventDetail {
+  reason: string;
+}
+
 export declare const Linework: LineworkApi;
 export default Linework;
 
 declare global {
   interface Window {
     Linework: LineworkApi;
+  }
+
+  interface HTMLElementEventMap {
+    'lw-open': CustomEvent<LwDrawerEventDetail | null>;
+    'lw-close': CustomEvent<LwDrawerEventDetail>;
+    'lw-change': CustomEvent<LwTabsChangeDetail>;
+    'lw-press': CustomEvent<LwPadEventDetail>;
+    'lw-menu': CustomEvent<LwPadMenuDetail>;
+    'lw-play': CustomEvent<LwPadPlayDetail>;
+    'lw-stop': CustomEvent<LwPadStopDetail>;
+    'lw-end': CustomEvent<LwPadEventDetail>;
+  }
+
+  interface DocumentEventMap {
+    'linework:theme': CustomEvent<{ theme: LineworkTheme }>;
+    'linework:ready': CustomEvent<{ linework: LineworkApi }>;
   }
 
   interface HTMLElementTagNameMap {

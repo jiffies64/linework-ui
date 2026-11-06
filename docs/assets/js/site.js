@@ -407,18 +407,6 @@
     });
   }
 
-  document.querySelectorAll('.lw-segments').forEach((group) => {
-    const items = Array.from(group.querySelectorAll('.lw-segments__item'));
-    if (!items.some((item) => item.hasAttribute('aria-pressed'))) return;
-    items.forEach((item) => {
-      item.addEventListener('click', () => {
-        items.forEach((other) => {
-          other.setAttribute('aria-pressed', String(other === item));
-        });
-      });
-    });
-  });
-
   document.querySelectorAll('[data-lw-copy-target]').forEach((button) => {
     if (!button.hasAttribute('aria-label')) button.setAttribute('aria-label', 'Copy to clipboard');
   });

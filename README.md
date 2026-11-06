@@ -14,9 +14,9 @@ Linework uses the visual language of architectural drawings: trace paper, a 24 p
 
 | Piece | Detail |
 | --- | --- |
-| **CSS** | `linework.css`: tokens, base, layout, 35 components and utilities. 11.9 kB gzipped (minified). |
+| **CSS** | `linework.css`: tokens, base, layout, 35 components and utilities. 12.1 kB gzipped (minified). |
 | **Blocks CSS** | `linework-blocks.css`: layout for the ten blocks. 3.7 kB gzipped (minified). |
-| **Behaviour** | `linework.js`: five Web Components, icons, menus, toasts, themes and copy buttons. 10.3 kB gzipped. |
+| **Behaviour** | `linework.js`: five Web Components, icons, menus, toasts, themes and copy buttons. 10.8 kB gzipped. |
 | **Themes** | Trace (light, default), Blueprint (dark) and Vellum (warm), defined entirely in tokens. |
 | **Blocks** | Hero, features, pricing, FAQ, testimonial, call to action, dashboard, sign in, settings and footer. |
 | **Components** | Keys, fields, choices, pads, dimension lines, lamps, meters, stamps, keycaps, avatars, tabs, breadcrumbs, pagination, side navigation, accordion, tables, stats, activity, menus, sheets, dialogs, toasts, tooltips, empty states, callouts, dropzones and icons. |
@@ -109,7 +109,7 @@ Token groups:
 - Space: `--lw-space-*`, named in pixels (`--lw-space-8` is 8 px)
 - Motion: `--lw-duration-1` to `--lw-duration-5`, `--lw-ease`
 
-A custom theme can be a few lines:
+A custom theme can be a few lines. Overrides on `:root` apply under every theme, including Blueprint; to change one theme only, scope them to `[data-theme="trace"]` or a theme name of your own.
 
 ```css
 :root {
@@ -128,7 +128,7 @@ The elements render in the light DOM, so your CSS applies inside them.
 | --- | --- |
 | `<lw-drawer>` | Side sheet on a native `<dialog>`, with focus trapping, Escape, backdrop and close control. |
 | `<lw-tabs>` | Tabs with roving tabindex, arrow keys, Home/End and panels. |
-| `<lw-pad>` | Action pad with progress, countdown, hatch and an optional menu key. |
+| `<lw-pad>` | Action pad with progress, countdown, hatch and an optional menu key; `menu="id"` opens that `.lw-menu`. |
 | `<lw-meter>` | ARIA meter drawn as a row of ticks, with an optional demo animation. |
 | `<lw-toast-stack>` | Popover live region used by `Linework.toast()`. |
 

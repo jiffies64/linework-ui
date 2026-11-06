@@ -39,9 +39,6 @@
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
           const period = button.dataset.billing || 'monthly';
-          buttons.forEach((item) =>
-            item.setAttribute('aria-pressed', String(item === button))
-          );
           pricing.querySelectorAll('[data-price]').forEach((price) => {
             const value =
               price.dataset[period === 'yearly' ? 'yearly' : 'monthly'];

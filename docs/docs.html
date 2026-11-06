@@ -126,8 +126,8 @@
           <div class="guide-table-wrap"><table class="guide-table">
             <thead><tr><th>File</th><th>What it is</th><th>Load it when</th></tr></thead>
             <tbody>
-              <tr><td>linework.css</td><td>Tokens, base, layout, every component, utilities. 15.3 kB raw / 11.8 kB gzipped.</td><td>Always.</td></tr>
-              <tr><td>linework.min.css</td><td>The same sheet with comments and whitespace removed. 68.7 kB raw / 11.8 kB gzipped.</td><td>Production.</td></tr>
+              <tr><td>linework.css</td><td>Tokens, base, layout, every component, utilities. 81.9 kB raw / 13.8 kB gzipped.</td><td>Always.</td></tr>
+              <tr><td>linework.min.css</td><td>The same sheet with comments and whitespace removed. 70.2 kB raw / 12.1 kB gzipped.</td><td>Production.</td></tr>
               <tr><td>tokens.css</td><td>Only the custom properties, for teams with their own CSS.</td><td>You are bringing your own rules.</td></tr>
               <tr><td>linework-blocks.css</td><td>Layout for the ten copy-paste blocks.</td><td>You copy a block from the gallery.</td></tr>
               <tr><td>linework.js</td><td>ES module: Web Components, icons, toasts, menus, theming and copy. ~10 kB gzipped.</td><td>Bundler or module script.</td></tr>
@@ -164,6 +164,7 @@ import 'linework-ui/blocks.css';</code></pre>
           <div class="guide-split">
             <div class="guide-prose">
               <p>Override tokens in your own stylesheet. Do not override component internals unless you are changing a rule deliberately. Tokens are the contract.</p>
+              <p>Overrides on <code class="lw-code">:root</code> apply under every paper, including Blueprint. To change one paper only, scope the override to <code class="lw-code">[data-theme="trace"]</code> or a theme name of your own.</p>
               <div class="guide-code">
                 <div class="guide-code__cap"><span>CSS — a private paper</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-tokens" aria-label="Copy tokens code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
                 <pre id="code-tokens"><code>:root {
@@ -314,7 +315,7 @@ Linework.cycleTheme();      // next paper
             <tbody>
               <tr><td>lw-drawer</td><td>A native &lt;dialog&gt; side sheet with focus trap, Escape, backdrop and a close key.</td><td><code>label</code>, <code>width</code>, <code>dismissible</code>, <code>open</code>; <code>.open()</code>, <code>.close()</code>, <code>.isOpen</code></td></tr>
               <tr><td>lw-tabs</td><td>Roving tabindex, arrow keys and panel wiring for a normal tab list.</td><td><code>selected</code>; <code>.select(index)</code>, <code>.selectedIndex</code>; <code>lw-change</code></td></tr>
-              <tr><td>lw-pad</td><td>An action pad with pressed state, countdown, hatch progress and optional menu key.</td><td><code>name</code>, <code>keys</code>, <code>length</code>, <code>duration</code>, <code>playing</code>, <code>progress</code>, <code>menu</code>; <code>.play()</code>, <code>.stop()</code></td></tr>
+              <tr><td>lw-pad</td><td>An action pad with pressed state, countdown, hatch progress and optional menu key.</td><td><code>name</code>, <code>keys</code>, <code>length</code>, <code>duration</code>, <code>playing</code>, <code>progress</code>, <code>menu</code> (id of a <code>.lw-menu</code> to open); <code>.play()</code>, <code>.stop()</code></td></tr>
               <tr><td>lw-meter</td><td>An ARIA meter drawn as a row of ticks; optional live demo animation.</td><td><code>bars</code>, <code>level</code>, <code>live</code>, <code>tone</code>, <code>label</code></td></tr>
               <tr><td>lw-toast-stack</td><td>The live region and popover stack used by <code>Linework.toast()</code>.</td><td>Created automatically; <code>.show()</code></td></tr>
             </tbody>
@@ -482,7 +483,7 @@ export function ActionPad({ item }) {
                 <li>Native buttons, inputs, selects, checkboxes, radios and <code class="lw-code">&lt;details&gt;</code>; no div-buttons.</li>
                 <li>Visible keyboard focus: a 1.5 px dashed construction line with an offset.</li>
                 <li>Native modal dialogs for sheets and dialogs: top layer, focus trap, Escape, backdrop.</li>
-                <li>Roving tabindex and Home/End/arrow keys in tabs and menus.</li>
+                <li>Roving tabindex, arrow keys and Home/End in tabs; Up/Down and Home/End in menus.</li>
                 <li>Toasts in a polite live region, above native dialogs via popovers, paused on hover or focus.</li>
                 <li>ARIA meters with a value, a label and a non-visual name for icon-only keys.</li>
                 <li>Reduced-motion support for animation and smooth scrolling.</li>
@@ -498,7 +499,7 @@ export function ActionPad({ item }) {
                 <li>Do not remove focus outlines. If you restyle them, keep a 3:1 contrast ring.</li>
                 <li>Test with your own copy, zoom at 200%, and a screen reader once per release.</li>
               </ul>
-              <div class="guide-note"><strong>Keyboard map:</strong> <span class="guide-kbd"><span class="lw-keycap">Tab</span> move</span> <span class="guide-kbd"><span class="lw-keycap">Space</span> press</span> <span class="guide-kbd"><span class="lw-keycap">Esc</span> close</span> <span class="guide-kbd"><span class="lw-keycap">← →</span> tabs/menus</span></div>
+              <div class="guide-note"><strong>Keyboard map:</strong> <span class="guide-kbd"><span class="lw-keycap">Tab</span> move</span> <span class="guide-kbd"><span class="lw-keycap">Space</span> press</span> <span class="guide-kbd"><span class="lw-keycap">Esc</span> close</span> <span class="guide-kbd"><span class="lw-keycap">← →</span> tabs</span> <span class="guide-kbd"><span class="lw-keycap">↑ ↓</span> menus</span></div>
             </div>
           </div>
 

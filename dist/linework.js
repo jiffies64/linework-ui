@@ -93,6 +93,8 @@ function installIcons() {
   document.body.prepend(sprite);
 }
 
+const TOAST_TONE_WORDS = { success: 'Success', warning: 'Warning', blue: 'Info' };
+
 class LwToastStack extends BaseElement {
   constructor() {
     super();
@@ -148,6 +150,13 @@ class LwToastStack extends BaseElement {
 
     const body = document.createElement('div');
     body.className = 'lw-toast__body';
+    const toneWord = TOAST_TONE_WORDS[tone];
+    if (toneWord) {
+      const spoken = document.createElement('span');
+      spoken.className = 'lw-vh';
+      spoken.textContent = `${toneWord}: `;
+      body.appendChild(spoken);
+    }
     if (title) {
       const heading = document.createElement('div');
       heading.className = 'lw-toast__title';
@@ -618,13 +627,15 @@ class LwPad extends BaseElement {
     if (this._moreBtn) {
       this._moreBtn.addEventListener('click', (event) => {
         event.stopPropagation();
-        this.dispatchEvent(
+        const proceed = this.dispatchEvent(
           new CustomEvent('lw-menu', {
             bubbles: true,
             cancelable: true,
             detail: { pad: this, anchor: this._moreBtn },
           })
         );
+        const menu = proceed ? resolveElement(this.getAttribute('menu')) : null;
+        if (menu) toggleMenu(this._moreBtn, menu);
       });
     }
 
@@ -834,6 +845,8 @@ class LwMeter extends BaseElement {
     this._build();
     this.classList.add('lw-meter');
     this.classList.toggle('lw-meter--redline', this.getAttribute('tone') === 'redline');
+    const initial = parseFloat(this.getAttribute('level'));
+    if (!Number.isNaN(initial)) this._level = clamp(initial, 0, 1);
     this._sync();
     this._syncLive();
   }
@@ -1057,12 +1070,29 @@ function copySpec(trigger) {
 function flashCopyLabel(trigger) {
   const label = trigger.querySelector('[data-lw-copy-label], .lw-copy-label');
   if (!label) return false;
-  const original = label.textContent;
+  if (!label.dataset.lwLabel) label.dataset.lwLabel = label.textContent;
+  window.clearTimeout(label._lwFlash);
   label.textContent = 'Copied';
-  window.setTimeout(() => {
-    label.textContent = original;
+  label._lwFlash = window.setTimeout(() => {
+    label.textContent = label.dataset.lwLabel;
   }, 1600);
   return true;
+}
+
+function announce(message) {
+  if (!isBrowser) return;
+  let region = document.querySelector('[data-lw-announcer]');
+  if (!region) {
+    region = document.createElement('div');
+    region.className = 'lw-vh';
+    region.setAttribute('role', 'status');
+    region.setAttribute('data-lw-announcer', '');
+    document.body.appendChild(region);
+  }
+  region.textContent = '';
+  window.setTimeout(() => {
+    region.textContent = message;
+  }, 50);
 }
 
 async function handleCopy(trigger) {
@@ -1074,14 +1104,15 @@ async function handleCopy(trigger) {
     return;
   }
   const flashed = flashCopyLabel(trigger);
-  if (!flashed && !trigger.hasAttribute('data-lw-silent')) {
+  if (flashed) announce('Copied');
+  else if (!trigger.hasAttribute('data-lw-silent')) {
     toast({ title: 'Copied', message: 'Copied to clipboard.' });
   }
 }
 
 function menuFor(trigger) {
   const spec = trigger.getAttribute('data-lw-menu');
-  if (spec) return document.querySelector(spec);
+  if (spec) return resolveElement(spec);
   const next = trigger.nextElementSibling;
   return next && next.classList.contains('lw-menu') ? next : null;
 }
@@ -1261,8 +1292,34 @@ function onDocumentClick(event) {
   const menuTrigger = target.closest('[data-lw-menu]');
   if (menuTrigger && !menuTrigger.hasAttribute('disabled')) {
     event.preventDefault();
-    toggleMenu(menuTrigger, menuFor(menuTrigger));
+    const menu = menuFor(menuTrigger);
+    if (menuTrigger._lwMenuWasOpen) {
+      menuTrigger._lwMenuWasOpen = false;
+      closeMenu(menu);
+    } else {
+      toggleMenu(menuTrigger, menu);
+    }
   }
+
+  const segment = target.closest('.lw-segments__item[aria-pressed]');
+  if (segment && !segment.disabled) {
+    segment
+      .closest('.lw-segments')
+      ?.querySelectorAll('.lw-segments__item[aria-pressed]')
+      .forEach((item) => item.setAttribute('aria-pressed', String(item === segment)));
+  }
+}
+
+function onDocumentPointerDown(event) {
+  const trigger = event.target instanceof Element ? event.target.closest('[data-lw-menu]') : null;
+  if (trigger) trigger._lwMenuWasOpen = Boolean(menuFor(trigger)?.matches(':popover-open'));
+}
+
+function onDocumentScroll(event) {
+  document.querySelectorAll('.lw-menu:popover-open').forEach((menu) => {
+    if (event.target instanceof Node && menu.contains(event.target)) return;
+    closeMenu(menu);
+  });
 }
 
 function onDocumentInput(event) {
@@ -1286,6 +1343,8 @@ function installDelegates() {
   if (!isBrowser || delegatesInstalled) return;
   delegatesInstalled = true;
   document.addEventListener('click', onDocumentClick);
+  document.addEventListener('pointerdown', onDocumentPointerDown, true);
+  document.addEventListener('scroll', onDocumentScroll, { capture: true, passive: true });
   document.addEventListener('input', onDocumentInput);
   document.addEventListener('change', onDocumentChange);
 }
