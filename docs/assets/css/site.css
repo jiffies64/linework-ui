@@ -796,8 +796,8 @@ body.site {
 .block-card__media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: left top;
+  object-fit: contain;
+  object-position: center;
   transition: transform var(--lw-duration-4) var(--lw-ease);
 }
 
@@ -1406,12 +1406,9 @@ body.site {
   content: "−";
 }
 
-.faq__item summary:hover {
-  color: var(--lw-ink);
-}
-
+.faq__item summary:hover,
 .faq__item summary:hover::after {
-  border-color: var(--lw-ink);
+  color: var(--lw-redline);
 }
 
 .faq__answer {

@@ -153,10 +153,11 @@
         }
         const label = copy.querySelector('.lw-copy-label');
         if (label) {
-          const original = label.textContent;
+          if (!label.dataset.lwLabel) label.dataset.lwLabel = label.textContent;
+          window.clearTimeout(label._lwFlash);
           label.textContent = 'Copied';
-          window.setTimeout(() => {
-            label.textContent = original;
+          label._lwFlash = window.setTimeout(() => {
+            label.textContent = label.dataset.lwLabel;
           }, 1600);
         }
         Linework.toast({

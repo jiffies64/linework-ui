@@ -179,7 +179,7 @@
               <article class="blk-plan blk-plan--featured">
                 <div class="blk-plan__head"><span class="blk-plan__name">Studio</span><span class="lw-stamp lw-stamp--ink">Most specified</span></div>
                 <p class="blk-plan__desc">For teams who review together, every week.</p>
-                <div class="blk-plan__price">$<span data-price data-monthly="24" data-yearly="19">24</span> <small>/ seat / month</small></div>
+                <div class="blk-plan__price"><span>$<span data-price data-monthly="24" data-yearly="19">24</span></span> <small>/ seat / month</small></div>
                 <ul class="blk-plan__features">
                   <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Unlimited sheets and guests</li>
                   <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Review rooms and approvals</li>

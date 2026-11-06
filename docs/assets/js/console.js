@@ -205,19 +205,46 @@
 
   document.getElementById('confirm-archive')?.addEventListener('click', () => {
     if (!pendingArchive) return;
-    const name = pendingArchive.dataset.name;
-    pendingArchive.remove();
+    const row = pendingArchive;
+    const name = row.dataset.name;
+    const visible = rows().filter((entry) => !entry.hidden);
+    const index = visible.indexOf(row);
+    const neighbour = visible[index + 1] || visible[index - 1];
+    if (row.dataset.status === 'review') decrementOpenReviews();
+    row.remove();
+    document.querySelectorAll('.cn-approval').forEach((card) => {
+      if (card.dataset.approvalName === name) card.remove();
+    });
+    syncApprovals();
     pendingArchive = null;
     Linework.close('archive-dialog');
     refresh();
+    (neighbour?.querySelector('[data-open-sheet]') || search)?.focus();
     Linework.toast({
       title: 'Sheet archived',
       message: `${name} moved to the archive.`,
     });
   });
 
+  function syncApprovals() {
+    const pending = document.querySelectorAll('.cn-approval:not(.is-approved)').length;
+    if (approvalsCount) approvalsCount.textContent = `${pad(pending)} open`;
+    if (sidebarApprovals) sidebarApprovals.textContent = pad(pending);
+    document.querySelectorAll('#console-nav .lw-sidenav__count').forEach((node) => {
+      node.textContent = pad(pending);
+    });
+    if (waitingCount) waitingCount.textContent = String(pending);
+  }
+
+  function decrementOpenReviews() {
+    if (!openReviews) return;
+    const open = Math.max(0, (parseInt(openReviews.textContent, 10) || 0) - 1);
+    openReviews.textContent = pad(open);
+  }
+
   function approveItem(item) {
     if (!item || item.classList.contains('is-approved')) return;
+    const hadFocus = item.contains(document.activeElement);
     item.classList.add('is-approved');
     const actions = item.querySelector('.cn-approval__actions');
     if (actions) {
@@ -227,23 +254,20 @@
     const approvedName = item.dataset.approvalName;
     const row = rows().find((entry) => entry.dataset.name === approvedName);
     if (row) {
+      if (row.dataset.status === 'review') decrementOpenReviews();
       row.dataset.status = 'approved';
       const cells = row.querySelectorAll('td');
       if (cells[3]) cells[3].innerHTML = stampMarkup('approved');
     }
 
-    const pending = document.querySelectorAll('.cn-approval:not(.is-approved)').length;
-    if (approvalsCount) approvalsCount.textContent = `${pad(pending)} open`;
-    if (sidebarApprovals) sidebarApprovals.textContent = pad(pending);
-    document.querySelectorAll('#console-nav .lw-sidenav__count').forEach((node) => {
-      node.textContent = pad(pending);
-    });
-    if (waitingCount) waitingCount.textContent = String(pending);
-    if (openReviews) {
-      const open = Math.max(0, (parseInt(openReviews.textContent, 10) || 0) - 1);
-      openReviews.textContent = pad(open);
-    }
+    syncApprovals();
     refresh();
+    if (hadFocus) {
+      const next = document.querySelector('.cn-approval:not(.is-approved) [data-approve]');
+      const title = document.getElementById('approvals-title');
+      if (!next && title) title.setAttribute('tabindex', '-1');
+      (next || title)?.focus();
+    }
     Linework.toast({
       title: 'Approved',
       message: `${approvedName} is approved.`,
@@ -422,6 +446,7 @@
       }
       if (document.querySelector('dialog[open]')) return;
       event.preventDefault();
+      document.querySelectorAll('.lw-menu:popover-open').forEach((menu) => menu.hidePopover());
       search?.focus();
     }
   });
