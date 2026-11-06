@@ -2,6 +2,8 @@
 
 A UI kit in the style of technical drawings: 51 components, 25 copy-paste blocks and three themes. Plain CSS and Web Components with no runtime dependencies and no build step, plus typed React wrappers.
 
+**[Docs](https://jiffies64.github.io/linework-ui/docs/docs.html)** · [Components](https://jiffies64.github.io/linework-ui/docs/components.html) · [Blocks](https://jiffies64.github.io/linework-ui/docs/blocks.html) · [Example console](https://jiffies64.github.io/linework-ui/docs/console.html) · [llms.txt](https://jiffies64.github.io/linework-ui/llms.txt) · [npm](https://www.npmjs.com/package/linework-ui)
+
 ![The Linework landing page](https://raw.githubusercontent.com/jiffies64/linework-ui/main/docs/assets/docs-img/final-home.png)
 
 ![The blocks gallery](https://raw.githubusercontent.com/jiffies64/linework-ui/main/docs/assets/docs-img/final-home-blocks.png)
