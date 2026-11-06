@@ -94,8 +94,8 @@
 &lt;head&gt;
   &lt;meta charset="utf-8"&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-  &lt;link rel="stylesheet" href="linework.css"&gt;
-  &lt;script src="linework.global.js" defer&gt;&lt;/script&gt;
+  &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework.min.css"&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework.global.js" defer&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body class="lw-graph"&gt;
   &lt;main class="lw-wrap" style="padding: 48px"&gt;
@@ -120,7 +120,17 @@
           </div>
 
           <div class="guide-prose">
-            <p>Download the two files from the <a href="../dist/linework.css" download>CSS</a> and <a href="../dist/linework.global.js" download>JavaScript</a>, or vendor the package. The blocks page additionally loads <code class="lw-code">linework-blocks.css</code> for the composed section layouts.</p>
+            <p>Link the files from the jsDelivr CDN, install the package from npm, or download the <a href="../dist/linework.css" download>CSS</a> and <a href="../dist/linework.global.js" download>JavaScript</a> and vendor them. The blocks page additionally loads <code class="lw-code">linework-blocks.css</code> for the composed section layouts.</p>
+            <p><code class="lw-code">@1</code> follows every 1.x release; pin an exact version such as <code class="lw-code">@1.0.1</code> to freeze it. The bundled fonts load from the same folder as the stylesheet, so they work from the CDN too.</p>
+          </div>
+
+          <div class="guide-code">
+            <div class="guide-code__cap"><span>CDN: jsDelivr</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-cdn" aria-label="Copy CDN links"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+            <pre id="code-cdn"><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework.min.css"&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework.global.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- Blocks only --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework-blocks.min.css"&gt;</code></pre>
           </div>
 
           <div class="guide-table-wrap"><table class="guide-table">

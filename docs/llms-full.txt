@@ -47,7 +47,16 @@ Windows uses Bahnschrift and macOS uses DIN Alternate. Every other platform down
 
 ### Quick start
 
-Install the package, or copy `dist/` into your project and link the files:
+Link the files from the jsDelivr CDN:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework.min.css">
+<script src="https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework.global.js" defer></script>
+```
+
+`@1` follows every 1.x release; pin an exact version such as `@1.0.1` to freeze it. For blocks, add `https://cdn.jsdelivr.net/npm/linework-ui@1/dist/linework-blocks.min.css`.
+
+Or install the package, or copy `dist/` into your project and link the files:
 
 ```sh
 npm install linework-ui
