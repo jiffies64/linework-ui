@@ -24,11 +24,11 @@
         <div class="docs-hero__grid">
           <h1 class="docs-hero__title">The guide.</h1>
           <div class="docs-hero__aside">
-            <p>Everything needed to draw with Linework: two files, thirty-five parts, three papers and a small set of rules.</p>
+            <p>Everything needed to draw with Linework: two files, fifty-one parts, three papers and a small set of rules.</p>
             <div class="docs-hero__facts">
               <div class="docs-hero__fact"><strong>02</strong><span>Files</span></div>
-              <div class="docs-hero__fact"><strong>05</strong><span>Elements</span></div>
-              <div class="docs-hero__fact"><strong>31</strong><span>Icons</span></div>
+              <div class="docs-hero__fact"><strong>08</strong><span>Elements</span></div>
+              <div class="docs-hero__fact"><strong>33</strong><span>Icons</span></div>
               <div class="docs-hero__fact"><strong>MIT</strong><span>Licence</span></div>
             </div>
           </div>
@@ -126,11 +126,11 @@
           <div class="guide-table-wrap"><table class="guide-table">
             <thead><tr><th>File</th><th>What it is</th><th>Load it when</th></tr></thead>
             <tbody>
-              <tr><td>linework.css</td><td>Tokens, base, layout, every component, utilities. 81.9 kB raw / 13.8 kB gzipped.</td><td>Always.</td></tr>
-              <tr><td>linework.min.css</td><td>The same sheet with comments and whitespace removed. 70.2 kB raw / 12.1 kB gzipped.</td><td>Production.</td></tr>
+              <tr><td>linework.css</td><td>Tokens, base, layout, every component, utilities. 95.2 kB raw / 15.4 kB gzipped.</td><td>Always.</td></tr>
+              <tr><td>linework.min.css</td><td>The same sheet with comments and whitespace removed. 81.7 kB raw / 13.6 kB gzipped.</td><td>Production.</td></tr>
               <tr><td>tokens.css</td><td>Only the custom properties, for teams with their own CSS.</td><td>You are bringing your own rules.</td></tr>
-              <tr><td>linework-blocks.css</td><td>Layout for the ten copy-paste blocks.</td><td>You copy a block from the gallery.</td></tr>
-              <tr><td>linework.js</td><td>ES module: Web Components, icons, toasts, menus, theming and copy. ~10 kB gzipped.</td><td>Bundler or module script.</td></tr>
+              <tr><td>linework-blocks.css</td><td>Layout for the 25 copy-paste blocks.</td><td>You copy a block from the gallery.</td></tr>
+              <tr><td>linework.js</td><td>ES module: Web Components, icons, toasts, menus, theming and copy. 16.5 kB gzipped.</td><td>Bundler or module script.</td></tr>
               <tr><td>linework.global.js</td><td>The same behaviour as a classic script, exposing <code>window.Linework</code>.</td><td>No-build HTML.</td></tr>
               <tr><td>linework.d.ts</td><td>Types for the API and custom elements.</td><td>TypeScript projects.</td></tr>
             </tbody>
@@ -270,22 +270,20 @@ Linework.cycleTheme();      // next paper
             <span class="docs-section__num">05</span>
             <div>
               <h2 class="docs-section__title">Typography</h2>
-              <p class="docs-section__note">Bahnschrift is the native voice of a technical drawing. The stack falls back through DIN Alternate and modern grotesques when it is not installed.</p>
+              <p class="docs-section__note">Bahnschrift is the native voice of a technical drawing. Where it is not installed, the stack falls back to DIN Alternate on macOS and to the bundled Barlow Semi Condensed everywhere else.</p>
             </div>
           </div>
 
           <div class="guide-split">
             <div class="guide-prose">
-              <p>The UI uses Bahnschrift first; it ships with Windows 10 and 11. macOS has DIN Alternate. For a consistent cross-platform look, load an open DIN-like face such as <strong>Barlow Semi Condensed</strong> and put it at the front of <code class="lw-code">--lw-font-ui</code>.</p>
+              <p>The UI uses Bahnschrift first; it ships with Windows 10 and 11. macOS uses DIN Alternate. Linux, Android and everything else get <strong>Barlow Semi Condensed</strong>, bundled in <code class="lw-code">dist/fonts/</code> as five latin woff2 weights. A browser only downloads Barlow when the fonts before it are missing, so Windows and macOS never fetch it.</p>
+              <p>Bahnschrift and Barlow carry ascent and descent overrides so capitals sit centred in buttons, inputs and stamps. To use Barlow everywhere, put it first:</p>
               <div class="guide-code">
-                <div class="guide-code__cap"><span>CSS — an open substitute</span></div>
-                <pre><code>@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@300;400;500;600;700&display=swap");
-
-:root {
-  --lw-font-ui: "Barlow Semi Condensed", Bahnschrift,
-    "Segoe UI", system-ui, sans-serif;
-  --lw-font-display: "Barlow Semi Condensed", Bahnschrift,
-    "Helvetica Neue", sans-serif;
+                <div class="guide-code__cap"><span>CSS — Barlow on every platform</span></div>
+                <pre><code>:root {
+  --lw-font-ui: "Linework Barlow", system-ui, sans-serif;
+  --lw-font-display: "Linework Barlow", sans-serif;
+  --lw-font-narrow: "Linework Barlow", sans-serif;
 }</code></pre>
               </div>
             </div>
@@ -296,7 +294,7 @@ Linework.cycleTheme();      // next paper
                 <li><strong>Body</strong> is 14–17 px with a 1.55 line height. Long reading caps at about 72 characters.</li>
                 <li><strong>Figures</strong> use the monospace stack with tabular numerals so columns of dimensions line up.</li>
               </ul>
-              <div class="guide-note">Fonts are not bundled. Bahnschrift and DIN Alternate are system fonts; Barlow is open source under the SIL Open Font License.</div>
+              <div class="guide-note">Bahnschrift and DIN Alternate are system fonts. Barlow Semi Condensed is bundled under the SIL Open Font License; its licence ships as <code class="lw-code">dist/fonts/OFL.txt</code>.</div>
             </div>
           </div>
         </section>
@@ -306,7 +304,7 @@ Linework.cycleTheme();      // next paper
             <span class="docs-section__num">06</span>
             <div>
               <h2 class="docs-section__title">Web components</h2>
-              <p class="docs-section__note">Five small custom elements cover the things markup cannot do alone. Everything else is a class. All five use light DOM, so your CSS still reaches inside.</p>
+              <p class="docs-section__note">Eight small custom elements cover the things markup cannot do alone. Everything else is a class. All eight use light DOM, so your CSS still reaches inside.</p>
             </div>
           </div>
 
@@ -317,6 +315,9 @@ Linework.cycleTheme();      // next paper
               <tr><td>lw-tabs</td><td>Roving tabindex, arrow keys and panel wiring for a normal tab list.</td><td><code>selected</code>; <code>.select(index)</code>, <code>.selectedIndex</code>; <code>lw-change</code></td></tr>
               <tr><td>lw-pad</td><td>An action pad with pressed state, countdown, hatch progress and optional menu key.</td><td><code>name</code>, <code>keys</code>, <code>length</code>, <code>duration</code>, <code>playing</code>, <code>progress</code>, <code>menu</code> (id of a <code>.lw-menu</code> to open); <code>.play()</code>, <code>.stop()</code></td></tr>
               <tr><td>lw-meter</td><td>An ARIA meter drawn as a row of ticks; optional live demo animation.</td><td><code>bars</code>, <code>level</code>, <code>live</code>, <code>tone</code>, <code>label</code></td></tr>
+              <tr><td>lw-combobox</td><td>An input with a filtered <code>.lw-listbox</code>: arrow keys, Enter, Escape and <code>aria-activedescendant</code>.</td><td><code>empty</code>; <code>.value</code>; <code>lw-change</code> with <code>value</code> and <code>option</code></td></tr>
+              <tr><td>lw-command</td><td>A command palette in a native dialog, built from <code>.lw-command__item</code> children grouped by <code>data-group</code>.</td><td><code>shortcut</code>, <code>label</code>, <code>placeholder</code>, <code>empty</code>; <code>.open()</code>, <code>.close()</code>; <code>lw-select</code></td></tr>
+              <tr><td>lw-calendar</td><td>A month of day buttons with arrow, Home/End and Page Up/Down keys.</td><td><code>value</code>, <code>min</code>, <code>max</code>, <code>locale</code> (YYYY-MM-DD); <code>lw-change</code> with <code>value</code> and <code>date</code></td></tr>
               <tr><td>lw-toast-stack</td><td>The live region and popover stack used by <code>Linework.toast()</code>.</td><td>Created automatically; <code>.show()</code></td></tr>
             </tbody>
           </table></div>
@@ -406,6 +407,9 @@ Linework.cycleTheme();      // next paper
               <tr><td>data-lw-copy-target</td><td>Copies the text or value of an element by selector.</td></tr>
               <tr><td>data-lw-menu</td><td>Opens the popover menu by id or the next <code>.lw-menu</code> sibling, positioned to the trigger.</td></tr>
               <tr><td>data-lw-tip</td><td>A supplementary CSS tooltip. Always pair with an accessible name.</td></tr>
+              <tr><td>data-lw-sort</td><td>On a <code>&lt;table&gt;</code>: header cells become sort keys with <code>aria-sort</code>. Use <code>data-sort-value</code> on a cell to sort by something other than its text, and <code>data-sort="none"</code> on a header to opt out. Emits <code>lw-sort</code>.</td></tr>
+              <tr><td>data-lw-dismiss</td><td>Removes the closest <code>.lw-chip</code>, <code>.lw-banner</code> or <code>.lw-file</code>, or the element named in the attribute, and keeps focus on a neighbour. Emits a cancelable <code>lw-dismiss</code>.</td></tr>
+              <tr><td>data-lw-step</td><td>Inside <code>.lw-stepper</code>: <code>1</code> or <code>-1</code> steps the number input and disables the key at its min or max.</td></tr>
             </tbody>
           </table></div>
 
@@ -427,36 +431,34 @@ Linework.setTheme('vellum');</code></pre>
             <span class="docs-section__num">08</span>
             <div>
               <h2 class="docs-section__title">Frameworks</h2>
-              <p class="docs-section__note">The CSS is framework-agnostic. The five custom elements are standard; use them as tags in every modern framework, or just use the classes.</p>
+              <p class="docs-section__note">The CSS is framework-agnostic. The eight custom elements are standard; use them as tags in every modern framework, or just use the classes.</p>
             </div>
           </div>
 
           <div class="guide-split">
             <div class="guide-code">
-              <div class="guide-code__cap"><span>React — a pad wrapper</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-react" aria-label="Copy React code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
-              <pre id="code-react"><code>import { useEffect, useRef } from 'react';
-import 'linework-ui/style.css';
-import Linework from 'linework-ui';
+              <div class="guide-code__cap"><span>React — linework-ui/react</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#code-react" aria-label="Copy React code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></div>
+              <pre id="code-react"><code>import 'linework-ui/style.css';
+import { Drawer, Pad } from 'linework-ui/react';
 
-export function ActionPad({ item }) {
-  const ref = useRef(null);
-
-  useEffect(() =&gt; {
-    Linework.icons.install();
-    const pad = ref.current;
-    const onPress = () =&gt; {
-      // drive your own operation here
-    };
-    pad?.addEventListener('lw-press', onPress);
-    return () =&gt; pad?.removeEventListener('lw-press', onPress);
-  }, []);
-
-  return &lt;lw-pad ref={ref} name={item.name}
-                 keys={item.keys} /&gt;;
+export function Publish({ open, setOpen, run }) {
+  return (
+    &lt;&gt;
+      &lt;Pad name="Publish" keys="1"
+           onPress={(event) =&gt; {
+             event.preventDefault();
+             run(event.detail.pad);
+           }} /&gt;
+      &lt;Drawer open={open} label="Publish"
+              onClose={() =&gt; setOpen(false)}&gt;
+        &lt;p&gt;Ready to send revision 04.&lt;/p&gt;
+      &lt;/Drawer&gt;
+    &lt;/&gt;
+  );
 }</code></pre>
             </div>
             <div class="guide-prose">
-              <p>React 19 passes custom-element props through as properties; React 18 stringifies them as attributes, which is exactly what Linework reads. For events, attach listeners to a ref, or wrap the element in a small component as above.</p>
+              <p><code class="lw-code">linework-ui/react</code> wraps seven elements as typed components for React 18 and 19: <code class="lw-code">Drawer</code>, <code class="lw-code">Tabs</code>, <code class="lw-code">Pad</code>, <code class="lw-code">Meter</code>, <code class="lw-code">Combobox</code>, <code class="lw-code">Command</code> and <code class="lw-code">Calendar</code>. The eighth, the toast stack, is driven by <code class="lw-code">Linework.toast()</code>. Events arrive as props such as <code class="lw-code">onPress</code> and <code class="lw-code">onChange</code> with typed <code class="lw-code">detail</code>; refs reach the element; booleans map to attributes the way the elements read them. React and React DOM are optional peer dependencies.</p>
               <ul class="guide-list">
                 <li><strong>Vue</strong>: use <code class="lw-code">&lt;lw-pad :name="item.name" @lw-press="run"&gt;</code>. Add <code class="lw-code">compilerOptions.isCustomElement</code> for the <code class="lw-code">lw-</code> prefix to silence warnings.</li>
                 <li><strong>Svelte</strong>: custom elements are native tags; bind events with <code class="lw-code">on:lw-press</code> in Svelte 4 or <code class="lw-code">onlw-press</code> in Svelte 5.</li>
@@ -507,7 +509,7 @@ export function ActionPad({ item }) {
             <thead><tr><th>Pairing</th><th>Contrast</th><th>Approved for</th></tr></thead>
             <tbody>
               <tr><td>Ink on paper</td><td>&gt; 12:1</td><td>Body, labels, controls, everything.</td></tr>
-              <tr><td>Pencil on paper</td><td>&gt; 5.5:1</td><td>Secondary body text and notes.</td></tr>
+              <tr><td>Pencil on paper</td><td>&gt; 5:1</td><td>Secondary body text and notes.</td></tr>
               <tr><td>Paper on redline</td><td>&gt; 4.5:1</td><td>Danger keys and the on-air lamp.</td></tr>
               <tr><td>Redline on paper</td><td>&gt; 4.6:1</td><td>Large text, borders and state. Use redline-deep for small text.</td></tr>
             </tbody>
@@ -543,7 +545,7 @@ export function ActionPad({ item }) {
           <div class="guide-split">
             <div class="guide-prose">
               <p>Linework code is released under the <strong>MIT licence</strong>. Use it in commercial and private work, keep the copyright notice, and do not hold the authors liable. The blocks, components, tokens and site are all published under the same terms.</p>
-              <p>No third-party assets are bundled; type comes from system fonts.</p>
+              <p>The only third-party asset is Barlow Semi Condensed, bundled under the SIL Open Font License.</p>
             </div>
             <div class="lw-plate">
               <div class="lw-plate__cap"><span>Licence summary</span><span>01 / 01</span></div>
@@ -551,8 +553,8 @@ export function ActionPad({ item }) {
                 <dl class="lw-spec lw-spec--mono">
                   <dt>Code</dt><dd>MIT</dd>
                   <dt>Blocks</dt><dd>MIT</dd>
-                  <dt>Media</dt><dd>None bundled</dd>
-                  <dt>Fonts</dt><dd>System only</dd>
+                  <dt>Media</dt><dd>No images or icons from third parties</dd>
+                  <dt>Fonts</dt><dd>Barlow Semi Condensed, SIL OFL</dd>
                   <dt>Attribution</dt><dd>Not required, appreciated</dd>
                   <dt>Warranty</dt><dd>None</dd>
                 </dl>

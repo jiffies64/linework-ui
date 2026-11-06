@@ -151,7 +151,7 @@ body.cn-body {
   display: block;
   color: var(--lw-text-faint);
   font-family: var(--lw-font-narrow);
-  font-size: var(--lw-text-2xs);
+  font-size: var(--lw-text-sm);
   font-weight: var(--lw-weight-regular);
   letter-spacing: 0.02em;
 }
@@ -270,7 +270,7 @@ body.cn-body {
 .cn-eyebrow {
   color: var(--lw-text-faint);
   font-family: var(--lw-font-narrow);
-  font-size: var(--lw-text-xs);
+  font-size: var(--lw-text-sm);
   letter-spacing: var(--lw-tracking-label);
   text-transform: uppercase;
 }
@@ -336,7 +336,7 @@ body.cn-body {
 .cn-panel__sub {
   color: var(--lw-text-faint);
   font-family: var(--lw-font-narrow);
-  font-size: var(--lw-text-2xs);
+  font-size: var(--lw-text-sm);
   letter-spacing: 0.04em;
 }
 

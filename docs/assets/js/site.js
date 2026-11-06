@@ -43,7 +43,7 @@
             <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-theme"></use></svg>
             <span class="site-theme__label" data-theme-label>Trace</span>
           </button>
-          <a class="lw-btn lw-btn--primary lw-btn--sm" href="docs.html#install">
+          <a class="lw-btn lw-btn--sm" href="docs.html#install">
             Get started
             <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
           </a>

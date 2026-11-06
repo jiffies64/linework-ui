@@ -1,6 +1,6 @@
 # Linework
 
-A UI kit in the style of technical drawings: 35 components, 10 copy-paste blocks and three themes. Plain CSS and Web Components with no runtime dependencies and no build step.
+A UI kit in the style of technical drawings: 51 components, 25 copy-paste blocks and three themes. Plain CSS and Web Components with no runtime dependencies and no build step, plus typed React wrappers.
 
 ![The Linework landing page](docs/assets/docs-img/final-home.png)
 
@@ -8,26 +8,32 @@ A UI kit in the style of technical drawings: 35 components, 10 copy-paste blocks
 
 ![The project console showroom](docs/assets/docs-img/final-console.png)
 
-Linework uses the visual language of architectural drawings: trace paper, a 24 px grid, hairline rules, dimension lines and title blocks. It ships as a CSS library, five Web Components, ten composed blocks and a documentation site built from the library itself.
+Linework uses the visual language of architectural drawings: trace paper, a 24 px grid, hairline rules, dimension lines and title blocks. It ships as a CSS library, eight Web Components, 25 composed blocks, React wrappers and a documentation site built from the library itself.
 
 ## What is inside
 
 | Piece | Detail |
 | --- | --- |
-| **CSS** | `linework.css`: tokens, base, layout, 35 components and utilities. 12.1 kB gzipped (minified). |
-| **Blocks CSS** | `linework-blocks.css`: layout for the ten blocks. 3.7 kB gzipped (minified). |
-| **Behaviour** | `linework.js`: five Web Components, icons, menus, toasts, themes and copy buttons. 10.8 kB gzipped. |
+| **CSS** | `linework.css`: tokens, base, layout, 51 components and utilities. 13.6 kB gzipped (minified). |
+| **Blocks CSS** | `linework-blocks.css`: layout for the 25 blocks. 5.5 kB gzipped (minified). |
+| **Behaviour** | `linework.js`: eight Web Components, icons, menus, toasts, themes, sorting and copy buttons. 16.5 kB gzipped. |
+| **React** | `linework-ui/react`: typed wrappers for seven elements, with event props and refs. 1.7 kB gzipped. |
 | **Themes** | Trace (light, default), Blueprint (dark) and Vellum (warm), defined entirely in tokens. |
-| **Blocks** | Hero, features, pricing, FAQ, testimonial, call to action, dashboard, sign in, settings and footer. |
-| **Components** | Keys, fields, choices, pads, dimension lines, lamps, meters, stamps, keycaps, avatars, tabs, breadcrumbs, pagination, side navigation, accordion, tables, stats, activity, menus, sheets, dialogs, toasts, tooltips, empty states, callouts, dropzones and icons. |
-| **Icons** | 31 icons in one inline SVG sprite. |
+| **Blocks** | Marketing: hero, header, logos, stats, process, features, comparison, pricing, team, testimonial, journal, changelog, FAQ, contact, newsletter, call to action and footer. Application: dashboard, onboarding, billing, members, review inbox, sign in, settings and not found. |
+| **Components** | Forms: buttons, button groups, inputs, textareas, selects, search fields, fieldsets, checkboxes, radios, switches, ranges, segmented controls, steppers, combobox and calendar. Instruments: pads, dimension lines, keycaps, lamps, stamps, meters, progress bars, spinners and skeletons. Navigation: tabs, breadcrumbs, pagination, side navigation, steps and trees. Data: tables with sorting, spec lists, stats, activity feeds, setting rows, avatars, chips, file lists and code blocks. Overlays: menus, tooltips, dialogs, sheets, toasts and the command palette. Feedback: empty states, callouts, banners, accordions and dropzones. Plus 33 icons. |
+| **Icons** | 33 icons in one inline SVG sprite. |
+| **Fonts** | Barlow Semi Condensed, five latin woff2 weights under the SIL Open Font License, used only where Bahnschrift and DIN Alternate are missing. |
 | **Pages** | Landing page, block gallery, component gallery, guide, an example project console and block previews. |
 
-Fonts come from the system stack. Nothing is loaded from a CDN.
+Windows uses Bahnschrift and macOS uses DIN Alternate. Every other platform downloads the bundled Barlow from `dist/fonts/`, next to the stylesheet. Nothing is loaded from a CDN.
 
 ## Quick start
 
-Copy `dist/linework.css` and `dist/linework.global.js` into your project and link them:
+Install the package, or copy `dist/` into your project and link the files:
+
+```sh
+npm install linework-ui
+```
 
 ```html
 <link rel="stylesheet" href="linework.css">
@@ -37,14 +43,34 @@ Copy `dist/linework.css` and `dist/linework.global.js` into your project and lin
 <lw-pad name="Publish" keys="1" length="1.2 s"></lw-pad>
 ```
 
-The script is optional. Every component renders with HTML and CSS alone; the script adds behaviour for drawers, tabs, pads, meters, menus, toasts, theme switching and copy buttons. The global build exposes `window.Linework`. The ES module build, `linework.js`, is for bundlers:
+The script is optional for the class-based components, which render with HTML and CSS alone. The eight custom elements build their markup in the script: without it, `lw-pad`, `lw-meter`, `lw-command`, `lw-calendar` and `lw-drawer` render nothing, and `lw-tabs` and `lw-combobox` show their static children. The script also adds behaviour for menus, toasts, sorting, dismissing, steppers, theme switching and copy buttons. The global build exposes `window.Linework`. The ES module build, `linework.js`, is for bundlers:
 
 ```js
 import 'linework-ui/style.css';
 import Linework from 'linework-ui';
 ```
 
-The package is not on the npm registry. Vendor the `dist/` files, publish them to a private registry, or link them directly.
+When you copy files by hand, keep `dist/fonts/` next to `linework.css`.
+
+### React
+
+```jsx
+import 'linework-ui/style.css';
+import { Drawer, Pad } from 'linework-ui/react';
+
+export function Publish({ open, setOpen, run }) {
+  return (
+    <>
+      <Pad name="Publish" keys="1" onPress={(event) => { event.preventDefault(); run(event.detail.pad); }} />
+      <Drawer open={open} label="Publish" onClose={() => setOpen(false)}>
+        <p>Ready to send revision 04.</p>
+      </Drawer>
+    </>
+  );
+}
+```
+
+`Drawer`, `Tabs`, `Pad`, `Meter`, `Combobox`, `Command` and `Calendar` take typed event props (`onPress`, `onChange`, `onSelect` and so on) whose `detail` is typed, forward refs to the element, and map booleans to attributes. React and React DOM 18 or later are optional peer dependencies.
 
 ### Blocks
 
@@ -73,7 +99,7 @@ The capture script drives Microsoft Edge through the Chrome DevTools Protocol. O
 Pages after `npm start`:
 
 - `/docs/`: landing page
-- `/docs/blocks.html`: blocks with live previews, copy and filters
+- `/docs/blocks.html`: 25 blocks with live previews, copy and filters
 - `/docs/components.html`: component gallery and tokens
 - `/docs/docs.html`: guide covering install, tokens, themes, components, API, frameworks and accessibility
 - `/docs/console.html`: example project console
@@ -130,6 +156,9 @@ The elements render in the light DOM, so your CSS applies inside them.
 | `<lw-tabs>` | Tabs with roving tabindex, arrow keys, Home/End and panels. |
 | `<lw-pad>` | Action pad with progress, countdown, hatch and an optional menu key; `menu="id"` opens that `.lw-menu`. |
 | `<lw-meter>` | ARIA meter drawn as a row of ticks, with an optional demo animation. |
+| `<lw-combobox>` | Input with a filtered `.lw-listbox`, keyboard navigation and `aria-activedescendant`. |
+| `<lw-command>` | Command palette in a native dialog, built from `.lw-command__item` children, with an optional Ctrl/Cmd shortcut. |
+| `<lw-calendar>` | Month of day buttons with arrow, Home/End and Page Up/Down keys, `min`, `max` and `locale`. |
 | `<lw-toast-stack>` | Popover live region used by `Linework.toast()`. |
 
 ```html
@@ -168,6 +197,9 @@ Data attributes:
 - `data-lw-menu`: open a positioned menu
 - `data-lw-copy` / `data-lw-copy-target`: copy a literal or an element's text
 - `data-lw-tip`: supplementary CSS tooltip
+- `data-lw-sort`: sortable table headers with `aria-sort`
+- `data-lw-dismiss`: remove a chip, banner or file row and keep focus nearby
+- `data-lw-step`: step the number input inside `.lw-stepper`
 
 ## Accessibility
 
@@ -188,6 +220,8 @@ In your own pages, label every control, keep focus visible, do not use redline a
 ```
 src/css/        tokens, base, layout, components, blocks
 src/js/         linework.js, the behaviour build
+src/react/      React wrappers and their types
+src/fonts/      bundled Barlow Semi Condensed and its licence
 src/types/      TypeScript declarations
 scripts/        build, static server and screenshots
 dist/           built CSS, JS and types
@@ -197,7 +231,7 @@ docs/assets/    site CSS and JS, screenshots and block images
 
 ## Credits
 
-The brand names in the blocks ("Fold", "Atelier North") are fictional. No third-party fonts, images or other assets are bundled.
+The brand names in the blocks ("Fold", "Atelier North") are fictional. Barlow Semi Condensed is by the Barlow Project Authors and is bundled under the SIL Open Font License (`dist/fonts/OFL.txt`). No other third-party assets are bundled.
 
 ## License
 

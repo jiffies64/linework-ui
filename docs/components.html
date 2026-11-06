@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Components — Linework</title>
-  <meta name="description" content="The Linework component library: keys, fields, LED toggles, pads, dimension lines, lamps, meters, stamps, tabs, tables, sheets, dialogs, menus, toasts, tooltips and application patterns.">
+  <meta name="description" content="The Linework component library: keys, fields, LED toggles, pads, dimension lines, lamps, meters, stamps, tabs, tables, sheets, dialogs, menus, toasts, tooltips, pickers, a command palette and application patterns.">
   <meta name="theme-color" content="#EEF0EC">
   <script src="assets/js/theme-init.js"></script>
   <link rel="stylesheet" href="../dist/linework.css">
@@ -26,8 +26,8 @@
           <div class="docs-hero__aside">
             <p>Most things are live on this sheet. Press it, toggle it, open it, copy the class, or open <strong>View markup</strong> under any plate to take the HTML with you.</p>
             <div class="docs-hero__facts">
-              <div class="docs-hero__fact"><strong>35</strong><span>Components</span></div>
-              <div class="docs-hero__fact"><strong>05</strong><span>Elements</span></div>
+              <div class="docs-hero__fact"><strong>51</strong><span>Components</span></div>
+              <div class="docs-hero__fact"><strong>08</strong><span>Elements</span></div>
               <div class="docs-hero__fact"><strong>03</strong><span>Papers</span></div>
               <div class="docs-hero__fact"><strong>00</strong><span>Deps</span></div>
             </div>
@@ -55,6 +55,9 @@
           <a class="lw-sidenav__item" href="#overlays"><span class="lw-sidenav__count">09</span>Overlays</a>
           <a class="lw-sidenav__item" href="#feedback"><span class="lw-sidenav__count">10</span>Feedback</a>
           <a class="lw-sidenav__item" href="#application"><span class="lw-sidenav__count">11</span>Application</a>
+          <p class="lw-sidenav__label">Pickers &amp; data</p>
+          <a class="lw-sidenav__item" href="#pickers"><span class="lw-sidenav__count">12</span>Pickers</a>
+          <a class="lw-sidenav__item" href="#data"><span class="lw-sidenav__count">13</span>Data &amp; content</a>
         </nav>
         <p class="docs-side__note">Need installation, tokens and the API? <a href="docs.html">Read the guide</a>.</p>
       </aside>
@@ -126,7 +129,7 @@
             <span class="docs-section__num">02</span>
             <div>
               <h2 class="docs-section__title">Icons</h2>
-              <p class="docs-section__note">Thirty-one drafting icons, one weight, square caps. They are supplementary: always pair an icon with a visible label or an <code class="lw-code">aria-label</code>.</p>
+              <p class="docs-section__note">Thirty-three drafting icons, one weight, square caps. They are supplementary: always pair an icon with a visible label or an <code class="lw-code">aria-label</code>.</p>
             </div>
           </div>
           <div class="demo-plate">
@@ -457,8 +460,8 @@
                   <button class="lw-tab"><span class="lw-tab__num">02</span>Components</button>
                   <button class="lw-tab"><span class="lw-tab__num">03</span>Tokens</button>
                 </div>
-                <div class="lw-tabpanel"><p class="lw-note">Thirty-five parts on one sheet. Everything here is live: press, type, drag, open a sheet.</p></div>
-                <div class="lw-tabpanel"><p class="lw-note">Keys, fields, pads, tables and sheets. Behaviour comes from five small Web Components.</p></div>
+                <div class="lw-tabpanel"><p class="lw-note">Fifty-one parts on one sheet. Everything here is live: press, type, drag, open a sheet.</p></div>
+                <div class="lw-tabpanel"><p class="lw-note">Keys, fields, pads, tables and sheets. Behaviour comes from eight small Web Components.</p></div>
                 <div class="lw-tabpanel"><p class="lw-note">Every colour, space and duration is a custom property. Override the values; the rules stay true.</p></div>
               </lw-tabs>
             </div>
@@ -686,10 +689,167 @@
           </div>
         </section>
 
+        <section class="docs-section" id="pickers">
+          <div class="docs-section__head">
+            <span class="docs-section__num">12</span>
+            <div>
+              <h2 class="docs-section__title">Pickers</h2>
+              <p class="docs-section__note">Choosing from a list, a date or a number. The combobox, calendar and command palette are Web Components over markup you write; the stepper and chips are classes with a little delegated behaviour.</p>
+            </div>
+          </div>
+
+          <div class="demo-grid">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Combobox</strong></span><span class="demo-plate__tag">lw-combobox</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <lw-combobox id="c-combobox">
+                  <label class="lw-field__label" for="c-lead">Lead</label>
+                  <input class="lw-input" id="c-lead" type="text" placeholder="Search people">
+                  <ul class="lw-listbox">
+                    <li data-value="mara"><span class="lw-option__label">Mara Weiss</span><span class="lw-option__meta">Facade</span></li>
+                    <li data-value="jonas"><span class="lw-option__label">Jonas Keller</span><span class="lw-option__meta">Interiors</span></li>
+                    <li data-value="ada"><span class="lw-option__label">Ada Sorensen</span><span class="lw-option__meta">Landscape</span></li>
+                    <li data-value="omar"><span class="lw-option__label">Omar Haddad</span><span class="lw-option__meta">Facade</span></li>
+                  </ul>
+                </lw-combobox>
+                <p class="lw-smallprint">Arrow keys move, Enter picks, Escape closes. Emits <code class="lw-code">lw-change</code> with the value.</p>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Calendar</strong></span><span class="demo-plate__tag">lw-calendar</span></div>
+              <div class="demo-plate__body">
+                <lw-calendar id="c-calendar" value="2026-10-18" min="2026-10-05" locale="en-GB"></lw-calendar>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Stepper</strong></span><span class="demo-plate__tag">.lw-stepper · data-lw-step</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <label class="lw-field__label" for="c-seats">Seats</label>
+                <div class="lw-stepper">
+                  <button type="button" class="lw-stepper__key" data-lw-step="-1" aria-label="Fewer seats"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-minus"></use></svg></button>
+                  <input class="lw-input" id="c-seats" type="number" value="4" min="1" max="6" step="1">
+                  <button type="button" class="lw-stepper__key" data-lw-step="1" aria-label="More seats"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Chips</strong></span><span class="demo-plate__tag">.lw-chip · data-lw-dismiss</span></div>
+              <div class="demo-plate__body">
+                <ul class="lw-chips" id="c-chips" aria-label="Teams on this sheet">
+                  <li class="lw-chip">Facade<button type="button" class="lw-chip__remove" data-lw-dismiss aria-label="Remove Facade"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+                  <li class="lw-chip">Interiors<button type="button" class="lw-chip__remove" data-lw-dismiss aria-label="Remove Interiors"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+                  <li class="lw-chip">Landscape<button type="button" class="lw-chip__remove" data-lw-dismiss aria-label="Remove Landscape"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+                  <li class="lw-chip">Read only</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-plate demo-plate--wide" style="margin-top:16px">
+            <div class="demo-plate__cap"><span><strong>Command palette</strong></span><span class="demo-plate__tag">lw-command</span></div>
+            <div class="demo-plate__body">
+              <button type="button" class="lw-btn" data-lw-open="c-command"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg>Open the palette</button>
+              <span class="lw-smallprint">or press <span class="lw-keycap">Ctrl</span> <span class="lw-keycap">K</span></span>
+              <lw-command id="c-command" shortcut="k" label="Command palette" placeholder="Search commands and sheets">
+                <button type="button" class="lw-command__item" data-group="Sheets" data-shortcut="N">New sheet</button>
+                <button type="button" class="lw-command__item" data-group="Sheets">Duplicate North facade</button>
+                <button type="button" class="lw-command__item" data-group="Sheets">Archive Roof study</button>
+                <button type="button" class="lw-command__item" data-group="Paper" data-lw-theme="trace">Switch to Trace</button>
+                <button type="button" class="lw-command__item" data-group="Paper" data-lw-theme="blueprint">Switch to Blueprint</button>
+                <button type="button" class="lw-command__item" data-group="Paper" data-lw-theme="vellum">Switch to Vellum</button>
+                <a class="lw-command__item" data-group="Go to" href="docs.html">Read the guide</a>
+                <a class="lw-command__item" data-group="Go to" href="blocks.html">Browse the blocks</a>
+              </lw-command>
+            </div>
+          </div>
+        </section>
+
+        <section class="docs-section" id="data">
+          <div class="docs-section__head">
+            <span class="docs-section__num">13</span>
+            <div>
+              <h2 class="docs-section__title">Data &amp; content</h2>
+              <p class="docs-section__note">A table you can sort, files in flight, a folder tree, a block of code with a copy key and a page banner.</p>
+            </div>
+          </div>
+
+          <div class="demo-plate demo-plate--wide">
+            <div class="demo-plate__cap"><span><strong>Sortable table</strong></span><span class="demo-plate__tag">table[data-lw-sort]</span></div>
+            <div class="demo-plate__body demo-plate__body--stack">
+              <div class="lw-table-wrap">
+                <table class="lw-table" id="c-sort-table" data-lw-sort>
+                  <caption>Sheets by revision. Select a heading to sort.</caption>
+                  <thead><tr><th scope="col">Sheet</th><th scope="col">Code</th><th scope="col">Revision</th><th scope="col" data-sort="none">Status</th></tr></thead>
+                  <tbody>
+                    <tr><td class="lw-table__strong">North facade</td><td>A-104</td><td>4</td><td><span class="lw-stamp lw-stamp--red">In review</span></td></tr>
+                    <tr><td class="lw-table__strong">Atrium / concept 2</td><td>A-102</td><td>2</td><td><span class="lw-stamp lw-stamp--quiet">Draft</span></td></tr>
+                    <tr><td class="lw-table__strong">East wing / tender</td><td>A-108</td><td>6</td><td><span class="lw-stamp lw-stamp--ink">Approved</span></td></tr>
+                    <tr><td class="lw-table__strong">Roof study</td><td>A-111</td><td>1</td><td><span class="lw-stamp lw-stamp--quiet">Draft</span></td></tr>
+                    <tr><td class="lw-table__strong">Terrace / lighting</td><td>A-115</td><td>10</td><td><span class="lw-stamp lw-stamp--red">In review</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-grid" style="margin-top:16px">
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>File list</strong></span><span class="demo-plate__tag">.lw-files</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <ul class="lw-files">
+                  <li class="lw-file"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg><span class="lw-file__name">north-facade-rev04.pdf<span class="lw-file__meta">2.4 MB · uploaded</span></span><span class="lw-stamp lw-stamp--ink">Done</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-dismiss aria-label="Remove north-facade-rev04.pdf"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+                  <li class="lw-file"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg><span class="lw-file__name">atrium-model.ifc<span class="lw-file__meta">18 MB · 62%</span></span><span class="lw-stamp lw-stamp--red">Uploading</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-dismiss aria-label="Cancel atrium-model.ifc"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button><div class="lw-progress" role="progressbar" aria-label="atrium-model.ifc" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"><div class="lw-progress__bar" style="width:62%"></div></div></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Tree</strong></span><span class="demo-plate__tag">.lw-tree · details</span></div>
+              <div class="demo-plate__body">
+                <ul class="lw-tree" aria-label="Project files">
+                  <li><details open><summary><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-folder"></use></svg>Facade</summary>
+                    <ul>
+                      <li><a href="#data"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>North facade</a></li>
+                      <li><a href="#data" aria-current="page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>East wing</a></li>
+                    </ul>
+                  </details></li>
+                  <li><details><summary><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-folder"></use></svg>Interiors</summary>
+                    <ul>
+                      <li><a href="#data"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Atrium / concept 2</a></li>
+                    </ul>
+                  </details></li>
+                  <li><a href="#data"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg>Project brief</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Code block</strong></span><span class="demo-plate__tag">.lw-codeblock</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <figure class="lw-codeblock">
+                  <figcaption class="lw-codeblock__cap"><span>Shell</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#c-code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></figcaption>
+                  <pre><code id="c-code">npm install linework-ui</code></pre>
+                </figure>
+              </div>
+            </div>
+
+            <div class="demo-plate">
+              <div class="demo-plate__cap"><span><strong>Banner</strong></span><span class="demo-plate__tag">.lw-banner</span></div>
+              <div class="demo-plate__body demo-plate__body--stack">
+                <div class="lw-banner lw-banner--redline" role="status"><span class="lw-banner__text">Review closes today at 17:00. Two sheets are still open.</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-dismiss aria-label="Dismiss notice"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></div>
+                <div class="lw-banner lw-banner--blue"><span class="lw-banner__text">Pickers and a React package are in this release.</span><a class="lw-btn lw-btn--sm" href="docs.html">Read the guide</a></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="docs-cta">
           <div>
             <h2 class="docs-cta__title">Start with a block.</h2>
-            <p class="docs-cta__text">Ten assembled sections, each one built from the parts above. Copy the markup or open a preview and redraw the words.</p>
+            <p class="docs-cta__text">Twenty-five assembled sections, each one built from the parts above. Copy the markup or open a preview and redraw the words.</p>
           </div>
           <a class="lw-btn lw-btn--primary" href="blocks.html">Browse the blocks<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg></a>
         </div>
