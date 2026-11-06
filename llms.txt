@@ -1,0 +1,87 @@
+# Linework UI
+
+> A UI kit in the style of technical drawings: 51 CSS components, 8 custom elements, 25 copy-paste blocks, 3 themes and typed React wrappers. Plain HTML, CSS and light-DOM Web Components with no runtime dependencies and no build step.
+
+Package: `linework-ui`. Files in `dist/`: `linework.css` (all components), `linework-blocks.css` (block layouts only), `linework.global.js` (script tag, exposes `window.Linework`), `linework.js` (ES module), `react.js` (React wrappers), `tokens.css` (custom properties only), `fonts/` (Barlow Semi Condensed, SIL OFL).
+
+## Rules for generating Linework markup
+
+- Every class starts with `lw-`. Elements use `__` (`lw-field__label`), variants use `--` (`lw-btn--primary`). Block layouts use `blk-*` and need `linework-blocks.css`.
+- Buttons: `lw-btn`, plus `--primary`, `--quiet`, `--danger`, `--sm`, `--lg` or `--icon`. Use one `--primary` per view. An icon-only button needs `aria-label`.
+- Icons are an inline SVG sprite installed by the script: `<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-NAME"></use></svg>`. Names: arrow-right, arrow-up-right, blocks, check, chevron-down, chevron-left, chevron-right, clock, close, copy, download, external, file, folder, grid, headphones, info, keyboard, link, menu, minus, mic, more, play, plus, search, settings, sheet, stop, theme, trash, volume, warning.
+- Class-based components render without the script. `lw-pad`, `lw-meter`, `lw-command`, `lw-calendar` and `lw-drawer` render nothing until the script runs.
+- Custom elements use the light DOM, so page CSS applies inside them. Do not add a shadow root or move their children.
+- Red (`--lw-redline`) marks live, playing, destructive or focused state only. Do not use it for decoration.
+- Theme with `data-theme="trace|blueprint|vellum"` on `<html>` or any container. Override tokens (`--lw-paper`, `--lw-ink`, `--lw-redline`, `--lw-font-ui`, `--lw-space-8`, ...) instead of writing new colours.
+- After inserting markup dynamically, call `Linework.refresh(root)` so sortable tables, steppers and range fills are enhanced.
+
+## Setup
+
+```html
+<link rel="stylesheet" href="linework.css">
+<script src="linework.global.js" defer></script>
+```
+
+```js
+import 'linework-ui/style.css';
+import Linework from 'linework-ui';
+```
+
+Keep `dist/fonts/` next to `linework.css` when copying files by hand.
+
+## Custom elements
+
+| Element | Attributes | Events |
+| --- | --- | --- |
+| `<lw-drawer>` | `open`, `label`, `width`, `dismissible="false"`; methods `open()`, `close()` | `lw-open`, `lw-close` |
+| `<lw-tabs>` | `selected`; children `.lw-tablist > .lw-tab` and `.lw-tabpanel` | `lw-change` (`index`, `tab`, `panel`) |
+| `<lw-pad>` | `name`, `keys`, `length`, `duration`, `progress` (0 to 1), `playing`, `menu="id"` | `lw-press` (cancelable), `lw-play`, `lw-stop`, `lw-end`, `lw-menu` |
+| `<lw-meter>` | `level` (0 to 1), `bars`, `live`, `tone="redline"`, `label` | none |
+| `<lw-combobox>` | `empty`; children: an `input` and a `ul.lw-listbox` of `li` with `data-value` | `lw-change` (`value`, `option`) |
+| `<lw-command>` | `shortcut`, `label`, `placeholder`, `empty`; children `.lw-command__item` with `data-group`, `data-shortcut` | `lw-select` (cancelable, `item`) |
+| `<lw-calendar>` | `value`, `min`, `max` (YYYY-MM-DD), `locale` | `lw-change` (`value`, `date`) |
+| `<lw-toast-stack>` | created by `Linework.toast()` | none |
+
+```html
+<button class="lw-btn" data-lw-open="new-sheet">New sheet</button>
+<lw-drawer id="new-sheet" label="New sheet" width="460">
+  <div class="lw-drawer__head"><h2 class="lw-drawer__title">New sheet</h2></div>
+  <div class="lw-drawer__body">...</div>
+  <div class="lw-drawer__foot"><button class="lw-btn lw-btn--primary" data-lw-close>Done</button></div>
+</lw-drawer>
+
+<lw-command shortcut="k" label="Command palette">
+  <button type="button" class="lw-command__item" data-group="Sheets" data-shortcut="N">New sheet</button>
+  <a class="lw-command__item" data-group="Go to" href="/docs">Read the guide</a>
+</lw-command>
+```
+
+Data attributes: `data-lw-open`, `data-lw-close`, `data-lw-theme` (a theme name or `cycle`), `data-lw-menu`, `data-lw-tip` (supplementary tooltip, keep an accessible name), `data-lw-copy-target`, `data-lw-sort`, `data-lw-dismiss`, `data-lw-step`.
+
+JavaScript: `Linework.toast({ title, message, tone })`, `Linework.open(target)`, `Linework.close(target)`, `Linework.copy(text)`, `Linework.setTheme(name)`, `Linework.getTheme()`, `Linework.cycleTheme()`, `Linework.refresh(root)`, `Linework.icons.names`. The `linework:ready` event fires on `document` after boot.
+
+## React
+
+```jsx
+import 'linework-ui/style.css';
+import { Drawer, Pad, Calendar } from 'linework-ui/react';
+
+<Pad name="Publish" keys="1" onPress={(event) => { event.preventDefault(); run(event.detail.pad); }} />
+<Drawer open={open} label="Publish" onClose={() => setOpen(false)}>...</Drawer>
+<Calendar value="2026-10-18" onChange={(event) => setDate(event.detail.value)} />
+```
+
+Wrappers: `Drawer`, `Tabs`, `Pad`, `Meter`, `Combobox`, `Command`, `Calendar`. They work on React 18 and 19, forward refs to the element, take `className`, and type every event `detail`. The module starts with `'use client'`.
+
+## Docs
+
+- [Full reference](llms-full.txt): every component with its markup, every class, every token, the complete types and all 25 blocks in one file
+- [README](README.md): install, themes, elements and API
+- [Element and API types](src/types/linework.d.ts): elements, event details and the `Linework` object
+- [React types](src/react/index.d.ts): wrapper props
+
+## Optional
+
+- [Guide](docs/docs.html): tokens, typography, frameworks and accessibility as a web page
+- [Component gallery](docs/components.html): the live page the full reference is built from
+- [Block markup](docs/assets/js/blocks-data.js): source of the 25 blocks

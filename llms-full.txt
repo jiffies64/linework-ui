@@ -1,0 +1,2460 @@
+# Linework UI: full reference
+
+> A UI kit in the style of technical drawings: 51 CSS components, 8 custom elements, 25 copy-paste blocks, 3 themes and typed React wrappers. Plain HTML, CSS and light-DOM Web Components with no runtime dependencies and no build step.
+
+Package: `linework-ui`. Files in `dist/`: `linework.css` (all components), `linework-blocks.css` (block layouts only), `linework.global.js` (script tag, exposes `window.Linework`), `linework.js` (ES module), `react.js` (React wrappers), `tokens.css` (custom properties only), `fonts/` (Barlow Semi Condensed, SIL OFL).
+
+This file is generated from the sources by `npm run build`. It holds every component example, every class, every token, the complete type definitions and every block.
+
+## Rules
+
+- Every class starts with `lw-`. Elements use `__` (`lw-field__label`), variants use `--` (`lw-btn--primary`). Block layouts use `blk-*` and need `linework-blocks.css`.
+- Buttons: `lw-btn`, plus `--primary`, `--quiet`, `--danger`, `--sm`, `--lg` or `--icon`. Use one `--primary` per view. An icon-only button needs `aria-label`.
+- Icons are an inline SVG sprite installed by the script: `<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-NAME"></use></svg>`. Names: arrow-right, arrow-up-right, blocks, check, chevron-down, chevron-left, chevron-right, clock, close, copy, download, external, file, folder, grid, headphones, info, keyboard, link, menu, minus, mic, more, play, plus, search, settings, sheet, stop, theme, trash, volume, warning.
+- Class-based components render without the script. `lw-pad`, `lw-meter`, `lw-command`, `lw-calendar` and `lw-drawer` render nothing until the script runs.
+- Custom elements use the light DOM, so page CSS applies inside them. Do not add a shadow root or move their children.
+- Red (`--lw-redline`) marks live, playing, destructive or focused state only. Do not use it for decoration.
+- Theme with `data-theme="trace|blueprint|vellum"` on `<html>` or any container. Override tokens (`--lw-paper`, `--lw-ink`, `--lw-redline`, `--lw-font-ui`, `--lw-space-8`, ...) instead of writing new colours.
+- After inserting markup dynamically, call `Linework.refresh(root)` so sortable tables, steppers and range fills are enhanced.
+
+## Guide
+
+A UI kit in the style of technical drawings: 51 components, 25 copy-paste blocks and three themes. Plain CSS and Web Components with no runtime dependencies and no build step, plus typed React wrappers.
+
+
+
+
+Linework uses the visual language of architectural drawings: trace paper, a 24 px grid, hairline rules, dimension lines and title blocks. It ships as a CSS library, eight Web Components, 25 composed blocks, React wrappers and a documentation site built from the library itself.
+
+### What is inside
+
+| Piece | Detail |
+| --- | --- |
+| **CSS** | `linework.css`: tokens, base, layout, 51 components and utilities. 13.6 kB gzipped (minified). |
+| **Blocks CSS** | `linework-blocks.css`: layout for the 25 blocks. 5.5 kB gzipped (minified). |
+| **Behaviour** | `linework.js`: eight Web Components, icons, menus, toasts, themes, sorting and copy buttons. 16.5 kB gzipped. |
+| **React** | `linework-ui/react`: typed wrappers for seven elements, with event props and refs. 1.7 kB gzipped. |
+| **Themes** | Trace (light, default), Blueprint (dark) and Vellum (warm), defined entirely in tokens. |
+| **Blocks** | Marketing: hero, header, logos, stats, process, features, comparison, pricing, team, testimonial, journal, changelog, FAQ, contact, newsletter, call to action and footer. Application: dashboard, onboarding, billing, members, review inbox, sign in, settings and not found. |
+| **Components** | Forms: buttons, button groups, inputs, textareas, selects, search fields, fieldsets, checkboxes, radios, switches, ranges, segmented controls, steppers, combobox and calendar. Instruments: pads, dimension lines, keycaps, lamps, stamps, meters, progress bars, spinners and skeletons. Navigation: tabs, breadcrumbs, pagination, side navigation, steps and trees. Data: tables with sorting, spec lists, stats, activity feeds, setting rows, avatars, chips, file lists and code blocks. Overlays: menus, tooltips, dialogs, sheets, toasts and the command palette. Feedback: empty states, callouts, banners, accordions and dropzones. Plus 33 icons. |
+| **Icons** | 33 icons in one inline SVG sprite. |
+| **Fonts** | Barlow Semi Condensed, five latin woff2 weights under the SIL Open Font License, used only where Bahnschrift and DIN Alternate are missing. |
+| **Pages** | Landing page, block gallery, component gallery, guide, an example project console and block previews. |
+
+Windows uses Bahnschrift and macOS uses DIN Alternate. Every other platform downloads the bundled Barlow from `dist/fonts/`, next to the stylesheet. Nothing is loaded from a CDN.
+
+### Quick start
+
+Install the package, or copy `dist/` into your project and link the files:
+
+```sh
+npm install linework-ui
+```
+
+```html
+<link rel="stylesheet" href="linework.css">
+<script src="linework.global.js" defer></script>
+
+<button class="lw-btn lw-btn--primary">New sheet</button>
+<lw-pad name="Publish" keys="1" length="1.2 s"></lw-pad>
+```
+
+The script is optional for the class-based components, which render with HTML and CSS alone. The eight custom elements build their markup in the script: without it, `lw-pad`, `lw-meter`, `lw-command`, `lw-calendar` and `lw-drawer` render nothing, and `lw-tabs` and `lw-combobox` show their static children. The script also adds behaviour for menus, toasts, sorting, dismissing, steppers, theme switching and copy buttons. The global build exposes `window.Linework`. The ES module build, `linework.js`, is for bundlers:
+
+```js
+import 'linework-ui/style.css';
+import Linework from 'linework-ui';
+```
+
+When you copy files by hand, keep `dist/fonts/` next to `linework.css`.
+
+#### React
+
+```jsx
+import 'linework-ui/style.css';
+import { Drawer, Pad } from 'linework-ui/react';
+
+export function Publish({ open, setOpen, run }) {
+  return (
+    <>
+      <Pad name="Publish" keys="1" onPress={(event) => { event.preventDefault(); run(event.detail.pad); }} />
+      <Drawer open={open} label="Publish" onClose={() => setOpen(false)}>
+        <p>Ready to send revision 04.</p>
+      </Drawer>
+    </>
+  );
+}
+```
+
+`Drawer`, `Tabs`, `Pad`, `Meter`, `Combobox`, `Command` and `Calendar` take typed event props (`onPress`, `onChange`, `onSelect` and so on) whose `detail` is typed, forward refs to the element, and map booleans to attributes. React and React DOM 18 or later are optional peer dependencies.
+
+#### Blocks
+
+Blocks need the block stylesheet as well:
+
+```html
+<link rel="stylesheet" href="linework.css">
+<link rel="stylesheet" href="linework-blocks.css">
+<script src="linework.global.js" defer></script>
+```
+
+Copy a block's markup from the gallery or from `docs/assets/js/blocks-data.js`. Blocks use `blk-*` layout classes; everything else is the component API.
+
+### Run the site
+
+Requires Node 18 or later. There are no npm packages to install.
+
+```sh
+npm start         # static server at http://127.0.0.1:4173/docs/
+npm run build     # build dist/ and report gzip sizes
+npm run capture   # screenshots for the README and gallery cards
+```
+
+The capture script drives Microsoft Edge through the Chrome DevTools Protocol. On macOS or Linux, set `LW_BROWSER` to a Chromium binary.
+
+Pages after `npm start`:
+
+- `/docs/`: landing page
+- `/docs/blocks.html`: 25 blocks with live previews, copy and filters
+- `/docs/components.html`: component gallery and tokens
+- `/docs/docs.html`: guide covering install, tokens, themes, components, API, frameworks and accessibility
+- `/docs/console.html`: example project console
+- `/docs/preview.html?block=hero`: a single block
+
+### Themes
+
+All three themes set the same custom properties. Apply one to the root or to any container:
+
+```html
+<html data-theme="blueprint">
+  ...
+</html>
+
+<section data-theme="vellum">
+  ...
+</section>
+```
+
+```js
+Linework.setTheme('blueprint'); // saved to localStorage
+Linework.getTheme();            // 'blueprint'
+Linework.cycleTheme();          // next theme
+```
+
+Token groups:
+
+- Surfaces: `--lw-paper`, `--lw-paper-lit`, `--lw-paper-deep`
+- Ink: `--lw-ink`, `--lw-pencil`, `--lw-faint`
+- Structure: `--lw-rule`, `--lw-line`, `--lw-grid`, `--lw-border`, `--lw-border-quiet`
+- Signal: `--lw-redline`, `--lw-redline-deep`, used only for live, playing, destructive or focused states
+- Type: `--lw-font-ui`, `--lw-font-display`, `--lw-font-narrow`, `--lw-font-mono`
+- Space: `--lw-space-*`, named in pixels (`--lw-space-8` is 8 px)
+- Motion: `--lw-duration-1` to `--lw-duration-5`, `--lw-ease`
+
+A custom theme can be a few lines. Overrides on `:root` apply under every theme, including Blueprint; to change one theme only, scope them to `[data-theme="trace"]` or a theme name of your own.
+
+```css
+:root {
+  --lw-paper: #f4f1e8;
+  --lw-ink: #1e1c18;
+  --lw-redline: #c93027;
+  --lw-font-ui: "Barlow Semi Condensed", "Segoe UI", system-ui, sans-serif;
+}
+```
+
+### Web Components
+
+The elements render in the light DOM, so your CSS applies inside them.
+
+| Element | Behaviour |
+| --- | --- |
+| `<lw-drawer>` | Side sheet on a native `<dialog>`, with focus trapping, Escape, backdrop and close control. |
+| `<lw-tabs>` | Tabs with roving tabindex, arrow keys, Home/End and panels. |
+| `<lw-pad>` | Action pad with progress, countdown, hatch and an optional menu key; `menu="id"` opens that `.lw-menu`. |
+| `<lw-meter>` | ARIA meter drawn as a row of ticks, with an optional demo animation. |
+| `<lw-combobox>` | Input with a filtered `.lw-listbox`, keyboard navigation and `aria-activedescendant`. |
+| `<lw-command>` | Command palette in a native dialog, built from `.lw-command__item` children, with an optional Ctrl/Cmd shortcut. |
+| `<lw-calendar>` | Month of day buttons with arrow, Home/End and Page Up/Down keys, `min`, `max` and `locale`. |
+| `<lw-toast-stack>` | Popover live region used by `Linework.toast()`. |
+
+```html
+<button class="lw-btn" data-lw-open="add-sheet">New sheet</button>
+
+<lw-drawer id="add-sheet" label="New sheet" width="460">
+  <div class="lw-drawer__head"><h2 class="lw-drawer__title">New sheet</h2></div>
+  <div class="lw-drawer__body">...</div>
+  <div class="lw-drawer__foot">
+    <button class="lw-btn lw-btn--primary" data-lw-close>Done</button>
+  </div>
+</lw-drawer>
+```
+
+The pad's `lw-press` event is cancelable. Call `preventDefault()` to drive the pad from a real operation; otherwise it runs its own timer.
+
+### JavaScript API
+
+```js
+Linework.toast({
+  title: 'Added',
+  message: 'North facade is now on the schedule.',
+  tone: 'success',
+});
+
+Linework.open('#new-sheet');
+Linework.copy('...');
+Linework.refresh(); // repaint range fills after dynamic content
+```
+
+Data attributes:
+
+- `data-lw-open`: open a drawer or native dialog
+- `data-lw-close`: close the nearest dialog or drawer
+- `data-lw-theme`: set a theme, or `cycle`
+- `data-lw-menu`: open a positioned menu
+- `data-lw-copy` / `data-lw-copy-target`: copy a literal or an element's text
+- `data-lw-tip`: supplementary CSS tooltip
+- `data-lw-sort`: sortable table headers with `aria-sort`
+- `data-lw-dismiss`: remove a chip, banner or file row and keep focus nearby
+- `data-lw-step`: step the number input inside `.lw-stepper`
+
+### Accessibility
+
+Linework targets WCAG AA in all three themes:
+
+- Native buttons, inputs, selects, checkboxes, radios and `<details>`.
+- Visible dashed focus outlines with offset.
+- Native modal dialogs for focus trapping and Escape.
+- Keyboard support in tabs, menus and drawers, with no keyboard traps.
+- Toasts in a polite live region that pauses on hover and focus.
+- Reduced-motion support.
+- AA contrast for body text, labels and secondary text, and 3:1 for control borders.
+
+In your own pages, label every control, keep focus visible, do not use redline as the only signal, and test your content at 200% zoom.
+
+### Project structure
+
+```
+src/css/        tokens, base, layout, components, blocks
+src/js/         linework.js, the behaviour build
+src/react/      React wrappers and their types
+src/fonts/      bundled Barlow Semi Condensed and its licence
+src/types/      TypeScript declarations
+scripts/        build, static server and screenshots
+dist/           built CSS, JS and types
+docs/           site, blocks, components, guide and console example
+docs/assets/    site CSS and JS, screenshots and block images
+```
+
+### Credits
+
+The brand names in the blocks ("Fold", "Atelier North") are fictional. Barlow Semi Condensed is by the Barlow Project Authors and is bundled under the SIL Open Font License (`dist/fonts/OFL.txt`). No other third-party assets are bundled.
+
+### License
+
+MIT. See [LICENSE](LICENSE).
+
+## Components
+
+Each example below is the live markup from the component gallery, `docs/components.html`.
+
+### Foundations
+
+Paper, ink and redline. Every value is a custom property. Override the values to change the system.
+
+### Icons
+
+Thirty-three drafting icons, one weight, square caps. They are supplementary: always pair an icon with a visible label or an aria-label.
+
+#### Icon set (`.lw-icon`)
+
+Use <svg class="lw-icon"><use href="#lw-i-search"></use></svg>. The sprite is installed by linework.js.
+
+### Keys
+
+Hovering thickens the bottom wall, as if the key stood proud of the sheet. Pressing puts it back flush. Sharp corners, always.
+
+#### Variants (`.lw-btn`)
+
+Primary is for the one next action. Danger is for deleting, stopping or leaving. Redline never decorates.
+
+```html
+<button type="button" class="lw-btn">Default</button>
+<button type="button" class="lw-btn lw-btn--primary">Primary</button>
+<button type="button" class="lw-btn lw-btn--danger">Danger</button>
+<button type="button" class="lw-btn lw-btn--quiet">Quiet</button>
+<button type="button" class="lw-btn lw-btn--danger-quiet">Quiet danger</button>
+<button type="button" class="lw-btn lw-btn--link">Text link</button>
+<button type="button" class="lw-btn" disabled>Disabled</button>
+<button type="button" class="lw-btn is-loading">Working</button>
+```
+
+#### Sizes & icons (`--sm · --lg · --icon`)
+
+```html
+<button type="button" class="lw-btn lw-btn--sm">Small</button>
+<button type="button" class="lw-btn">Default</button>
+<button type="button" class="lw-btn lw-btn--lg">Large</button>
+<button type="button" class="lw-btn lw-btn--icon" aria-label="Settings"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-settings"></use></svg></button>
+<button type="button" class="lw-btn lw-btn--icon lw-btn--sm" aria-label="Copy"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg></button>
+<button type="button" class="lw-btn"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg>New sheet</button>
+```
+
+#### Groups & legends (`.lw-btn-group`)
+
+```html
+<div class="lw-btn-group">
+  <button type="button" class="lw-btn">Day</button>
+  <button type="button" class="lw-btn">Week</button>
+  <button type="button" class="lw-btn">Month</button>
+</div>
+<button type="button" class="lw-btn lw-btn--danger lw-btn--block">Stop all<span class="lw-btn__legend">Ctrl + Alt + Backspace</span></button>
+```
+
+### Fields
+
+Native inputs, drawn as boxes. Focus shows a dashed construction line outside the border; invalid fields borrow the redline.
+
+#### Text, search, select (`.lw-input · .lw-search`)
+
+```html
+<div class="lw-field">
+  <label class="lw-field__label" for="c-name">Project name</label>
+  <input class="lw-input" id="c-name" type="text" value="North facade">
+  <span class="lw-field__hint">Shown on the schedule and in search.</span>
+</div>
+<div class="lw-field">
+  <label class="lw-field__label" for="c-search">Search sheets</label>
+  <div class="lw-search">
+    <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg>
+    <input class="lw-input" id="c-search" type="search" placeholder="Search 6 sheets">
+    <span class="lw-keycap lw-search__hint">/</span>
+  </div>
+</div>
+<div class="lw-field">
+  <label class="lw-field__label" for="c-device">Default paper</label>
+  <div class="lw-select-wrap">
+    <select class="lw-select" id="c-device">
+      <option>Trace — default</option>
+      <option>Blueprint — dark</option>
+      <option>Vellum — warm</option>
+    </select>
+  </div>
+</div>
+<div class="lw-field">
+  <label class="lw-field__label" for="c-note">Note for the next reviewer</label>
+  <textarea class="lw-textarea" id="c-note" placeholder="What still needs a decision?"></textarea>
+</div>
+```
+
+#### States & actions (`aria-invalid · :disabled`)
+
+```html
+<div class="lw-field">
+  <label class="lw-field__label" for="c-error">Shortcut</label>
+  <input class="lw-input" id="c-error" type="text" value="Ctrl+1" aria-invalid="true" aria-describedby="c-error-note">
+  <span class="lw-field__error" id="c-error-note">Another app already uses this combination.</span>
+</div>
+<div class="lw-field">
+  <label class="lw-field__label" for="c-disabled">Workspace</label>
+  <input class="lw-input" id="c-disabled" type="text" value="Atelier North" disabled>
+  <span class="lw-field__hint">Owner-managed; ask an owner to change it.</span>
+</div>
+<div class="lw-field">
+  <label class="lw-field__label" for="c-output">Workspace path</label>
+  <div class="lw-input-row">
+    <input class="lw-input" id="c-output" type="text" value="Atelier North / Studio / Sheets" readonly>
+    <button type="button" class="lw-btn" data-lw-copy-target="#c-output"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button>
+  </div>
+</div>
+<div class="lw-field">
+  <div class="lw-field__meta"><label class="lw-field__label" for="c-bio">Short note</label><span>24 / 80</span></div>
+  <textarea class="lw-textarea" id="c-bio" rows="3" style="min-height:70px">Measure twice. Comment once.</textarea>
+</div>
+```
+
+### Choices
+
+An LED square instead of a pill switch. Checkboxes and radios stay native underneath, so keyboard and screen readers behave.
+
+#### On / off & selection (`.lw-led · .lw-check`)
+
+```html
+<label class="lw-led lw-led--redline">
+  <input class="lw-led__input" type="checkbox" checked>
+  <span class="lw-led__box"><span class="lw-led__fill"></span></span>
+  <span>Snap to grid</span><span class="lw-led__state">On</span>
+</label>
+<label class="lw-led">
+  <input class="lw-led__input" type="checkbox">
+  <span class="lw-led__box"><span class="lw-led__fill"></span></span>
+  <span>Guides</span><span class="lw-led__state">Off</span>
+</label>
+<hr class="demo-divider">
+<label class="lw-check"><input class="lw-check__input" type="checkbox" checked><span class="lw-check__box"></span><span>Show rulers on the sheet</span></label>
+<label class="lw-check"><input class="lw-check__input" type="checkbox"><span class="lw-check__box"></span><span>Open the overview on start</span></label>
+<hr class="demo-divider">
+<div class="lw-choices">
+  <label class="lw-radio"><input class="lw-radio__input" type="radio" name="c-paper" checked><span class="lw-radio__box"></span><span>Trace</span></label>
+  <label class="lw-radio"><input class="lw-radio__input" type="radio" name="c-paper"><span class="lw-radio__box"></span><span>Blueprint</span></label>
+  <label class="lw-radio"><input class="lw-radio__input" type="radio" name="c-paper"><span class="lw-radio__box"></span><span>Vellum</span></label>
+</div>
+```
+
+#### Ranges & segments (`.lw-range · .lw-segments`)
+
+```html
+<div class="lw-field">
+  <label class="lw-field__label" for="c-volume">Grid opacity</label>
+  <input class="lw-range" id="c-volume" type="range" min="0" max="1" step="0.01" value="0.64">
+  <div class="lw-scale"><span>0</span><span>50</span><span>100</span></div>
+</div>
+<div class="lw-field">
+  <label class="lw-field__label" for="c-monitor">Line weight</label>
+  <input class="lw-range" id="c-monitor" type="range" min="0" max="1" step="0.01" value="0.3">
+</div>
+<hr class="demo-divider">
+<div>
+  <p class="lw-label" style="margin-bottom:8px">Density</p>
+  <div class="lw-segments" role="group" aria-label="Density">
+    <button type="button" class="lw-segments__item" aria-pressed="false">Compact</button>
+    <button type="button" class="lw-segments__item" aria-pressed="true">Default</button>
+    <button type="button" class="lw-segments__item" aria-pressed="false">Room</button>
+  </div>
+</div>
+<div>
+  <p class="lw-label" style="margin-bottom:8px">Paper</p>
+  <div class="lw-segments lw-segments--block" role="group" aria-label="Paper">
+    <button type="button" class="lw-segments__item" aria-pressed="true">Trace</button>
+    <button type="button" class="lw-segments__item" aria-pressed="false">Blueprint</button>
+    <button type="button" class="lw-segments__item" aria-pressed="false">Vellum</button>
+  </div>
+</div>
+```
+
+### Pads & dimensions
+
+A pad drawn as a room in plan. While it runs, the walls and dimension turn red and section hatching sweeps the elapsed part. Every pad is a real button.
+
+#### The board (`lw-pad`)
+
+Attributes: name, keys, length, duration, playing, progress, menu. Events: lw-press, lw-play, lw-stop, lw-end. The keycap is a visual legend; shortcuts belong to the application. The pad is a visual timer only; wire it to your own task.
+
+```html
+<div class="lw-pads">
+  <lw-pad name="Publish" keys="1" length="1.2 s" duration="1.2" menu="c-menu"></lw-pad>
+  <lw-pad name="Archive" keys="2" length="0.8 s" duration="0.8"></lw-pad>
+  <lw-pad name="Sync" keys="3" length="2.4 s" duration="2.4"></lw-pad>
+  <lw-pad name="Send for review" keys="4" length="1.6 s" duration="1.6"></lw-pad>
+</div>
+```
+
+#### Dimension lines (`.lw-dimension`)
+
+```html
+<div class="lw-dimension" role="img" aria-label="Length 3.1 seconds">
+  <span class="lw-dimension__cap" aria-hidden="true"></span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__label">3.1 s</span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+</div>
+<div class="lw-dimension lw-dimension--live" role="img" aria-label="Remaining 2.2 seconds">
+  <span class="lw-dimension__cap" aria-hidden="true"></span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__label">2.2 s</span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+</div>
+<div class="lw-dimension lw-dimension--ink" role="img" aria-label="Width 1440 pixels">
+  <span class="lw-dimension__cap" aria-hidden="true"></span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__label">1440 px</span><span class="lw-dimension__rule" aria-hidden="true"></span><span class="lw-dimension__cap lw-dimension__cap--end" aria-hidden="true"></span>
+</div>
+```
+
+#### Keys & keycaps (`.lw-keycap`)
+
+```html
+<span class="lw-keycap">Ctrl+1</span>
+<span class="lw-keycap lw-keycap--ink">Cmd K</span>
+<span class="lw-keycap lw-keycap--red">Esc</span>
+<span class="lw-keycap lw-keycap--filled">F5</span>
+<span class="lw-keycap lw-keycap--lg">Space</span>
+<span class="lw-keys"><span class="lw-keycap">Ctrl</span>+<span class="lw-keycap">Alt</span>+<span class="lw-keycap">Backspace</span></span>
+```
+
+### Status & data
+
+Lamps, stamps, meters and progress. Redline appears only when something is live, pending or at risk; everything else is graphite.
+
+#### Lamps & stamps (`.lw-lamp · .lw-stamp`)
+
+```html
+<div class="lw-cluster">
+  <span class="lw-lamp is-on"><span class="lw-lamp__dot"></span>On air</span>
+  <span class="lw-lamp"><span class="lw-lamp__dot"></span>Standby</span>
+</div>
+<div class="lw-cluster">
+  <span class="lw-stamp">Draft</span>
+  <span class="lw-stamp lw-stamp--red">Live</span>
+  <span class="lw-stamp lw-stamp--ink">Approved</span>
+  <span class="lw-stamp lw-stamp--blue">MIT</span>
+  <span class="lw-stamp lw-stamp--quiet">Archived</span>
+  <span class="lw-stamp lw-stamp--tilt">Reviewed</span>
+</div>
+<div class="lw-cluster">
+  <span class="lw-avatars">
+    <span class="lw-avatar">MW</span>
+    <span class="lw-avatar">JK</span>
+    <span class="lw-avatar">AS</span>
+    <span class="lw-avatars__more">+4</span>
+  </span>
+  <span class="lw-smallprint">Atelier North</span>
+</div>
+```
+
+#### Meters & progress (`lw-meter · .lw-progress`)
+
+```html
+<div class="lw-row">
+  <span class="lw-label">Activity</span>
+  <lw-meter bars="20" live label="Activity level"></lw-meter>
+</div>
+<div>
+  <div class="lw-field__meta"><span class="lw-label">Approval</span><span class="lw-smallprint">3 of 4</span></div>
+  <div class="lw-progress"><div class="lw-progress__bar" style="width:75%"></div></div>
+</div>
+<div>
+  <div class="lw-field__meta"><span class="lw-label">Playing</span><span class="lw-smallprint">42%</span></div>
+  <div class="lw-progress lw-progress--live lw-progress--hatch"><div class="lw-progress__bar" style="width:42%"></div></div>
+</div>
+<div class="lw-skeleton" style="height:12px;width:80%"></div>
+<div class="lw-row"><span class="lw-spinner" aria-hidden="true"></span><span class="lw-smallprint">Drawing revision 04…</span></div>
+<div class="lw-sparkbars" aria-hidden="true"><span style="--v:30%"></span><span style="--v:45%"></span><span style="--v:38%"></span><span style="--v:62%"></span><span style="--v:55%"></span><span style="--v:74%"></span><span style="--v:68%" class="is-red"></span></div>
+```
+
+### Navigation
+
+Tabs are arrow-key navigable; breadcrumbs and pagination keep the page addressable.
+
+#### Tabs (`lw-tabs`)
+
+```html
+<lw-tabs style="width:100%">
+  <div class="lw-tablist">
+    <button class="lw-tab"><span class="lw-tab__num">01</span>Overview</button>
+    <button class="lw-tab"><span class="lw-tab__num">02</span>Components</button>
+    <button class="lw-tab"><span class="lw-tab__num">03</span>Tokens</button>
+  </div>
+  <div class="lw-tabpanel"><p class="lw-note">Fifty-one parts on one sheet. Everything here is live: press, type, drag, open a sheet.</p></div>
+  <div class="lw-tabpanel"><p class="lw-note">Keys, fields, pads, tables and sheets. Behaviour comes from eight small Web Components.</p></div>
+  <div class="lw-tabpanel"><p class="lw-note">Every colour, space and duration is a custom property. Override the values; the rules stay true.</p></div>
+</lw-tabs>
+```
+
+#### Breadcrumb & pagination (`.lw-breadcrumb · .lw-pagination`)
+
+```html
+<nav class="lw-breadcrumb" aria-label="Breadcrumb example">
+  <ol><li><a href="#">Atelier North</a></li><li><a href="#">Sheets</a></li><li aria-current="page">North facade</li></ol>
+</nav>
+<nav class="lw-pagination" aria-label="Pagination example">
+  <button type="button" aria-label="Previous page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-chevron-right" style="transform:rotate(180deg)"></use></svg></button>
+  <button type="button" aria-current="page">1</button>
+  <button type="button">2</button>
+  <button type="button">3</button>
+  <span class="lw-pagination__gap" style="display:grid;place-items:center;min-width:34px;color:var(--lw-faint)">…</span>
+  <button type="button">12</button>
+  <button type="button" aria-label="Next page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-chevron-right"></use></svg></button>
+</nav>
+```
+
+#### Side navigation (`.lw-sidenav`)
+
+```html
+<nav class="lw-sidenav" aria-label="Side navigation example" style="padding:8px 0">
+  <p class="lw-sidenav__label">Workspace</p>
+  <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-grid"></use></svg>Overview</a>
+  <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Sheets<span class="lw-sidenav__count">284</span></a>
+  <a class="lw-sidenav__item" href="#" aria-current="page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Reviews<span class="lw-sidenav__count">04</span></a>
+</nav>
+```
+
+### Overlays
+
+Sheets and dialogs are native <dialog> elements: top layer, focus trapped, Escape and backdrop for free. Toasts use popovers so they stay above them.
+
+#### Sheets & dialogs (`lw-drawer · .lw-dialog`)
+
+The drawer is a side sheet; the dialog is centred. Both close with Escape or the visible close control.
+
+```html
+<button type="button" class="lw-btn" data-lw-open="c-drawer"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Open a sheet</button>
+<button type="button" class="lw-btn lw-btn--danger-quiet" data-lw-open="c-dialog">Delete a sheet</button>
+```
+
+#### Menu & tooltip (`data-lw-menu · data-lw-tip`)
+
+Tooltips are supplementary by design. The control itself always carries an accessible name.
+
+```html
+<button type="button" class="lw-btn" data-lw-menu="#c-menu">Pad options</button>
+<div class="lw-popover lw-menu" id="c-menu" popover>
+  <button type="button" class="lw-menu__item"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-keyboard"></use></svg>Set key…</button>
+  <button type="button" class="lw-menu__item"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-volume"></use></svg>Volume</button>
+  <hr class="lw-menu__sep">
+  <button type="button" class="lw-menu__item lw-menu__item--danger"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-trash"></use></svg>Remove pad</button>
+</div>
+<button type="button" class="lw-btn lw-btn--icon" aria-label="Settings" data-lw-tip="Settings" data-lw-tip-pos="right"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-settings"></use></svg></button>
+<button type="button" class="lw-btn lw-btn--icon" aria-label="Copy link" data-lw-tip="Copy link"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-link"></use></svg></button>
+```
+
+### Feedback
+
+Short confirmations, quiet empty states, visible waiting. Toasts sit in the bottom centre, above native dialogs, and pause their timer on hover.
+
+#### Toasts (`Linework.toast() · lw-toast-stack`)
+
+```html
+<div class="lw-cluster">
+  <button type="button" class="lw-btn" data-toast data-toast-title="Added" data-toast-message="North facade is now on the schedule." data-toast-tone="success">Success</button>
+  <button type="button" class="lw-btn" data-toast data-toast-title="Settings saved" data-toast-message="The workspace inherits the new paper." data-toast-tone="blue">Info</button>
+  <button type="button" class="lw-btn" data-toast data-toast-title="Shortcut taken" data-toast-message="Another app already uses Ctrl+Alt+Backspace." data-toast-tone="warning">Warning</button>
+</div>
+<p class="demo-note">One live region, maximum four on screen. Each toast pauses when hovered or focused, then resumes.</p>
+```
+
+#### Empty state (`.lw-empty`)
+
+```html
+<div class="lw-empty" style="width:100%;padding:28px 20px">
+  <div class="lw-empty__frame"><span class="lw-title" style="font-size:24px">No sheets yet</span></div>
+  <p class="lw-empty__text">Draw a new sheet, or start from a template in the project library.</p>
+  <div class="lw-empty__actions"><button type="button" class="lw-btn lw-btn--primary lw-btn--sm" data-lw-open="c-drawer">New sheet</button></div>
+</div>
+```
+
+### Application
+
+The patterns that make a dashboard read: measured stats, a schedule table, activity, settings rows and an accordion that is just <details> in a good coat.
+
+#### Stats & activity (`.lw-stats · .lw-activity`)
+
+```html
+<div class="lw-stats">
+  <div class="lw-stat"><span class="lw-stat__label">Open reviews <span class="lw-stamp lw-stamp--red">Live</span></span><span class="lw-stat__value">04</span><span class="lw-stat__foot"><span class="lw-delta">↑ 2</span> this week</span></div>
+  <div class="lw-stat"><span class="lw-stat__label">Sheets this month</span><span class="lw-stat__value">28</span><span class="lw-stat__foot"><span class="lw-delta">↑ 12%</span> on September</span></div>
+  <div class="lw-stat"><span class="lw-stat__label">Approval time</span><span class="lw-stat__value">2.4 <span class="lw-smallprint">days</span></span><span class="lw-stat__foot"><span class="lw-delta">↓ 0.6</span> faster</span></div>
+</div>
+<ul class="lw-activity">
+  <li class="lw-activity__item lw-activity__item--live"><div><p class="lw-activity__title"><strong>Jonas</strong> left a redline on North facade.</p><p class="lw-activity__meta">18 min ago</p></div></li>
+  <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Ada</strong> approved East wing / tender.</p><p class="lw-activity__meta">1 hr ago</p></div></li>
+  <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Mara</strong> created Roof study / draft.</p><p class="lw-activity__meta">3 hrs ago</p></div></li>
+</ul>
+```
+
+#### Schedule table (`.lw-table`)
+
+```html
+<div class="lw-table-wrap">
+  <table class="lw-table">
+    <thead><tr><th>Sheet</th><th>Owner</th><th>Updated</th><th>Status</th><th class="lw-table__actions">Actions</th></tr></thead>
+    <tbody>
+      <tr><td class="lw-table__strong">North facade</td><td>Mara Weiss</td><td class="lw-table__muted">2 hours ago</td><td><span class="lw-stamp lw-stamp--red">In review</span></td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for North facade"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+      <tr><td class="lw-table__strong">Atrium / concept 2</td><td>Jonas Keller</td><td class="lw-table__muted">Yesterday</td><td><span class="lw-stamp lw-stamp--quiet">Draft</span></td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for Atrium / concept 2"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+      <tr><td class="lw-table__strong">East wing / tender</td><td>Ada Sorensen</td><td class="lw-table__muted">12 Oct</td><td><span class="lw-stamp lw-stamp--ink">Approved</span></td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for East wing / tender"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+#### Settings rows (`.lw-setting-row`)
+
+```html
+<div class="lw-setting-row">
+  <div class="lw-setting-row__text"><p class="lw-setting-row__title">New comments</p><p class="lw-setting-row__note">A quiet ping when someone marks up your sheet.</p></div>
+  <div class="lw-setting-row__control"><label class="lw-led lw-led--redline"><input class="lw-led__input" type="checkbox" checked aria-label="New comments"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span>On</span></label></div>
+</div>
+<div class="lw-setting-row">
+  <div class="lw-setting-row__text"><p class="lw-setting-row__title">Weekly digest</p><p class="lw-setting-row__note">One short sheet on Monday morning.</p></div>
+  <div class="lw-setting-row__control"><label class="lw-led"><input class="lw-led__input" type="checkbox" aria-label="Weekly digest"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span>Off</span></label></div>
+</div>
+```
+
+#### Accordion (`.lw-accordion / details`)
+
+```html
+<div class="lw-accordion" style="width:100%">
+  <details class="lw-accordion__item" open>
+    <summary class="lw-accordion__summary">Can guests approve?</summary>
+    <div class="lw-accordion__body"><p>Yes. Guests can comment and approve, but cannot create new sheets.</p></div>
+  </details>
+  <details class="lw-accordion__item">
+    <summary class="lw-accordion__summary">Is there an offline mode?</summary>
+    <div class="lw-accordion__body"><p>Sheets you have opened stay readable; notes queue until you reconnect.</p></div>
+  </details>
+</div>
+```
+
+#### Dropzone (`.lw-dropzone`)
+
+```html
+<div class="lw-dropzone" style="width:100%">
+  <svg class="lw-icon lw-dropzone__icon" aria-hidden="true"><use href="#lw-i-download"></use></svg>
+  <span class="lw-dropzone__title">Drop drawings here</span>
+  <span class="lw-smallprint">PDF, PNG, SVG, DWG · up to 25 MB</span>
+</div>
+```
+
+#### Callout (`.lw-callout`)
+
+```html
+<div class="lw-callout lw-callout--redline"><span class="lw-callout__label">Redline</span><p>Redline marks state: if it is on the sheet, something is live, waiting or at risk.</p></div>
+<div class="lw-callout lw-callout--blue"><span class="lw-callout__label">Note</span><p>Everything on this page is drawn with the same classes. Nothing is a screenshot.</p></div>
+```
+
+### Pickers
+
+Choosing from a list, a date or a number. The combobox, calendar and command palette are Web Components over markup you write; the stepper and chips are classes with a little delegated behaviour.
+
+#### Combobox (`lw-combobox`)
+
+```html
+<lw-combobox id="c-combobox">
+  <label class="lw-field__label" for="c-lead">Lead</label>
+  <input class="lw-input" id="c-lead" type="text" placeholder="Search people">
+  <ul class="lw-listbox">
+    <li data-value="mara"><span class="lw-option__label">Mara Weiss</span><span class="lw-option__meta">Facade</span></li>
+    <li data-value="jonas"><span class="lw-option__label">Jonas Keller</span><span class="lw-option__meta">Interiors</span></li>
+    <li data-value="ada"><span class="lw-option__label">Ada Sorensen</span><span class="lw-option__meta">Landscape</span></li>
+    <li data-value="omar"><span class="lw-option__label">Omar Haddad</span><span class="lw-option__meta">Facade</span></li>
+  </ul>
+</lw-combobox>
+<p class="lw-smallprint">Arrow keys move, Enter picks, Escape closes. Emits <code class="lw-code">lw-change</code> with the value.</p>
+```
+
+#### Calendar (`lw-calendar`)
+
+```html
+<lw-calendar id="c-calendar" value="2026-10-18" min="2026-10-05" locale="en-GB"></lw-calendar>
+```
+
+#### Stepper (`.lw-stepper · data-lw-step`)
+
+```html
+<label class="lw-field__label" for="c-seats">Seats</label>
+<div class="lw-stepper">
+  <button type="button" class="lw-stepper__key" data-lw-step="-1" aria-label="Fewer seats"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-minus"></use></svg></button>
+  <input class="lw-input" id="c-seats" type="number" value="4" min="1" max="6" step="1">
+  <button type="button" class="lw-stepper__key" data-lw-step="1" aria-label="More seats"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg></button>
+</div>
+```
+
+#### Chips (`.lw-chip · data-lw-dismiss`)
+
+```html
+<ul class="lw-chips" id="c-chips" aria-label="Teams on this sheet">
+  <li class="lw-chip">Facade<button type="button" class="lw-chip__remove" data-lw-dismiss aria-label="Remove Facade"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+  <li class="lw-chip">Interiors<button type="button" class="lw-chip__remove" data-lw-dismiss aria-label="Remove Interiors"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+  <li class="lw-chip">Landscape<button type="button" class="lw-chip__remove" data-lw-dismiss aria-label="Remove Landscape"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+  <li class="lw-chip">Read only</li>
+</ul>
+```
+
+#### Command palette (`lw-command`)
+
+```html
+<button type="button" class="lw-btn" data-lw-open="c-command"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg>Open the palette</button>
+<span class="lw-smallprint">or press <span class="lw-keycap">Ctrl</span> <span class="lw-keycap">K</span></span>
+<lw-command id="c-command" shortcut="k" label="Command palette" placeholder="Search commands and sheets">
+  <button type="button" class="lw-command__item" data-group="Sheets" data-shortcut="N">New sheet</button>
+  <button type="button" class="lw-command__item" data-group="Sheets">Duplicate North facade</button>
+  <button type="button" class="lw-command__item" data-group="Sheets">Archive Roof study</button>
+  <button type="button" class="lw-command__item" data-group="Paper" data-lw-theme="trace">Switch to Trace</button>
+  <button type="button" class="lw-command__item" data-group="Paper" data-lw-theme="blueprint">Switch to Blueprint</button>
+  <button type="button" class="lw-command__item" data-group="Paper" data-lw-theme="vellum">Switch to Vellum</button>
+  <a class="lw-command__item" data-group="Go to" href="docs.html">Read the guide</a>
+  <a class="lw-command__item" data-group="Go to" href="blocks.html">Browse the blocks</a>
+</lw-command>
+```
+
+### Data & content
+
+A table you can sort, files in flight, a folder tree, a block of code with a copy key and a page banner.
+
+#### Sortable table (`table[data-lw-sort]`)
+
+```html
+<div class="lw-table-wrap">
+  <table class="lw-table" id="c-sort-table" data-lw-sort>
+    <caption>Sheets by revision. Select a heading to sort.</caption>
+    <thead><tr><th scope="col">Sheet</th><th scope="col">Code</th><th scope="col">Revision</th><th scope="col" data-sort="none">Status</th></tr></thead>
+    <tbody>
+      <tr><td class="lw-table__strong">North facade</td><td>A-104</td><td>4</td><td><span class="lw-stamp lw-stamp--red">In review</span></td></tr>
+      <tr><td class="lw-table__strong">Atrium / concept 2</td><td>A-102</td><td>2</td><td><span class="lw-stamp lw-stamp--quiet">Draft</span></td></tr>
+      <tr><td class="lw-table__strong">East wing / tender</td><td>A-108</td><td>6</td><td><span class="lw-stamp lw-stamp--ink">Approved</span></td></tr>
+      <tr><td class="lw-table__strong">Roof study</td><td>A-111</td><td>1</td><td><span class="lw-stamp lw-stamp--quiet">Draft</span></td></tr>
+      <tr><td class="lw-table__strong">Terrace / lighting</td><td>A-115</td><td>10</td><td><span class="lw-stamp lw-stamp--red">In review</span></td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+#### File list (`.lw-files`)
+
+```html
+<ul class="lw-files">
+  <li class="lw-file"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg><span class="lw-file__name">north-facade-rev04.pdf<span class="lw-file__meta">2.4 MB · uploaded</span></span><span class="lw-stamp lw-stamp--ink">Done</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-dismiss aria-label="Remove north-facade-rev04.pdf"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></li>
+  <li class="lw-file"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg><span class="lw-file__name">atrium-model.ifc<span class="lw-file__meta">18 MB · 62%</span></span><span class="lw-stamp lw-stamp--red">Uploading</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-dismiss aria-label="Cancel atrium-model.ifc"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button><div class="lw-progress" role="progressbar" aria-label="atrium-model.ifc" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"><div class="lw-progress__bar" style="width:62%"></div></div></li>
+</ul>
+```
+
+#### Tree (`.lw-tree · details`)
+
+```html
+<ul class="lw-tree" aria-label="Project files">
+  <li><details open><summary><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-folder"></use></svg>Facade</summary>
+    <ul>
+      <li><a href="#data"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>North facade</a></li>
+      <li><a href="#data" aria-current="page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>East wing</a></li>
+    </ul>
+  </details></li>
+  <li><details><summary><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-folder"></use></svg>Interiors</summary>
+    <ul>
+      <li><a href="#data"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Atrium / concept 2</a></li>
+    </ul>
+  </details></li>
+  <li><a href="#data"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg>Project brief</a></li>
+</ul>
+```
+
+#### Code block (`.lw-codeblock`)
+
+```html
+<figure class="lw-codeblock">
+  <figcaption class="lw-codeblock__cap"><span>Shell</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--sm" data-lw-copy-target="#c-code"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-copy"></use></svg><span class="lw-copy-label">Copy</span></button></figcaption>
+  <pre><code id="c-code">npm install linework-ui</code></pre>
+</figure>
+```
+
+#### Banner (`.lw-banner`)
+
+```html
+<div class="lw-banner lw-banner--redline" role="status"><span class="lw-banner__text">Review closes today at 17:00. Two sheets are still open.</span><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-dismiss aria-label="Dismiss notice"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-close"></use></svg></button></div>
+<div class="lw-banner lw-banner--blue"><span class="lw-banner__text">Pickers and a React package are in this release.</span><a class="lw-btn lw-btn--sm" href="docs.html">Read the guide</a></div>
+```
+
+## Class reference
+
+Every `lw-*` class defined in the stylesheet, by source file. `__` marks a part of a component and `--` a variant.
+
+- `accordion.css`: `lw-accordion`, `lw-accordion--boxed`, `lw-accordion--indexed`, `lw-accordion__body`, `lw-accordion__item`, `lw-accordion__summary`
+- `base.css`: `lw-between`, `lw-caps`, `lw-cluster`, `lw-code`, `lw-display`, `lw-eyebrow`, `lw-faint`, `lw-fill`, `lw-graph`, `lw-graph--major`, `lw-hairline`, `lw-hatch`, `lw-hatch--paper`, `lw-hatch--pencil`, `lw-heading`, `lw-icon`, `lw-icon--fill`, `lw-label`, `lw-mono`, `lw-muted`, `lw-no-scroll`, `lw-note`, `lw-note--tight`, `lw-nowrap`, `lw-pre`, `lw-prose`, `lw-red`, `lw-row`, `lw-rule`, `lw-scroll-lock`, `lw-scroll-x`, `lw-skip-link`, `lw-smallprint`, `lw-sprite`, `lw-stack`, `lw-stack--loose`, `lw-stack--tight`, `lw-title`, `lw-truncate`, `lw-vh`, `lw-wrap`, `lw-wrap--narrow`
+- `button.css`: `lw-btn`, `lw-btn--block`, `lw-btn--danger`, `lw-btn--danger-quiet`, `lw-btn--icon`, `lw-btn--lg`, `lw-btn--link`, `lw-btn--primary`, `lw-btn--quiet`, `lw-btn--reveal`, `lw-btn--sm`, `lw-btn--tall`, `lw-btn-group`, `lw-btn__legend`, `lw-icon`, `lw-reveal-host`
+- `control.css`: `lw-check`, `lw-check__box`, `lw-check__input`, `lw-choices`, `lw-choices--stack`, `lw-led`, `lw-led--lg`, `lw-led--redline`, `lw-led__box`, `lw-led__fill`, `lw-led__input`, `lw-led__state`, `lw-radio`, `lw-radio__box`, `lw-radio__input`, `lw-range`, `lw-range--lg`, `lw-scale`, `lw-segments`, `lw-segments--block`, `lw-segments__item`
+- `dimension.css`: `lw-dimension`, `lw-dimension--ink`, `lw-dimension--live`, `lw-dimension--vertical`, `lw-dimension__cap`, `lw-dimension__cap--end`, `lw-dimension__label`, `lw-dimension__label--strong`, `lw-dimension__rule`
+- `display.css`: `lw-avatar`, `lw-avatar--lg`, `lw-avatar--sm`, `lw-chip`, `lw-chip__remove`, `lw-chips`, `lw-codeblock`, `lw-codeblock__cap`, `lw-keycap`, `lw-keycap--filled`, `lw-keycap--ink`, `lw-keycap--lg`, `lw-keycap--red`, `lw-keys`, `lw-lamp`, `lw-lamp--quiet`, `lw-lamp--sm`, `lw-lamp__dot`, `lw-meter`, `lw-meter--lg`, `lw-meter--redline`, `lw-meter__bar`, `lw-progress`, `lw-progress--hatch`, `lw-progress--lg`, `lw-progress--live`, `lw-progress__bar`, `lw-skeleton`, `lw-stamp`, `lw-stamp--blue`, `lw-stamp--ink`, `lw-stamp--lg`, `lw-stamp--quiet`, `lw-stamp--red`, `lw-stamp--tilt`, `lw-stamp__dot`, `lw-ticks`
+- `feedback.css`: `lw-banner`, `lw-banner--blue`, `lw-banner--redline`, `lw-banner__text`, `lw-callout`, `lw-callout--blue`, `lw-callout--redline`, `lw-callout--success`, `lw-callout__label`, `lw-dialog`, `lw-dialog--lg`, `lw-dialog--sm`, `lw-dialog__body`, `lw-dialog__foot`, `lw-dialog__head`, `lw-dialog__title`, `lw-empty`, `lw-empty__actions`, `lw-empty__frame`, `lw-empty__text`, `lw-empty__title`, `lw-icon`, `lw-menu`, `lw-menu__item`, `lw-menu__item--danger`, `lw-menu__sep`, `lw-popover`, `lw-spinner`, `lw-spinner--sm`, `lw-step`, `lw-step--done`, `lw-step-item`, `lw-step__text`, `lw-step__title`, `lw-steps`, `lw-toast`, `lw-toast--blue`, `lw-toast--success`, `lw-toast--warning`, `lw-toast-stack`, `lw-toast__body`, `lw-toast__close`, `lw-toast__led`, `lw-toast__text`, `lw-toast__title`
+- `field.css`: `lw-dropzone`, `lw-dropzone__icon`, `lw-dropzone__title`, `lw-field`, `lw-field--inline`, `lw-field-grid`, `lw-field__error`, `lw-field__hint`, `lw-field__label`, `lw-field__meta`, `lw-field__req`, `lw-icon`, `lw-input`, `lw-input-row`, `lw-search`, `lw-search__hint`, `lw-select`, `lw-select-wrap`, `lw-stepper`, `lw-stepper__key`, `lw-textarea`
+- `layout.css`: `lw-app`, `lw-app__canvas`, `lw-app__canvas--flush`, `lw-app__header`, `lw-app__main`, `lw-brand`, `lw-brand__mark`, `lw-brand__name`, `lw-brand__name--small`, `lw-drawer`, `lw-drawer__body`, `lw-drawer__body--flush`, `lw-drawer__close`, `lw-drawer__foot`, `lw-drawer__head`, `lw-drawer__title`, `lw-index`, `lw-index__group`, `lw-index__link`, `lw-index__list`, `lw-index__num`, `lw-index__title`, `lw-plate`, `lw-plate--dashed`, `lw-plate--quiet`, `lw-plate__body`, `lw-plate__body--flush`, `lw-plate__body--graph`, `lw-plate__body--tight`, `lw-plate__cap`, `lw-reg`, `lw-reg--bl`, `lw-reg--br`, `lw-reg--tl`, `lw-reg--tr`, `lw-rule-title`, `lw-section`, `lw-section--tight`, `lw-section__head`, `lw-section__lede`, `lw-section__num`, `lw-section__title`, `lw-sheet`, `lw-sheet--inset`, `lw-titleblock`, `lw-titleblock__cell`, `lw-titleblock__cell--auto`, `lw-titleblock__cell--center`, `lw-titleblock__label`, `lw-titleblock__value`
+- `linework.css`: `lw-calendar__day`, `lw-drawer`, `lw-js`, `lw-lamp`, `lw-lamp__dot`, `lw-led__fill`, `lw-meter__bar`, `lw-option`, `lw-progress__bar`, `lw-range`, `lw-segments__item`, `lw-skip-link`, `lw-table`, `lw-table__sort`, `lw-toast-stack`
+- `navigation.css`: `lw-activity`, `lw-activity__item`, `lw-activity__item--live`, `lw-activity__meta`, `lw-activity__title`, `lw-avatar`, `lw-avatars`, `lw-avatars__more`, `lw-breadcrumb`, `lw-delta`, `lw-delta--down`, `lw-fieldset`, `lw-fieldset__legend`, `lw-fieldset__note`, `lw-icon`, `lw-page-head`, `lw-page-head__actions`, `lw-page-head__note`, `lw-page-head__title`, `lw-pagination`, `lw-setting-row`, `lw-setting-row__control`, `lw-setting-row__note`, `lw-setting-row__text`, `lw-setting-row__title`, `lw-sidenav`, `lw-sidenav__count`, `lw-sidenav__item`, `lw-sidenav__label`, `lw-sparkbars`, `lw-sparkbars__label`, `lw-stat`, `lw-stat__foot`, `lw-stat__label`, `lw-stat__value`, `lw-stats`, `lw-tabbar`, `lw-toolbar`, `lw-toolbar__label`, `lw-toolbar__spacer`, `lw-tree`
+- `pad.css`: `lw-dimension__label`, `lw-pad`, `lw-pad--link`, `lw-pad--sm`, `lw-pad__dimension`, `lw-pad__hatch`, `lw-pad__keys`, `lw-pad__layout`, `lw-pad__more`, `lw-pad__spacer`, `lw-pad__surface`, `lw-pad__title`, `lw-pads`
+- `picker.css`: `lw-calendar`, `lw-calendar__day`, `lw-calendar__grid`, `lw-calendar__head`, `lw-calendar__title`, `lw-combobox`, `lw-command`, `lw-command__dialog`, `lw-command__foot`, `lw-command__group`, `lw-command__item`, `lw-command__list`, `lw-command__search`, `lw-command__section`, `lw-listbox`, `lw-listbox__empty`, `lw-option`, `lw-option__meta`
+- `table.css`: `lw-file`, `lw-file__meta`, `lw-file__name`, `lw-files`, `lw-list`, `lw-list__meta`, `lw-list__row`, `lw-list__row--interactive`, `lw-list__row--stack`, `lw-list__title`, `lw-list__value`, `lw-progress`, `lw-spec`, `lw-spec--mono`, `lw-table`, `lw-table--compact`, `lw-table--ruled`, `lw-table-wrap`, `lw-table__actions`, `lw-table__muted`, `lw-table__num`, `lw-table__sort`, `lw-table__strong`
+- `tabs.css`: `lw-tab`, `lw-tab__num`, `lw-tablist`, `lw-tabpanel`, `lw-tabs`, `lw-tabs--underline`
+
+Icons (33), used as `<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-NAME"></use></svg>`: `arrow-right`, `arrow-up-right`, `blocks`, `check`, `chevron-down`, `chevron-left`, `chevron-right`, `clock`, `close`, `copy`, `download`, `external`, `file`, `folder`, `grid`, `headphones`, `info`, `keyboard`, `link`, `menu`, `minus`, `mic`, `more`, `play`, `plus`, `search`, `settings`, `sheet`, `stop`, `theme`, `trash`, `volume`, `warning`.
+
+## Design tokens
+
+All custom properties with their values for each theme (`src/css/tokens.css`).
+
+```css
+/*
+ * Every token is public API: override tokens, not rules.
+ * Themes: trace (default), blueprint, vellum. Set data-theme on <html> or any container.
+ */
+
+:root {
+  color-scheme: light;
+
+  --lw-paper: #eef0ec;
+  --lw-paper-lit: #f8f9f6;
+  --lw-paper-deep: #e4e7e1;
+  --lw-grid: #e6e9e4;
+  --lw-grid-major: #e0e4de;
+  --lw-rule: #bcc1ba;
+  --lw-line: #828586;
+  --lw-led-off: #c2c7c0;
+  --lw-scrim: rgba(238, 240, 236, 0.82);
+
+  --lw-ink: #23262b;
+  --lw-ink-soft: #343940;
+  --lw-pencil: #5e636b;
+  --lw-faint: #636a72;
+
+  /* The only colour allowed to mean "live", "playing", "danger". */
+  --lw-redline: #c93027;
+  --lw-redline-deep: #9e241d;
+  --lw-redline-wash: rgba(201, 48, 39, 0.09);
+  --lw-on-redline: #f8f9f6;
+
+  /* Information only. Never used for state. */
+  --lw-blueprint: #2d4d67;
+
+  --lw-text: var(--lw-ink);
+  --lw-text-muted: var(--lw-pencil);
+  --lw-text-faint: var(--lw-faint);
+  --lw-surface: var(--lw-paper);
+  --lw-surface-raised: var(--lw-paper-lit);
+  --lw-border: var(--lw-line);
+  --lw-border-quiet: var(--lw-rule);
+  --lw-accent: var(--lw-redline);
+  --lw-success: #39644a;
+  --lw-warning: #8a5c16;
+  --lw-info: var(--lw-blueprint);
+  --lw-danger: var(--lw-redline);
+  --lw-on-ink: var(--lw-paper);
+  --lw-focus: var(--lw-ink);
+
+  --lw-font-ui: "Linework Bahnschrift", Bahnschrift, "DIN Alternate", "Linework Barlow",
+    "Segoe UI", system-ui, sans-serif;
+  --lw-font-display: "Linework Bahnschrift", Bahnschrift, "DIN Alternate", "Linework Barlow",
+    "Helvetica Neue", Arial, sans-serif;
+  --lw-font-narrow: "Linework Bahnschrift Narrow", "Bahnschrift SemiCondensed",
+    "Bahnschrift Semi Condensed", "Linework Barlow", "Arial Narrow", sans-serif;
+  --lw-font-mono: "Cascadia Mono", "Cascadia Code", Consolas, "SFMono-Regular", Menlo,
+    monospace;
+
+  --lw-text-2xs: 11px;
+  --lw-text-xs: 11px;
+  --lw-text-sm: 12px;
+  --lw-text-md: 13px;
+  --lw-text-base: 14px;
+  --lw-text-lg: 15px;
+  --lw-text-xl: 17px;
+  --lw-text-2xl: 20px;
+  --lw-text-3xl: 26px;
+  --lw-text-4xl: 34px;
+  --lw-text-5xl: 46px;
+  --lw-text-6xl: 64px;
+  --lw-text-7xl: 88px;
+
+  --lw-weight-light: 300;
+  --lw-weight-regular: 400;
+  --lw-weight-medium: 500;
+  --lw-weight-semibold: 600;
+  --lw-weight-bold: 700;
+
+  --lw-leading-none: 1;
+  --lw-leading-tight: 1.12;
+  --lw-leading-snug: 1.32;
+  --lw-leading-normal: 1.55;
+  --lw-leading-loose: 1.7;
+
+  --lw-tracking-tight: -0.02em;
+  --lw-tracking-normal: 0;
+  --lw-tracking-wide: 0.06em;
+  --lw-tracking-label: 0.12em;
+
+  /* Suffix = pixels, on a 2px increment. */
+  --lw-space-0: 0;
+  --lw-space-2: 2px;
+  --lw-space-4: 4px;
+  --lw-space-6: 6px;
+  --lw-space-8: 8px;
+  --lw-space-10: 10px;
+  --lw-space-12: 12px;
+  --lw-space-14: 14px;
+  --lw-space-16: 16px;
+  --lw-space-20: 20px;
+  --lw-space-24: 24px;
+  --lw-space-28: 28px;
+  --lw-space-32: 32px;
+  --lw-space-40: 40px;
+  --lw-space-48: 48px;
+  --lw-space-56: 56px;
+  --lw-space-64: 64px;
+  --lw-space-80: 80px;
+  --lw-space-96: 96px;
+
+  --lw-hairline: 1px;
+  --lw-stroke: 1.5px;
+  --lw-radius: 0;
+  --lw-grid-size: 24px;
+  --lw-control-height-sm: 30px;
+  --lw-control-height: 38px;
+  --lw-control-height-lg: 46px;
+  --lw-icon-size: 16px;
+  --lw-focus-width: 1.5px;
+  --lw-focus-offset: 3px;
+  --lw-sheet-margin: 10px;
+  --lw-sheet-width: 460px;
+  --lw-header-height: 64px;
+  --lw-titleblock-height: 86px;
+  --lw-wrap: 1440px;
+  --lw-wrap-narrow: 1120px;
+  --lw-gutter: clamp(20px, 3vw, 40px);
+
+  --lw-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --lw-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --lw-duration-1: 90ms;
+  --lw-duration-2: 140ms;
+  --lw-duration-3: 200ms;
+  --lw-duration-4: 320ms;
+  --lw-duration-5: 600ms;
+
+  /* No shadows: elevation is a line and a scrim. */
+  --lw-shadow: none;
+  --lw-z-sheet: 60;
+  --lw-z-toast: 90;
+  --lw-z-tooltip: 95;
+
+  --lw-graph-image: linear-gradient(to right, var(--lw-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--lw-grid) 1px, transparent 1px);
+  --lw-graph-size: var(--lw-grid-size) var(--lw-grid-size);
+  --lw-graph-major-image: linear-gradient(
+      to right,
+      var(--lw-grid-major) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--lw-grid-major) 1px, transparent 1px);
+  --lw-graph-major-size: calc(var(--lw-grid-size) * 5) calc(var(--lw-grid-size) * 5);
+}
+
+[data-theme="blueprint"] {
+  color-scheme: dark;
+
+  --lw-paper: #101b24;
+  --lw-paper-lit: #162430;
+  --lw-paper-deep: #0b141b;
+  --lw-grid: #182732;
+  --lw-grid-major: #1d2d39;
+  --lw-rule: #3a5263;
+  --lw-line: #6a737a;
+  --lw-led-off: #415b6c;
+  --lw-scrim: rgba(6, 12, 17, 0.78);
+
+  --lw-ink: #e7edf1;
+  --lw-ink-soft: #d3dee6;
+  --lw-pencil: #a9bac5;
+  --lw-faint: #8599a6;
+
+  --lw-redline: #ff6f61;
+  --lw-redline-deep: #ff8a7e;
+  --lw-redline-wash: rgba(255, 111, 97, 0.12);
+  --lw-on-redline: #101b24;
+
+  --lw-blueprint: #8cb6d4;
+  --lw-success: #93c7a5;
+  --lw-warning: #e0b36a;
+  --lw-on-ink: #101b24;
+  --lw-focus: var(--lw-ink);
+}
+
+[data-theme="vellum"] {
+  color-scheme: light;
+
+  --lw-paper: #f2ede2;
+  --lw-paper-lit: #faf7ef;
+  --lw-paper-deep: #e9e2d3;
+  --lw-grid: #e9e3d5;
+  --lw-grid-major: #e3dccd;
+  --lw-rule: #c8bfac;
+  --lw-line: #88837b;
+  --lw-led-off: #c7bead;
+  --lw-scrim: rgba(242, 237, 226, 0.82);
+
+  --lw-ink: #26221b;
+  --lw-ink-soft: #383227;
+  --lw-pencil: #5b5346;
+  --lw-faint: #6e6557;
+
+  --lw-redline: #c23524;
+  --lw-redline-deep: #942618;
+  --lw-redline-wash: rgba(194, 53, 36, 0.09);
+  --lw-on-redline: #faf7ef;
+
+  --lw-blueprint: #38536b;
+  --lw-success: #46634b;
+  --lw-warning: #7e5718;
+  --lw-on-ink: #f2ede2;
+  --lw-focus: var(--lw-ink);
+}
+
+/*
+ * Semantic aliases have to be recomputed on every theme scope, not just :root.
+ * A custom property declared on :root inherits its computed value, so a nested
+ * [data-theme="blueprint"] would otherwise keep trace-paper text aliases.
+ */
+:root,
+[data-theme] {
+  --lw-text: var(--lw-ink);
+  --lw-text-muted: var(--lw-pencil);
+  --lw-text-faint: var(--lw-faint);
+  --lw-surface: var(--lw-paper);
+  --lw-surface-raised: var(--lw-paper-lit);
+  --lw-border: var(--lw-line);
+  --lw-border-quiet: var(--lw-rule);
+  --lw-accent: var(--lw-redline);
+  --lw-info: var(--lw-blueprint);
+  --lw-danger: var(--lw-redline);
+  --lw-focus: var(--lw-ink);
+
+  /* Patterns derive from the local grid colours, so recompute on every scope. */
+  --lw-graph-image: linear-gradient(to right, var(--lw-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--lw-grid) 1px, transparent 1px);
+  --lw-graph-size: var(--lw-grid-size) var(--lw-grid-size);
+  --lw-graph-major-image: linear-gradient(
+      to right,
+      var(--lw-grid-major) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--lw-grid-major) 1px, transparent 1px);
+  --lw-graph-major-size: calc(var(--lw-grid-size) * 5) calc(var(--lw-grid-size) * 5);
+}
+
+[data-theme] {
+  background-color: var(--lw-paper);
+  color: var(--lw-text);
+}
+```
+
+## Types: elements, events and the JavaScript API
+
+```ts
+/** Types for the JavaScript API and custom elements. CSS is typed through class names. */
+
+export type LineworkTheme = 'trace' | 'blueprint' | 'vellum';
+
+export type ToastTone = 'default' | 'blue' | 'success' | 'warning';
+
+export interface ToastOptions {
+  title?: string;
+  message?: string;
+  tone?: ToastTone;
+  /** Milliseconds before auto-dismiss. Default 4200. */
+  duration?: number;
+}
+
+export interface ThemeOptions {
+  /** Persist the choice to localStorage. Default true. */
+  persist?: boolean;
+}
+
+export interface IconApi {
+  readonly names: string[];
+  install(): void;
+  /** Returns SVG markup referencing the installed sprite. */
+  markup(name: string, className?: string): string;
+}
+
+export interface LineworkApi {
+  readonly version: string;
+  readonly themes: LineworkTheme[];
+  getTheme(): LineworkTheme;
+  setTheme(name: LineworkTheme | string, options?: ThemeOptions): LineworkTheme;
+  cycleTheme(): LineworkTheme;
+  toast(options?: ToastOptions | string): HTMLElement | null;
+  copy(text: string): Promise<boolean>;
+  open(target: string | Element): Element | null;
+  close(target: string | Element): Element | null;
+  refresh(root?: Document | Element): void;
+  formatDuration(seconds: number): string;
+  readonly icons: IconApi;
+}
+
+export interface LwDrawerElement extends HTMLElement {
+  open(): void;
+  close(): void;
+  readonly isOpen: boolean;
+  readonly dialog: HTMLDialogElement | null;
+}
+
+export interface LwTabsElement extends HTMLElement {
+  select(index: number, emit?: boolean): void;
+  readonly selectedIndex: number;
+}
+
+export interface LwPadElement extends HTMLElement {
+  play(seconds?: number): number;
+  stop(reason?: string): void;
+  toggle(): void;
+  setProgress(progress: number, remainingSeconds?: number): void;
+  playing: boolean;
+  progress: number;
+}
+
+export interface LwMeterElement extends HTMLElement {
+  level: number;
+}
+
+export interface LwComboboxElement extends HTMLElement {
+  /** The data-value (or label) of the chosen option, or an empty string. */
+  readonly value: string;
+}
+
+export interface LwCommandElement extends HTMLElement {
+  open(): void;
+  close(): void;
+  readonly isOpen: boolean;
+}
+
+export interface LwCalendarElement extends HTMLElement {
+  /** Selected date as YYYY-MM-DD, or an empty string. */
+  value: string;
+}
+
+export interface LwToastStackElement extends HTMLElement {
+  show(options?: ToastOptions | string): HTMLElement | null;
+}
+
+export interface LwDrawerEventDetail {
+  drawer?: LwDrawerElement;
+}
+
+export interface LwTabsChangeDetail {
+  index: number;
+  tab: HTMLElement;
+  panel: HTMLElement | undefined;
+}
+
+export interface LwComboboxChangeDetail {
+  value: string;
+  option: HTMLElement;
+}
+
+export interface LwCalendarChangeDetail {
+  value: string;
+  date: Date;
+}
+
+export interface LwCommandSelectDetail {
+  item: HTMLElement;
+}
+
+export interface LwSortDetail {
+  column: number;
+  direction: 'ascending' | 'descending';
+}
+
+export interface LwPadEventDetail {
+  pad: LwPadElement;
+}
+
+export interface LwPadMenuDetail extends LwPadEventDetail {
+  anchor: HTMLElement;
+}
+
+export interface LwPadPlayDetail extends LwPadEventDetail {
+  duration: number;
+}
+
+export interface LwPadStopDetail extends LwPadEventDetail {
+  reason: string;
+}
+
+export declare const Linework: LineworkApi;
+export default Linework;
+
+declare global {
+  interface Window {
+    Linework: LineworkApi;
+  }
+
+  interface HTMLElementEventMap {
+    'lw-open': CustomEvent<LwDrawerEventDetail | null>;
+    'lw-close': CustomEvent<LwDrawerEventDetail>;
+    'lw-change': CustomEvent<LwTabsChangeDetail | LwComboboxChangeDetail | LwCalendarChangeDetail>;
+    'lw-select': CustomEvent<LwCommandSelectDetail>;
+    'lw-sort': CustomEvent<LwSortDetail>;
+    'lw-dismiss': CustomEvent<null>;
+    'lw-press': CustomEvent<LwPadEventDetail>;
+    'lw-menu': CustomEvent<LwPadMenuDetail>;
+    'lw-play': CustomEvent<LwPadPlayDetail>;
+    'lw-stop': CustomEvent<LwPadStopDetail>;
+    'lw-end': CustomEvent<LwPadEventDetail>;
+  }
+
+  interface DocumentEventMap {
+    'linework:theme': CustomEvent<{ theme: LineworkTheme }>;
+    'linework:ready': CustomEvent<{ linework: LineworkApi }>;
+  }
+
+  interface HTMLElementTagNameMap {
+    'lw-drawer': LwDrawerElement;
+    'lw-tabs': LwTabsElement;
+    'lw-pad': LwPadElement;
+    'lw-meter': LwMeterElement;
+    'lw-combobox': LwComboboxElement;
+    'lw-command': LwCommandElement;
+    'lw-calendar': LwCalendarElement;
+    'lw-toast-stack': LwToastStackElement;
+  }
+}
+```
+
+## Types: React wrappers (`linework-ui/react`)
+
+```ts
+import type { ForwardRefExoticComponent, HTMLAttributes, ReactNode, RefAttributes } from 'react';
+import type {
+  LineworkApi,
+  LwCalendarChangeDetail,
+  LwCalendarElement,
+  LwComboboxChangeDetail,
+  LwComboboxElement,
+  LwCommandElement,
+  LwCommandSelectDetail,
+  LwDrawerElement,
+  LwDrawerEventDetail,
+  LwMeterElement,
+  LwPadElement,
+  LwPadEventDetail,
+  LwPadMenuDetail,
+  LwPadPlayDetail,
+  LwPadStopDetail,
+  LwTabsChangeDetail,
+  LwTabsElement,
+} from './linework.js';
+
+type Base<E extends HTMLElement> = Omit<HTMLAttributes<E>, 'onChange' | 'onSelect' | 'onPlay' | 'onClose' | 'onOpen'> & {
+  children?: ReactNode;
+};
+
+type Component<P, E extends HTMLElement> = ForwardRefExoticComponent<P & RefAttributes<E>>;
+
+export interface DrawerProps extends Base<LwDrawerElement> {
+  open?: boolean;
+  label?: string;
+  width?: number | string;
+  dismissible?: boolean;
+  onOpen?: (event: CustomEvent<LwDrawerEventDetail | null>) => void;
+  onClose?: (event: CustomEvent<LwDrawerEventDetail>) => void;
+}
+
+export interface TabsProps extends Base<LwTabsElement> {
+  selected?: number;
+  onChange?: (event: CustomEvent<LwTabsChangeDetail>) => void;
+}
+
+export interface PadProps extends Omit<Base<LwPadElement>, 'children'> {
+  name?: string;
+  keys?: string;
+  length?: string;
+  duration?: number;
+  progress?: number;
+  playing?: boolean;
+  /** true adds the menu key; a string also opens the .lw-menu with that id. */
+  menu?: boolean | string;
+  onPress?: (event: CustomEvent<LwPadEventDetail>) => void;
+  onPlay?: (event: CustomEvent<LwPadPlayDetail>) => void;
+  onStop?: (event: CustomEvent<LwPadStopDetail>) => void;
+  onEnd?: (event: CustomEvent<LwPadEventDetail>) => void;
+  onMenu?: (event: CustomEvent<LwPadMenuDetail>) => void;
+}
+
+export interface MeterProps extends Omit<Base<LwMeterElement>, 'children'> {
+  level?: number;
+  bars?: number;
+  live?: boolean;
+  tone?: 'redline';
+  label?: string;
+}
+
+export interface ComboboxProps extends Base<LwComboboxElement> {
+  empty?: string;
+  onChange?: (event: CustomEvent<LwComboboxChangeDetail>) => void;
+}
+
+export interface CommandProps extends Base<LwCommandElement> {
+  label?: string;
+  placeholder?: string;
+  /** Key that opens the palette with Ctrl or Cmd, for example "k". */
+  shortcut?: string;
+  empty?: string;
+  onSelect?: (event: CustomEvent<LwCommandSelectDetail>) => void;
+}
+
+export interface CalendarProps extends Omit<Base<LwCalendarElement>, 'children'> {
+  /** YYYY-MM-DD */
+  value?: string;
+  min?: string;
+  max?: string;
+  locale?: string;
+  onChange?: (event: CustomEvent<LwCalendarChangeDetail>) => void;
+}
+
+export declare const Drawer: Component<DrawerProps, LwDrawerElement>;
+export declare const Tabs: Component<TabsProps, LwTabsElement>;
+export declare const Pad: Component<PadProps, LwPadElement>;
+export declare const Meter: Component<MeterProps, LwMeterElement>;
+export declare const Combobox: Component<ComboboxProps, LwComboboxElement>;
+export declare const Command: Component<CommandProps, LwCommandElement>;
+export declare const Calendar: Component<CalendarProps, LwCalendarElement>;
+
+export declare const Linework: LineworkApi;
+export default Linework;
+```
+
+## Blocks
+
+Each block needs `linework-blocks.css` as well as `linework.css`. Layout classes are `blk-*`; everything else is the component API.
+
+### 01 Hero, with proof (marketing, id `hero`)
+
+A full sheet headline, actions, social proof and a figure that carries real content.
+
+```html
+<section class="blk blk-hero" aria-labelledby="fold-hero-title">
+  <div class="blk-wrap">
+    <div class="blk-hero__grid">
+      <div>
+        <p class="blk-kicker">Fold / Workspace</p>
+        <h1 class="blk-hero__title" id="fold-hero-title">Work, drawn out in the open.</h1>
+        <p class="blk-hero__lede">Fold is a shared sheet for teams who think with their hands. Plans, reviews and decisions kept on one surface instead of six tabs.</p>
+        <div class="blk-actions">
+          <a class="lw-btn lw-btn--primary lw-btn--lg" href="#">Start a sheet</a>
+          <a class="lw-btn lw-btn--lg" href="#">See a walkthrough</a>
+        </div>
+        <div class="blk-hero__proof">
+          <span class="lw-avatars">
+            <span class="lw-avatar lw-avatar--sm">MW</span>
+            <span class="lw-avatar lw-avatar--sm">JK</span>
+            <span class="lw-avatar lw-avatar--sm">AS</span>
+          </span>
+          <span><strong>12,400</strong> teams drawing</span>
+          <span class="lw-stamp lw-stamp--quiet">SOC 2</span>
+        </div>
+      </div>
+      <figure class="blk-hero__figure">
+        <div class="blk-hero__sheet">
+          <div class="blk-hero__sheet-bar">
+            <span>Approval sheet / A-104</span>
+            <span>Rev 04</span>
+          </div>
+          <div class="blk-hero__sheet-body">
+            <div class="blk-approval">
+              <div class="blk-approval__top">
+                <div>
+                  <span class="blk-approval__label">Release 4.0</span>
+                  <h3>North facade</h3>
+                </div>
+                <span class="lw-stamp lw-stamp--red">In review</span>
+              </div>
+              <div class="blk-approval__rows">
+                <div class="blk-approval__row"><span>Owner</span><span>Mara Weiss</span></div>
+                <div class="blk-approval__row"><span>Due</span><span>18 Oct 2026</span></div>
+                <div class="blk-approval__row"><span>Reviewers</span><span>4 people</span></div>
+                <div class="blk-approval__row"><span>Scope</span><span>Facade, lighting</span></div>
+              </div>
+              <div class="blk-approval__progress">
+                <div class="blk-approval__progress-head"><span>Approval</span><span>3 of 4</span></div>
+                <div class="lw-progress"><div class="lw-progress__bar" style="width:75%"></div></div>
+              </div>
+              <div class="blk-approval__signoff">
+                <span class="lw-avatars">
+                  <span class="lw-avatar lw-avatar--sm">MW</span>
+                  <span class="lw-avatar lw-avatar--sm">JK</span>
+                  <span class="lw-avatar lw-avatar--sm">AS</span>
+                  <span class="lw-avatar lw-avatar--sm">+1</span>
+                </span>
+                <span class="lw-smallprint">One signature to go</span>
+              </div>
+              <p class="blk-approval__note"><strong>Redline note:</strong> handrail detail still to be resolved before sign-off.</p>
+            </div>
+          </div>
+          <div class="blk-hero__sheet-bar blk-hero__sheet-bar--foot">
+            <span>Scale 1:50</span>
+            <span>Fold / 2026</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+```
+
+### 02 Feature grid (marketing, id `features`)
+
+Six numbered features in a measured grid. Enough room for a real sentence, no card shadows.
+
+```html
+<section class="blk blk-features" aria-labelledby="fold-features-title">
+  <div class="blk-wrap">
+    <div class="blk-head">
+      <div>
+        <p class="blk-kicker">Features</p>
+        <h2 class="blk-title" id="fold-features-title">Everything in plain view.</h2>
+        <p class="blk-lede">Six parts of the workspace that replace six other tools. All of them share one surface, one history and one obvious place to look.</p>
+      </div>
+      <p class="blk-head__aside">Designed for teams of four to four hundred. No hidden panels, no nested menus, no “where did that comment go?”</p>
+    </div>
+    <div class="blk-features__grid">
+      <article class="blk-feature">
+        <div class="blk-feature__top"><span class="blk-feature__num">01</span><span class="blk-feature__icon"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg></span></div>
+        <h3>Canvas plans</h3>
+        <p>Arrange the work spatially. Move a decision and everything it touches moves with it.</p>
+      </article>
+      <article class="blk-feature">
+        <div class="blk-feature__top"><span class="blk-feature__num">02</span><span class="blk-feature__icon"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg></span></div>
+        <h3>Living documents</h3>
+        <p>Specs, notes and approvals live beside the drawing instead of inside a folder nobody opens.</p>
+      </article>
+      <article class="blk-feature">
+        <div class="blk-feature__top"><span class="blk-feature__num">03</span><span class="blk-feature__icon"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg></span></div>
+        <h3>Review in place</h3>
+        <p>Mark up a sheet, not a screenshot. Comments carry the version and the exact point they refer to.</p>
+      </article>
+      <article class="blk-feature">
+        <div class="blk-feature__top"><span class="blk-feature__num">04</span><span class="blk-feature__icon"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-clock"></use></svg></span></div>
+        <h3>Version marks</h3>
+        <p>Every save on the record. Diff two revisions without leaving the sheet you are reading.</p>
+      </article>
+      <article class="blk-feature">
+        <div class="blk-feature__top"><span class="blk-feature__num">05</span><span class="blk-feature__icon"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-keyboard"></use></svg></span></div>
+        <h3>Quiet shortcuts</h3>
+        <p>The keyboard works the way you expect. Letter keys for comments, brackets for revisions.</p>
+      </article>
+      <article class="blk-feature">
+        <div class="blk-feature__top"><span class="blk-feature__num">06</span><span class="blk-feature__icon"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg></span></div>
+        <h3>Export to scale</h3>
+        <p>Print at scale, export a static PDF, or hand the whole sheet to someone without an account.</p>
+      </article>
+    </div>
+  </div>
+</section>
+```
+
+### 03 Pricing (marketing, id `pricing`)
+
+Three plans as measured columns. One redline recommendation, no floating cards.
+
+```html
+<section class="blk blk-pricing" aria-labelledby="fold-pricing-title">
+  <div class="blk-wrap">
+    <div class="blk-pricing__head">
+      <div>
+        <p class="blk-kicker">Pricing</p>
+        <h2 class="blk-title" id="fold-pricing-title">Measured in seats, not surprises.</h2>
+        <p class="blk-lede blk-lede--sm">Every plan includes the full canvas, unlimited guests and the complete revision history. Upgrade when the team does.</p>
+      </div>
+      <div class="lw-segments" role="group" aria-label="Billing period">
+        <button type="button" class="lw-segments__item" data-billing="monthly" aria-pressed="true">Monthly</button>
+        <button type="button" class="lw-segments__item" data-billing="yearly" aria-pressed="false">Yearly −20%</button>
+      </div>
+    </div>
+    <div class="blk-plans">
+      <article class="blk-plan">
+        <div class="blk-plan__head"><span class="blk-plan__name">Draft</span></div>
+        <p class="blk-plan__desc">For a first drawing, or a team of one.</p>
+        <div class="blk-plan__price">$0 <small>/ forever</small></div>
+        <ul class="blk-plan__features">
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>One active sheet</li>
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Three guests</li>
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>PDF export</li>
+        </ul>
+        <button type="button" class="lw-btn lw-btn--block">Start drawing</button>
+      </article>
+      <article class="blk-plan blk-plan--featured">
+        <div class="blk-plan__head"><span class="blk-plan__name">Studio</span><span class="lw-stamp lw-stamp--ink">Most specified</span></div>
+        <p class="blk-plan__desc">For teams who review together, every week.</p>
+        <div class="blk-plan__price"><span>$<span data-price data-monthly="24" data-yearly="19">24</span></span> <small>/ seat / month</small></div>
+        <ul class="blk-plan__features">
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Unlimited sheets and guests</li>
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Review rooms and approvals</li>
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Version comparison</li>
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Custom papers and stamps</li>
+        </ul>
+        <button type="button" class="lw-btn lw-btn--primary lw-btn--block">Start free for 14 days</button>
+      </article>
+      <article class="blk-plan">
+        <div class="blk-plan__head"><span class="blk-plan__name">Atelier</span></div>
+        <p class="blk-plan__desc">For practices with their own rules and records.</p>
+        <div class="blk-plan__price">Custom</div>
+        <ul class="blk-plan__features">
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Everything in Studio</li>
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>SSO, SCIM and audit log</li>
+          <li><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Dedicated success support</li>
+        </ul>
+        <button type="button" class="lw-btn lw-btn--block">Talk to us</button>
+      </article>
+    </div>
+    <p class="blk-pricing__note">Prices in USD, billed to the whole workspace. Cancel or change plan at any time.</p>
+  </div>
+</section>
+```
+
+### 04 Questions (marketing, id `faq`)
+
+Questions answered as a drawing schedule, with a human escape hatch on the left.
+
+```html
+<section class="blk blk-faq" aria-labelledby="fold-faq-title">
+  <div class="blk-wrap">
+    <div class="blk-faq__grid">
+      <div class="blk-faq__aside">
+        <p class="blk-kicker">Questions</p>
+        <h2 class="blk-title" id="fold-faq-title">Before you start drawing.</h2>
+        <p class="blk-lede blk-lede--sm">If it is not covered here, a person will answer — usually within a working day.</p>
+        <div class="blk-faq__contact">
+          <span class="lw-avatar lw-avatar--sm">JK</span>
+          <span><a href="#">Talk to a human</a><br><span class="lw-smallprint">Jonas, support</span></span>
+        </div>
+      </div>
+      <div class="lw-accordion">
+        <details class="lw-accordion__item" open>
+          <summary class="lw-accordion__summary">Can I invite people who do not have an account?</summary>
+          <div class="lw-accordion__body"><p>Yes. Guests can view any sheet you share, leave comments and approve reviews. They only need an account when they want to create sheets of their own.</p></div>
+        </details>
+        <details class="lw-accordion__item">
+          <summary class="lw-accordion__summary">What happens to a sheet after a project closes?</summary>
+          <div class="lw-accordion__body"><p>It moves to the archive with its full revision history, and every link keeps working. You can pin an archived sheet back into an active workspace at any time.</p></div>
+        </details>
+        <details class="lw-accordion__item">
+          <summary class="lw-accordion__summary">Do you train models on our drawings?</summary>
+          <div class="lw-accordion__body"><p>No. Workspace content is never used to train anything. We store it, sync it and return it when asked; nothing else.</p></div>
+        </details>
+        <details class="lw-accordion__item">
+          <summary class="lw-accordion__summary">Can we use our own type and paper?</summary>
+          <div class="lw-accordion__body"><p>Studio and Atelier workspaces can apply a custom paper, ink and redline colour. Every theme is a small set of variables — no rebuild, no plugin.</p></div>
+        </details>
+        <details class="lw-accordion__item">
+          <summary class="lw-accordion__summary">Is there an offline mode?</summary>
+          <div class="lw-accordion__body"><p>Sheets you have opened stay readable offline, and your own notes queue until the connection returns. Review approvals always need a connection so the record stays accurate.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+### 05 Client note (marketing, id `testimonial`)
+
+A quote set like a title block, with provenance and a measured result beside it.
+
+```html
+<section class="blk blk-testimonial" aria-labelledby="fold-quote-title">
+  <div class="blk-wrap">
+    <div class="blk-testimonial__grid">
+      <div>
+        <p class="blk-kicker">Client note / 01</p>
+        <blockquote class="blk-quote" id="fold-quote-title">“Fold replaced <em>three tools</em> and one Monday meeting. The drawing is the discussion now.”</blockquote>
+        <div class="blk-author">
+          <span class="lw-avatar lw-avatar--lg">MW</span>
+          <span>
+            <span class="blk-author__name">Mara Weiss</span><br>
+            <span class="blk-author__role">Design director, Atelier North</span>
+          </span>
+          <span class="blk-author__spacer"></span>
+          <span class="lw-stamp lw-stamp--quiet">Verified / 2026</span>
+        </div>
+      </div>
+      <aside class="blk-aside" aria-label="Results at Atelier North">
+        <div class="blk-aside__cap"><span>Field note / results</span><span>12 weeks</span></div>
+        <div class="blk-aside__body">
+          <div class="blk-aside__brand"><span class="blk-logo">atelier north</span></div>
+          <div class="blk-aside__stat"><strong>−38%</strong><span>Review cycle<br>time</span></div>
+          <div class="blk-aside__stat"><strong>1,204</strong><span>Sheets<br>shipped</span></div>
+          <div class="blk-aside__stat"><strong>86</strong><span>People on<br>one surface</span></div>
+          <div class="lw-sparkbars" style="margin-top:16px" aria-hidden="true">
+            <span style="--v:36%"></span><span style="--v:48%"></span><span style="--v:42%"></span><span style="--v:58%"></span><span style="--v:66%"></span><span style="--v:61%"></span><span style="--v:78%"></span><span style="--v:88%" class="is-red"></span>
+          </div>
+          <div class="lw-sparkbars__label"><span>W01</span><span>W12</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+```
+
+### 06 Closing call (marketing, id `cta`)
+
+A dark blueprint sheet for the final ask. One line, two keys, a measured rule.
+
+```html
+<section class="blk blk-cta" data-theme="blueprint" aria-labelledby="fold-cta-title">
+  <span class="lw-reg lw-reg--tl" aria-hidden="true"></span>
+  <span class="lw-reg lw-reg--tr" aria-hidden="true"></span>
+  <span class="lw-reg lw-reg--bl" aria-hidden="true"></span>
+  <span class="lw-reg lw-reg--br" aria-hidden="true"></span>
+  <div class="blk-cta__inner">
+    <p class="blk-kicker blk-kicker--center">Sheet 06 / The ask</p>
+    <h2 class="blk-cta__title" id="fold-cta-title">Put it on paper.</h2>
+    <p class="blk-cta__lede">Start with one sheet, invite the people who argue about it, and keep the argument where the work is.</p>
+    <div class="blk-actions">
+      <a class="lw-btn lw-btn--primary lw-btn--lg" href="#">Start a sheet</a>
+      <a class="lw-btn lw-btn--lg" href="#">Book a walkthrough</a>
+    </div>
+    <div class="blk-cta__rule"></div>
+    <div class="blk-cta__meta"><span>Free for one sheet</span><span>No card</span><span>Cancel whenever</span></div>
+  </div>
+</section>
+```
+
+### 07 Project dashboard (application, id `dashboard`)
+
+A working app shell: navigation, stats, a schedule table and an activity ledger.
+
+```html
+<section class="blk blk-dash" aria-labelledby="fold-dash-title">
+  <div class="blk-wrap">
+    <div class="blk-dash__app">
+      <div class="blk-dash__topbar">
+        <a class="blk-logo" href="#" aria-label="Fold home">fold</a>
+        <nav class="blk-dash__nav" aria-label="Workspace">
+          <a href="#" aria-current="page">Overview</a>
+          <a href="#">Sheets</a>
+          <a href="#">Reviews</a>
+        </nav>
+        <div class="blk-dash__topbar-right">
+          <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="Search">
+            <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg>
+          </button>
+          <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-lw-menu="#blocks-user-menu" aria-label="Account menu">
+            <span class="lw-avatar lw-avatar--sm">MW</span>
+          </button>
+          <div class="lw-popover lw-menu" id="blocks-user-menu" popover>
+            <button type="button" class="lw-menu__item">Profile</button>
+            <button type="button" class="lw-menu__item">Workspace settings</button>
+            <hr class="lw-menu__sep">
+            <button type="button" class="lw-menu__item lw-menu__item--danger">Sign out</button>
+          </div>
+        </div>
+      </div>
+      <div class="blk-dash__body">
+        <aside class="blk-dash__side">
+          <div class="blk-dash__side-block">
+            <p class="lw-sidenav__label">Workspace</p>
+            <nav class="lw-sidenav" aria-label="Workspace sections">
+              <a class="lw-sidenav__item" href="#" aria-current="page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-grid"></use></svg>Overview</a>
+              <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Sheets<span class="lw-sidenav__count">284</span></a>
+              <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg>Reviews<span class="lw-sidenav__count">04</span></a>
+              <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-clock"></use></svg>History</a>
+            </nav>
+          </div>
+          <div class="blk-dash__side-block">
+            <p class="lw-sidenav__label">Team</p>
+            <nav class="lw-sidenav" aria-label="Team spaces">
+              <a class="lw-sidenav__item" href="#">Atelier North</a>
+              <a class="lw-sidenav__item" href="#">Competitions</a>
+              <a class="lw-sidenav__item" href="#">Archive</a>
+            </nav>
+          </div>
+          <div class="blk-dash__plan">
+            <p class="blk-dash__plan-label">Studio plan</p>
+            <p class="blk-dash__plan-value">18 of 25 seats</p>
+            <div class="lw-progress" style="margin:8px 0 10px"><div class="lw-progress__bar" style="width:72%"></div></div>
+            <button type="button" class="lw-btn lw-btn--sm lw-btn--block">Manage plan</button>
+          </div>
+        </aside>
+        <div class="blk-dash__main">
+          <nav class="lw-breadcrumb" aria-label="Breadcrumb">
+            <ol><li><a href="#">Atelier North</a></li><li aria-current="page">Overview</li></ol>
+          </nav>
+          <div class="blk-dash__head">
+            <div>
+              <h2 class="blk-dash__title" id="fold-dash-title">Good morning, Mara.</h2>
+              <p class="blk-dash__sub">Four reviews are waiting. Two are yours.</p>
+            </div>
+            <div class="lw-cluster">
+              <button type="button" class="lw-btn lw-btn--sm"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg>Export</button>
+              <button type="button" class="lw-btn lw-btn--primary lw-btn--sm"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg>New sheet</button>
+            </div>
+          </div>
+          <div class="lw-stats blk-dash__stats">
+            <div class="lw-stat">
+              <span class="lw-stat__label">Open reviews <span class="lw-stamp lw-stamp--red">Live</span></span>
+              <span class="lw-stat__value">04</span>
+              <span class="lw-stat__foot"><span class="lw-delta">↑ 2</span> this week</span>
+            </div>
+            <div class="lw-stat">
+              <span class="lw-stat__label">Sheets this month</span>
+              <span class="lw-stat__value">28</span>
+              <span class="lw-stat__foot"><span class="lw-delta">↑ 12%</span> on September</span>
+            </div>
+            <div class="lw-stat">
+              <span class="lw-stat__label">Approval time</span>
+              <span class="lw-stat__value">2.4 <small class="lw-smallprint">days</small></span>
+              <span class="lw-stat__foot"><span class="lw-delta">↓ 0.6</span> faster</span>
+            </div>
+          </div>
+          <div class="blk-dash__content">
+            <div>
+              <div class="blk-dash__section-head"><h3>Recent sheets</h3><a class="lw-smallprint" href="#">View all 284</a></div>
+              <table class="lw-table lw-table--compact">
+                <thead>
+                  <tr><th>Sheet</th><th>Owner</th><th>Updated</th><th>Status</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="blk-dash__sheet-name"><span class="blk-dash__sheet-mark"></span>North facade</span></td>
+                    <td><span class="blk-dash__owner"><span class="lw-avatar lw-avatar--sm">MW</span>Mara</span></td>
+                    <td class="lw-table__muted">2 hours ago</td>
+                    <td><span class="lw-stamp lw-stamp--red">In review</span></td>
+                    <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="blk-dash__sheet-name"><span class="blk-dash__sheet-mark"></span>Atrium / concept 2</span></td>
+                    <td><span class="blk-dash__owner"><span class="lw-avatar lw-avatar--sm">JK</span>Jonas</span></td>
+                    <td class="lw-table__muted">Yesterday</td>
+                    <td><span class="lw-stamp lw-stamp--quiet">Draft</span></td>
+                    <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="blk-dash__sheet-name"><span class="blk-dash__sheet-mark"></span>East wing / tender</span></td>
+                    <td><span class="blk-dash__owner"><span class="lw-avatar lw-avatar--sm">AS</span>Ada</span></td>
+                    <td class="lw-table__muted">12 Oct</td>
+                    <td><span class="lw-stamp lw-stamp--ink">Approved</span></td>
+                    <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="blk-dash__sheet-name"><span class="blk-dash__sheet-mark"></span>Roof study / draft</span></td>
+                    <td><span class="blk-dash__owner"><span class="lw-avatar lw-avatar--sm">MW</span>Mara</span></td>
+                    <td class="lw-table__muted">9 Oct</td>
+                    <td><span class="lw-stamp lw-stamp--blue">Shared</span></td>
+                    <td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <aside class="blk-dash__rail">
+              <div class="blk-dash__section-head"><h3>Activity</h3><span class="lw-mono">Today</span></div>
+              <div class="blk-dash__activity">
+                <ul class="lw-activity">
+                  <li class="lw-activity__item lw-activity__item--live"><div><p class="lw-activity__title"><strong>Jonas</strong> left a redline on North facade.</p><p class="lw-activity__meta">18 min ago</p></div></li>
+                  <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Ada</strong> approved East wing / tender.</p><p class="lw-activity__meta">1 hr ago</p></div></li>
+                  <li class="lw-activity__item"><div><p class="lw-activity__title"><strong>Mara</strong> created Roof study / draft.</p><p class="lw-activity__meta">3 hrs ago</p></div></li>
+                  <li class="lw-activity__item"><div><p class="lw-activity__title">Version 04 archived.</p><p class="lw-activity__meta">Yesterday</p></div></li>
+                </ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+### 08 Sign in (application, id `auth`)
+
+A split sign-in sheet: real fields, real states, and a review-room vignette on the right.
+
+```html
+<section class="blk blk-auth" aria-labelledby="fold-auth-title">
+  <div class="blk-auth__grid">
+    <div class="blk-auth__form">
+      <div class="blk-auth__panel">
+        <a class="blk-logo" href="#" aria-label="Fold home">fold</a>
+        <h2 class="blk-auth__title" id="fold-auth-title">Welcome back.</h2>
+        <p class="blk-auth__lede">Sign in to pick up the review where you left it.</p>
+        <form>
+          <div class="lw-field">
+            <label class="lw-field__label" for="fold-email">Work email</label>
+            <input class="lw-input" id="fold-email" type="email" placeholder="you@studio.com" autocomplete="email">
+          </div>
+          <div class="lw-field">
+            <div class="blk-auth__row">
+              <label class="lw-field__label" for="fold-password">Password</label>
+              <a href="#">Forgot?</a>
+            </div>
+            <input class="lw-input" id="fold-password" type="password" placeholder="At least 8 characters" autocomplete="current-password">
+          </div>
+          <label class="lw-check"><input class="lw-check__input" type="checkbox" checked><span class="lw-check__box"></span><span>Keep me signed in</span></label>
+          <button type="submit" class="lw-btn lw-btn--primary lw-btn--block">Sign in</button>
+        </form>
+        <div class="blk-auth__divider">or</div>
+        <button type="button" class="lw-btn lw-btn--block"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-keyboard"></use></svg>Continue with SSO</button>
+        <p class="blk-auth__foot">New to Fold? <a href="#">Start a sheet</a></p>
+      </div>
+    </div>
+    <div class="blk-auth__side">
+      <div>
+        <p class="blk-kicker">Fig. 08 / The review room</p>
+        <p class="blk-auth__side-quote">“A good drawing gives everyone <em>the same thing to point at.</em>”</p>
+      </div>
+      <div class="blk-auth__card">
+        <div class="blk-auth__card-head"><span>Today / 14:20</span><span>Review 04</span></div>
+        <div class="blk-auth__card-body">
+          <div class="blk-approval__row"><span>Sheet</span><span>North facade / Rev 04</span></div>
+          <div class="blk-approval__row"><span>Reviewers</span><span>Mara, Jonas, Ada</span></div>
+          <div class="blk-approval__row"><span>Status</span><span class="lw-stamp lw-stamp--red">In review</span></div>
+          <p class="blk-approval__note" style="margin-bottom:0"><strong>Jonas:</strong> the handrail junction wants another look before we sign.</p>
+        </div>
+      </div>
+      <div class="blk-auth__side-foot"><span>Atelier North</span><span>Est. 2019</span></div>
+    </div>
+  </div>
+</section>
+```
+
+### 09 Settings (application, id `settings`)
+
+A settings sheet with a side index, field groups, toggles and a proper save bar.
+
+```html
+<section class="blk blk-settings" aria-labelledby="fold-settings-title">
+  <div class="blk-wrap">
+    <div class="blk-settings__app">
+      <aside class="blk-settings__side">
+        <div class="blk-settings__side-brand"><a class="blk-logo" href="#" aria-label="Fold home">fold</a></div>
+        <nav class="lw-sidenav" aria-label="Settings sections">
+          <p class="lw-sidenav__label">Workspace</p>
+          <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-grid"></use></svg>Overview</a>
+          <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-menu"></use></svg>Members</a>
+          <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-sheet"></use></svg>Projects</a>
+          <a class="lw-sidenav__item" href="#" aria-current="page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-volume"></use></svg>Notifications</a>
+          <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-file"></use></svg>Billing</a>
+          <a class="lw-sidenav__item" href="#"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-settings"></use></svg>Security</a>
+        </nav>
+      </aside>
+      <div class="blk-settings__main">
+        <div class="blk-settings__head">
+          <nav class="lw-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="#">Settings</a></li><li aria-current="page">Notifications</li></ol></nav>
+          <h2 class="blk-settings__title" id="fold-settings-title" style="margin-top:10px">Notifications</h2>
+          <p class="blk-settings__sub">Choose what reaches you, and when it is allowed to.</p>
+        </div>
+        <div class="blk-settings__body">
+          <fieldset class="lw-fieldset">
+            <legend class="lw-fieldset__legend">In the review room</legend>
+            <p class="lw-fieldset__note">Everything here happens while you are already looking at the sheet.</p>
+            <div class="lw-setting-row">
+              <div class="lw-setting-row__text"><p class="lw-setting-row__title">New comments</p><p class="lw-setting-row__note">A quiet ping when someone marks up a sheet you own.</p></div>
+              <div class="lw-setting-row__control"><label class="lw-led lw-led--redline"><input class="lw-led__input" type="checkbox" checked aria-label="New comments"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span class="lw-led__state">On</span></label></div>
+            </div>
+            <div class="lw-setting-row">
+              <div class="lw-setting-row__text"><p class="lw-setting-row__title">Approval requests</p><p class="lw-setting-row__note">When a review lands on your desk, send it to email as well.</p></div>
+              <div class="lw-setting-row__control"><label class="lw-led"><input class="lw-led__input" type="checkbox" checked aria-label="Approval requests"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span class="lw-led__state">On</span></label></div>
+            </div>
+            <div class="lw-setting-row">
+              <div class="lw-setting-row__text"><p class="lw-setting-row__title">Version updates</p><p class="lw-setting-row__note">Every new revision, or only the ones that changed the geometry.</p></div>
+              <div class="lw-setting-row__control">
+                <div class="lw-select-wrap" style="min-width:170px"><select class="lw-select" aria-label="Version updates"><option>Only geometry changes</option><option>Every revision</option><option>Nothing</option></select></div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="lw-fieldset">
+            <legend class="lw-fieldset__legend">Digest</legend>
+            <p class="lw-fieldset__note">One short sheet on Monday morning, if there is anything to report.</p>
+            <div class="lw-setting-row">
+              <div class="lw-setting-row__text"><p class="lw-setting-row__title">Weekly digest</p><p class="lw-setting-row__note">Sent at 08:00 in your workspace timezone.</p></div>
+              <div class="lw-setting-row__control"><label class="lw-led"><input class="lw-led__input" type="checkbox" aria-label="Weekly digest"><span class="lw-led__box"><span class="lw-led__fill"></span></span><span class="lw-led__state">Off</span></label></div>
+            </div>
+            <div class="lw-setting-row">
+              <div class="lw-setting-row__text"><p class="lw-setting-row__title">Workspace timezone</p><p class="lw-setting-row__note">Used for digests and deadline reminders.</p></div>
+              <div class="lw-setting-row__control">
+                <div class="lw-select-wrap" style="min-width:170px"><select class="lw-select" aria-label="Workspace timezone"><option>Europe / Berlin</option><option>Europe / London</option><option>America / New York</option></select></div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="lw-fieldset">
+            <legend class="lw-fieldset__legend">Leave quietly</legend>
+            <p class="lw-fieldset__note">You will lose access to all 284 sheets in this workspace. This cannot be undone.</p>
+            <div class="lw-setting-row">
+              <div class="lw-setting-row__text"><p class="lw-setting-row__title">Leave Atelier North</p><p class="lw-setting-row__note">An owner will need to invite you back.</p></div>
+              <div class="lw-setting-row__control"><button type="button" class="lw-btn lw-btn--danger-quiet lw-btn--sm">Leave workspace</button></div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="blk-settings__foot">
+          <span class="blk-settings__foot-note">Last saved 2 minutes ago</span>
+          <div class="lw-cluster">
+            <button type="button" class="lw-btn lw-btn--sm">Cancel</button>
+            <button type="button" class="lw-btn lw-btn--primary lw-btn--sm">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+### 10 Footer (marketing, id `footer`)
+
+A footer with a closing ask, a newsletter, four link columns and a calm bottom rule.
+
+```html
+<footer class="blk blk-footer" aria-labelledby="fold-footer-cta">
+  <div class="blk-wrap">
+    <div class="blk-footer__cta">
+      <h2 class="blk-footer__cta-title" id="fold-footer-cta">Have a drawing <em>in mind?</em></h2>
+      <a class="lw-btn lw-btn--primary lw-btn--lg" href="#">Start a sheet<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg></a>
+    </div>
+    <div class="blk-footer__main">
+      <div class="blk-footer__brand">
+        <a class="blk-logo" href="#" aria-label="Fold home">fold</a>
+        <p>A shared sheet for teams who think with their hands. Made quietly, kept plainly.</p>
+        <form class="blk-footer__news">
+          <label class="lw-vh" for="fold-news-email">Email for the monthly sheet</label>
+          <input class="lw-input" id="fold-news-email" type="email" placeholder="Email for the monthly sheet" autocomplete="email">
+          <button type="submit" class="lw-btn lw-btn--primary">Join</button>
+        </form>
+        <p class="lw-smallprint" style="margin-top:8px">One letter a month. No tracking pixels.</p>
+      </div>
+      <div class="blk-footer__cols">
+        <div class="blk-footer__col"><h3>Product</h3><a href="#">Canvas</a><a href="#">Reviews</a><a href="#">Revisions</a><a href="#">Export</a></div>
+        <div class="blk-footer__col"><h3>Company</h3><a href="#">About</a><a href="#">Journal</a><a href="#">Careers</a><a href="#">Contact</a></div>
+        <div class="blk-footer__col"><h3>Resources</h3><a href="#">Docs</a><a href="#">Templates</a><a href="#">Status</a><a href="#">Support</a></div>
+        <div class="blk-footer__col"><h3>Legal</h3><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a><a href="#">DPA</a></div>
+      </div>
+    </div>
+    <div class="blk-footer__bottom">
+      <span>© 2026 Fold Studio</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
+      <span class="blk-footer__status">All systems drawn</span>
+    </div>
+  </div>
+</footer>
+```
+
+### 11 Site header (marketing, id `header`)
+
+A product header with primary links, a sign-in key and a menu that folds into a details panel on phones.
+
+```html
+<header class="blk blk--flush blk-header">
+  <div class="blk-wrap blk-header__bar">
+    <a class="blk-logo" href="#" aria-label="Fold home">fold</a>
+    <nav class="blk-header__nav" aria-label="Fold">
+      <a href="#" aria-current="page">Product</a>
+      <a href="#">Templates</a>
+      <a href="#">Pricing</a>
+      <a href="#">Journal</a>
+    </nav>
+    <div class="blk-header__actions">
+      <a class="lw-btn lw-btn--quiet" href="#">Sign in</a>
+      <a class="lw-btn lw-btn--primary" href="#">Start a sheet</a>
+    </div>
+    <details class="blk-header__menu">
+      <summary class="lw-btn lw-btn--icon" aria-label="Open menu"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-menu"></use></svg></summary>
+      <nav class="blk-header__panel" aria-label="Fold, mobile">
+        <a href="#" aria-current="page">Product</a>
+        <a href="#">Templates</a>
+        <a href="#">Pricing</a>
+        <a href="#">Journal</a>
+        <a href="#">Sign in</a>
+      </nav>
+    </details>
+  </div>
+</header>
+```
+
+### 12 Logo strip (marketing, id `logos`)
+
+A row of client wordmarks set in a title-block grid, with one line of proof above it.
+
+```html
+<section class="blk blk-logos" aria-labelledby="fold-logos-title">
+  <div class="blk-wrap">
+    <p class="blk-kicker blk-kicker--center" id="fold-logos-title">Drawn on by 12,400 studios</p>
+    <ul class="blk-logos__grid">
+      <li><span class="blk-logos__mark">Atelier North</span></li>
+      <li><span class="blk-logos__mark blk-logos__mark--caps">Kessel</span></li>
+      <li><span class="blk-logos__mark">Haddad &amp; Ross</span></li>
+      <li><span class="blk-logos__mark blk-logos__mark--caps">Plan Nine</span></li>
+      <li><span class="blk-logos__mark">Studio Mira</span></li>
+      <li><span class="blk-logos__mark blk-logos__mark--caps">Okto</span></li>
+    </ul>
+  </div>
+</section>
+```
+
+### 13 Measured band (marketing, id `stats`)
+
+Four figures, each with a label and the rule it was measured against.
+
+```html
+<section class="blk blk-stats" aria-labelledby="fold-stats-title">
+  <div class="blk-wrap">
+    <div class="blk-head">
+      <div>
+        <p class="blk-kicker">Measured / 2026</p>
+        <h2 class="blk-title" id="fold-stats-title">Less time in review.</h2>
+      </div>
+      <p class="blk-head__aside">Median figures across 2,100 teams that moved their reviews to Fold this year.</p>
+    </div>
+    <dl class="blk-stats__grid">
+      <div class="blk-stats__item"><dt>Review time</dt><dd><span class="blk-stats__value">2.4</span> days</dd><p class="blk-stats__note">down from 6.1</p></div>
+      <div class="blk-stats__item"><dt>Sheets per week</dt><dd><span class="blk-stats__value">38</span></dd><p class="blk-stats__note">per team of ten</p></div>
+      <div class="blk-stats__item"><dt>Meetings dropped</dt><dd><span class="blk-stats__value">1</span> / week</dd><p class="blk-stats__note">the Monday walkthrough</p></div>
+      <div class="blk-stats__item"><dt>Uptime</dt><dd><span class="blk-stats__value">99.98</span> %</dd><p class="blk-stats__note">trailing twelve months</p></div>
+    </dl>
+  </div>
+</section>
+```
+
+### 14 Three steps (marketing, id `process`)
+
+How it works in three numbered steps joined by a dimension rule.
+
+```html
+<section class="blk blk-process" aria-labelledby="fold-process-title">
+  <div class="blk-wrap">
+    <p class="blk-kicker">How it works</p>
+    <h2 class="blk-title" id="fold-process-title">From sketch to sign-off.</h2>
+    <ol class="blk-process__steps">
+      <li class="blk-process__step">
+        <span class="blk-process__num">01</span>
+        <h3>Pin the drawing</h3>
+        <p>Drop a PDF, an image or a model export onto a sheet. Fold keeps every revision.</p>
+      </li>
+      <li class="blk-process__step">
+        <span class="blk-process__num">02</span>
+        <h3>Mark it up</h3>
+        <p>Reviewers leave redlines where the problem is, not in a thread three tabs away.</p>
+      </li>
+      <li class="blk-process__step">
+        <span class="blk-process__num">03</span>
+        <h3>Sign it off</h3>
+        <p>Approvals carry a name, a time and the revision they cover. Export the record in one key.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+```
+
+### 15 Plan comparison (marketing, id `comparison`)
+
+A feature table across three plans, with the recommended column marked in redline.
+
+```html
+<section class="blk blk-compare" aria-labelledby="fold-compare-title">
+  <div class="blk-wrap">
+    <p class="blk-kicker">Compare plans</p>
+    <h2 class="blk-title" id="fold-compare-title">Every line, side by side.</h2>
+    <div class="lw-table-wrap blk-compare__wrap">
+      <table class="lw-table blk-compare__table" aria-labelledby="fold-compare-title">
+        <thead>
+          <tr><th scope="col"><span class="lw-vh">Feature</span></th><th scope="col">Draft</th><th scope="col" class="is-picked"><span class="blk-compare__plan">Studio <span class="lw-stamp lw-stamp--red">Most picked</span></span></th><th scope="col">Atelier</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Active sheets</th><td>1</td><td class="is-picked">Unlimited</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Guests</th><td>3</td><td class="is-picked">Unlimited</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Revision history</th><td>30 days</td><td class="is-picked">Full</td><td>Full</td></tr>
+          <tr><th scope="row">Approval records</th><td><span class="lw-vh">Not included</span><span aria-hidden="true">—</span></td><td class="is-picked"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg><span class="lw-vh">Included</span></td><td><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg><span class="lw-vh">Included</span></td></tr>
+          <tr><th scope="row">SSO and audit log</th><td><span class="lw-vh">Not included</span><span aria-hidden="true">—</span></td><td class="is-picked"><span class="lw-vh">Not included</span><span aria-hidden="true">—</span></td><td><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg><span class="lw-vh">Included</span></td></tr>
+          <tr><th scope="row">Support</th><td>Community</td><td class="is-picked">Email, 1 day</td><td>Named contact</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+```
+
+### 16 Studio team (marketing, id `team`)
+
+People as title blocks: initials, name, role and where they work from.
+
+```html
+<section class="blk blk-team" aria-labelledby="fold-team-title">
+  <div class="blk-wrap">
+    <div class="blk-head">
+      <div>
+        <p class="blk-kicker">The studio</p>
+        <h2 class="blk-title" id="fold-team-title">Six people, one sheet.</h2>
+      </div>
+      <p class="blk-head__aside">Fold is made by a small studio split between Vienna and Lisbon. We answer support ourselves.</p>
+    </div>
+    <ul class="blk-team__grid">
+      <li class="blk-team__card"><span class="lw-avatar lw-avatar--lg">MW</span><div><p class="blk-team__name">Mara Weiss</p><p class="blk-team__role">Product, Vienna</p></div></li>
+      <li class="blk-team__card"><span class="lw-avatar lw-avatar--lg">JK</span><div><p class="blk-team__name">Jonas Keller</p><p class="blk-team__role">Engineering, Vienna</p></div></li>
+      <li class="blk-team__card"><span class="lw-avatar lw-avatar--lg">AS</span><div><p class="blk-team__name">Ada Sorensen</p><p class="blk-team__role">Design, Lisbon</p></div></li>
+      <li class="blk-team__card"><span class="lw-avatar lw-avatar--lg">OH</span><div><p class="blk-team__name">Omar Haddad</p><p class="blk-team__role">Engineering, Lisbon</p></div></li>
+      <li class="blk-team__card"><span class="lw-avatar lw-avatar--lg">LP</span><div><p class="blk-team__name">Lea Petrov</p><p class="blk-team__role">Support, Vienna</p></div></li>
+      <li class="blk-team__card"><span class="lw-avatar lw-avatar--lg">TR</span><div><p class="blk-team__name">Tomas Rey</p><p class="blk-team__role">Operations, Lisbon</p></div></li>
+    </ul>
+  </div>
+</section>
+```
+
+### 17 Journal (marketing, id `blog`)
+
+Three articles as sheets in a set: number, title, a short abstract and the date drawn.
+
+```html
+<section class="blk blk-blog" aria-labelledby="fold-blog-title">
+  <div class="blk-wrap">
+    <div class="blk-blog__head">
+      <div>
+        <p class="blk-kicker">Journal</p>
+        <h2 class="blk-title" id="fold-blog-title">Notes from the drawing table.</h2>
+      </div>
+      <a class="lw-btn" href="#">All articles<svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg></a>
+    </div>
+    <div class="blk-blog__grid">
+      <article class="blk-blog__post">
+        <p class="blk-meta"><span>J-31</span><span>Process</span></p>
+        <h3><a href="#">Why we stopped using comment threads</a></h3>
+        <p>Feedback that lives next to the line it is about gets fixed twice as fast. Here is what we measured.</p>
+        <p class="blk-blog__date"><time datetime="2026-10-14">14 October 2026</time> · 6 min</p>
+      </article>
+      <article class="blk-blog__post">
+        <p class="blk-meta"><span>J-30</span><span>Studios</span></p>
+        <h3><a href="#">Atelier North and the one-sheet review</a></h3>
+        <p>A facade team of nine replaced their Monday walkthrough with a single shared sheet.</p>
+        <p class="blk-blog__date"><time datetime="2026-09-29">29 September 2026</time> · 8 min</p>
+      </article>
+      <article class="blk-blog__post">
+        <p class="blk-meta"><span>J-29</span><span>Product</span></p>
+        <h3><a href="#">Approvals that carry their revision</a></h3>
+        <p>An approval now records exactly which revision it covers, so nobody signs a drawing that has moved.</p>
+        <p class="blk-blog__date"><time datetime="2026-09-08">8 September 2026</time> · 4 min</p>
+      </article>
+    </div>
+  </div>
+</section>
+```
+
+### 18 Revision log (marketing, id `changelog`)
+
+Releases as dated revisions, each tagged with what kind of change it carries.
+
+```html
+<section class="blk blk-changelog" aria-labelledby="fold-changelog-title">
+  <div class="blk-wrap blk-changelog__wrap">
+    <div>
+      <p class="blk-kicker">Changelog</p>
+      <h2 class="blk-title" id="fold-changelog-title">Revision log.</h2>
+      <p class="blk-lede blk-lede--sm">Every release Fold ships, newest first.</p>
+    </div>
+    <ol class="blk-changelog__list">
+      <li class="blk-changelog__entry">
+        <p class="blk-changelog__date"><time datetime="2026-10-20">20 Oct 2026</time><span>Rev 4.2</span></p>
+        <div><h3>Revision-bound approvals</h3><p>Approvals record the revision they cover and turn stale when the drawing moves.</p><span class="lw-stamp lw-stamp--red">New</span></div>
+      </li>
+      <li class="blk-changelog__entry">
+        <p class="blk-changelog__date"><time datetime="2026-10-02">2 Oct 2026</time><span>Rev 4.1</span></p>
+        <div><h3>Faster sheet loading</h3><p>Large PDFs open in under a second on a typical studio connection.</p><span class="lw-stamp">Improved</span></div>
+      </li>
+      <li class="blk-changelog__entry">
+        <p class="blk-changelog__date"><time datetime="2026-09-15">15 Sep 2026</time><span>Rev 4.0</span></p>
+        <div><h3>Guest reviewers</h3><p>Invite a client to one sheet without giving them the whole workspace.</p><span class="lw-stamp lw-stamp--red">New</span></div>
+      </li>
+      <li class="blk-changelog__entry">
+        <p class="blk-changelog__date"><time datetime="2026-08-28">28 Aug 2026</time><span>Rev 3.9</span></p>
+        <div><h3>Export fix for A0 sheets</h3><p>Exports at A0 keep their scale bar and title block.</p><span class="lw-stamp lw-stamp--quiet">Fixed</span></div>
+      </li>
+    </ol>
+  </div>
+</section>
+```
+
+### 19 Contact sheet (marketing, id `contact`)
+
+A contact form with real field states next to office details in a specification list.
+
+```html
+<section class="blk blk-contact" aria-labelledby="fold-contact-title">
+  <div class="blk-wrap blk-contact__grid">
+    <div>
+      <p class="blk-kicker">Contact</p>
+      <h2 class="blk-title" id="fold-contact-title">Ask a person.</h2>
+      <p class="blk-lede blk-lede--sm">Questions about a plan, a migration or a security review. A member of the studio answers within one working day.</p>
+      <dl class="lw-spec blk-contact__spec">
+        <dt>Email</dt><dd>studio@fold.example</dd>
+        <dt>Vienna</dt><dd>Mon to Fri, 9:00 to 17:00 CET</dd>
+        <dt>Lisbon</dt><dd>Mon to Fri, 9:00 to 17:00 WET</dd>
+      </dl>
+    </div>
+    <form class="blk-contact__form">
+      <div class="lw-field-grid">
+        <div class="lw-field"><label class="lw-field__label" for="fold-contact-name">Name</label><input class="lw-input" id="fold-contact-name" autocomplete="name" required></div>
+        <div class="lw-field"><label class="lw-field__label" for="fold-contact-email">Work email</label><input class="lw-input" id="fold-contact-email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="lw-field">
+        <label class="lw-field__label" for="fold-contact-topic">Topic</label>
+        <div class="lw-select-wrap"><select class="lw-select" id="fold-contact-topic"><option>Plans and billing</option><option>Migration</option><option>Security review</option><option>Something else</option></select></div>
+      </div>
+      <div class="lw-field"><label class="lw-field__label" for="fold-contact-message">Message</label><textarea class="lw-textarea" id="fold-contact-message" rows="4" required></textarea></div>
+      <div class="blk-actions"><button type="submit" class="lw-btn lw-btn--primary">Send message</button><span class="lw-smallprint">We reply from a real inbox.</span></div>
+    </form>
+  </div>
+</section>
+```
+
+### 20 Monthly sheet (marketing, id `newsletter`)
+
+A newsletter band with one field, one key and a plain promise about frequency.
+
+```html
+<section class="blk blk-newsletter" aria-labelledby="fold-newsletter-title">
+  <div class="blk-wrap blk-newsletter__grid">
+    <div>
+      <h2 class="blk-newsletter__title" id="fold-newsletter-title">The monthly sheet.</h2>
+      <p>One letter a month: what we shipped, one studio story and a drawing worth stealing.</p>
+    </div>
+    <form class="blk-newsletter__form">
+      <label class="lw-vh" for="fold-newsletter-email">Email address</label>
+      <input class="lw-input" id="fold-newsletter-email" type="email" placeholder="you@studio.com" autocomplete="email" required>
+      <button type="submit" class="lw-btn lw-btn--primary lw-btn--lg">Subscribe</button>
+    </form>
+  </div>
+</section>
+```
+
+### 21 First sheet setup (application, id `onboarding`)
+
+A setup checklist with progress, the current step open and the rest waiting their turn.
+
+```html
+<section class="blk blk-onboard" aria-labelledby="fold-onboard-title">
+  <div class="blk-wrap blk-onboard__sheet">
+    <div class="blk-onboard__head">
+      <div>
+        <p class="blk-kicker">Setup / Atelier North</p>
+        <h2 class="blk-onboard__title" id="fold-onboard-title">Set up your first sheet.</h2>
+      </div>
+      <div class="blk-onboard__progress">
+        <span class="lw-label">2 of 4 done</span>
+        <div class="lw-progress" role="progressbar" aria-label="Setup progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><div class="lw-progress__bar" style="width:50%"></div></div>
+      </div>
+    </div>
+    <ol class="blk-onboard__list">
+      <li class="blk-onboard__item is-done"><span class="blk-onboard__mark"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg></span><div><h3>Name the workspace <span class="lw-vh">(done)</span></h3><p>Atelier North</p></div></li>
+      <li class="blk-onboard__item is-done"><span class="blk-onboard__mark"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-check"></use></svg></span><div><h3>Invite the team <span class="lw-vh">(done)</span></h3><p>6 people joined</p></div></li>
+      <li class="blk-onboard__item is-current" aria-current="step"><span class="blk-onboard__mark">03</span><div><h3>Pin a drawing</h3><p>Drop a PDF or an image onto the sheet. You can replace it with a new revision later.</p><div class="blk-actions"><button type="button" class="lw-btn lw-btn--primary">Choose a file</button><button type="button" class="lw-btn lw-btn--quiet">Use a sample</button></div></div></li>
+      <li class="blk-onboard__item"><span class="blk-onboard__mark">04</span><div><h3>Ask for a review</h3><p>Pick reviewers and a due date.</p></div></li>
+    </ol>
+  </div>
+</section>
+```
+
+### 22 Billing (application, id `billing`)
+
+Plan summary, seat usage, payment method and an invoice schedule on one sheet.
+
+```html
+<section class="blk blk-billing" aria-labelledby="fold-billing-title">
+  <div class="blk-wrap">
+    <div class="lw-page-head blk-billing__head">
+      <div>
+        <p class="blk-kicker">Workspace / Billing</p>
+        <h2 class="blk-billing__title" id="fold-billing-title">Billing.</h2>
+      </div>
+      <button type="button" class="lw-btn">Download all invoices</button>
+    </div>
+    <div class="blk-billing__grid">
+      <div class="blk-billing__panel">
+        <p class="lw-label">Plan</p>
+        <p class="blk-billing__plan">Studio <span class="lw-stamp lw-stamp--ink">Yearly</span></p>
+        <p class="lw-smallprint">€19 per seat per month, billed on 1 January.</p>
+        <p class="lw-label blk-billing__gap">Seats</p>
+        <p><strong>18</strong> of 25 in use</p>
+        <div class="lw-progress" role="progressbar" aria-label="Seats in use" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"><div class="lw-progress__bar" style="width:72%"></div></div>
+        <div class="blk-actions"><button type="button" class="lw-btn lw-btn--primary">Change plan</button><button type="button" class="lw-btn lw-btn--quiet">Add seats</button></div>
+      </div>
+      <div class="blk-billing__panel">
+        <p class="lw-label">Payment method</p>
+        <p class="blk-billing__card">Card ending 4242</p>
+        <p class="lw-smallprint">Expires 08 / 2028 · billing@ateliernorth.example</p>
+        <div class="blk-actions"><button type="button" class="lw-btn">Update card</button></div>
+      </div>
+    </div>
+    <div class="lw-table-wrap blk-billing__table">
+      <table class="lw-table" data-lw-sort>
+        <caption>Invoices</caption>
+        <thead><tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Amount</th><th scope="col" data-sort="none">Status</th><th scope="col" data-sort="none"><span class="lw-vh">Download</span></th></tr></thead>
+        <tbody>
+          <tr><td class="lw-table__strong">F-2026-011</td><td data-sort-value="2026-10-01">1 Oct 2026</td><td data-sort-value="342">€342.00</td><td><span class="lw-stamp lw-stamp--quiet">Paid</span></td><td class="lw-table__actions"><a class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" href="#" aria-label="Download F-2026-011"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg></a></td></tr>
+          <tr><td class="lw-table__strong">F-2026-010</td><td data-sort-value="2026-09-01">1 Sep 2026</td><td data-sort-value="304">€304.00</td><td><span class="lw-stamp lw-stamp--quiet">Paid</span></td><td class="lw-table__actions"><a class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" href="#" aria-label="Download F-2026-010"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg></a></td></tr>
+          <tr><td class="lw-table__strong">F-2026-009</td><td data-sort-value="2026-08-01">1 Aug 2026</td><td data-sort-value="304">€304.00</td><td><span class="lw-stamp lw-stamp--red">Retrying</span></td><td class="lw-table__actions"><a class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" href="#" aria-label="Download F-2026-009"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-download"></use></svg></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+```
+
+### 23 Members (application, id `members`)
+
+A members list with search, role filter, a sortable table and pagination.
+
+```html
+<section class="blk blk-members" aria-labelledby="fold-members-title">
+  <div class="blk-wrap">
+    <div class="lw-page-head blk-members__head">
+      <div>
+        <p class="blk-kicker">Workspace / Members</p>
+        <h2 class="blk-members__title" id="fold-members-title">Members.</h2>
+      </div>
+      <button type="button" class="lw-btn lw-btn--primary"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-plus"></use></svg>Invite</button>
+    </div>
+    <div class="blk-members__tools">
+      <label class="lw-search"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg><span class="lw-vh">Search members</span><input class="lw-input" type="search" placeholder="Search members"></label>
+      <div class="lw-segments" role="group" aria-label="Role">
+        <button type="button" class="lw-segments__item" aria-pressed="true">All</button>
+        <button type="button" class="lw-segments__item" aria-pressed="false">Admins</button>
+        <button type="button" class="lw-segments__item" aria-pressed="false">Guests</button>
+      </div>
+    </div>
+    <div class="lw-table-wrap">
+      <table class="lw-table" data-lw-sort aria-labelledby="fold-members-title">
+        <thead><tr><th scope="col">Name</th><th scope="col">Role</th><th scope="col">Last active</th><th scope="col" data-sort="none"><span class="lw-vh">Actions</span></th></tr></thead>
+        <tbody>
+          <tr><td data-sort-value="Mara Weiss"><span class="blk-members__person"><span class="lw-avatar lw-avatar--sm">MW</span><span><strong>Mara Weiss</strong><span class="blk-members__email">mara@ateliernorth.example</span></span></span></td><td>Admin</td><td data-sort-value="1">Today</td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for Mara Weiss"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+          <tr><td data-sort-value="Jonas Keller"><span class="blk-members__person"><span class="lw-avatar lw-avatar--sm">JK</span><span><strong>Jonas Keller</strong><span class="blk-members__email">jonas@ateliernorth.example</span></span></span></td><td>Member</td><td data-sort-value="2">Yesterday</td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for Jonas Keller"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+          <tr><td data-sort-value="Ada Sorensen"><span class="blk-members__person"><span class="lw-avatar lw-avatar--sm">AS</span><span><strong>Ada Sorensen</strong><span class="blk-members__email">ada@ateliernorth.example</span></span></span></td><td>Member</td><td data-sort-value="5">5 days ago</td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for Ada Sorensen"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+          <tr><td data-sort-value="Clara Lind"><span class="blk-members__person"><span class="lw-avatar lw-avatar--sm">CL</span><span><strong>Clara Lind</strong><span class="blk-members__email">clara@client.example</span></span></span></td><td>Guest</td><td data-sort-value="12">12 days ago</td><td class="lw-table__actions"><button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" aria-label="More options for Clara Lind"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-more"></use></svg></button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="blk-members__foot">
+      <span class="lw-smallprint">4 of 18 members</span>
+      <nav class="lw-pagination" aria-label="Members pages">
+        <button type="button" aria-label="Previous page" disabled><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-chevron-left"></use></svg></button>
+        <button type="button" aria-current="page">1</button>
+        <button type="button">2</button>
+        <button type="button">3</button>
+        <button type="button" aria-label="Next page"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-chevron-right"></use></svg></button>
+      </nav>
+    </div>
+  </div>
+</section>
+```
+
+### 24 Review inbox (application, id `inbox`)
+
+A list of review requests beside the open request, with approve and redline actions.
+
+```html
+<section class="blk blk--flush blk-inbox" aria-labelledby="fold-inbox-title">
+  <div class="blk-inbox__frame">
+    <div class="blk-inbox__list">
+      <div class="blk-inbox__list-head"><h2 id="fold-inbox-title">Reviews</h2><span class="lw-stamp lw-stamp--red">3 open</span></div>
+      <ul>
+        <li><a class="blk-inbox__item" href="#" aria-current="true"><span class="blk-inbox__from">Jonas Keller</span><span class="blk-inbox__subject">North facade / Rev 04</span><span class="blk-inbox__time">18 min</span></a></li>
+        <li><a class="blk-inbox__item" href="#"><span class="blk-inbox__from">Mara Weiss</span><span class="blk-inbox__subject">Terrace / lighting</span><span class="blk-inbox__time">2 h</span></a></li>
+        <li><a class="blk-inbox__item" href="#"><span class="blk-inbox__from">Ada Sorensen</span><span class="blk-inbox__subject">Atrium / concept 2</span><span class="blk-inbox__time">Yesterday</span></a></li>
+        <li><a class="blk-inbox__item is-read" href="#"><span class="blk-inbox__from">Omar Haddad</span><span class="blk-inbox__subject">East wing / tender</span><span class="blk-inbox__time">12 Oct</span></a></li>
+      </ul>
+    </div>
+    <article class="blk-inbox__detail" aria-labelledby="fold-inbox-subject">
+      <p class="blk-meta"><span>A-104</span><span>Rev 04</span><span>Due today</span></p>
+      <h3 class="blk-inbox__detail-title" id="fold-inbox-subject">North facade, revision 04</h3>
+      <p class="blk-inbox__note"><strong>Jonas Keller:</strong> Handrail junction moved 40 mm east to clear the downpipe. Everything else matches revision 03.</p>
+      <dl class="lw-spec">
+        <dt>Changed</dt><dd>Handrail junction, level 3</dd>
+        <dt>Reviewers</dt><dd>Mara Weiss, you</dd>
+        <dt>Signatures</dt><dd>1 of 2</dd>
+      </dl>
+      <div class="blk-actions"><button type="button" class="lw-btn lw-btn--primary">Approve revision 04</button><button type="button" class="lw-btn">Leave a redline</button></div>
+    </article>
+  </div>
+</section>
+```
+
+### 25 Not found (application, id `error`)
+
+A not-found page drawn as a missing sheet, with a search and two ways back.
+
+```html
+<section class="blk blk-error" aria-labelledby="fold-error-title">
+  <div class="blk-wrap blk-error__grid">
+    <div class="blk-error__figure" aria-hidden="true">
+      <span class="blk-error__code">404</span>
+      <span class="lw-dimension"><span class="lw-dimension__cap"></span><span class="lw-dimension__rule"></span><span class="lw-dimension__label">sheet missing</span><span class="lw-dimension__rule"></span><span class="lw-dimension__cap lw-dimension__cap--end"></span></span>
+    </div>
+    <div>
+      <p class="blk-kicker">Error 404</p>
+      <h1 class="blk-title" id="fold-error-title">This sheet is not in the set.</h1>
+      <p class="blk-lede blk-lede--sm">It may have been archived, renamed or never drawn. Search the workspace or go back to where you were.</p>
+      <form class="blk-error__search" role="search">
+        <label class="lw-search"><svg class="lw-icon" aria-hidden="true"><use href="#lw-i-search"></use></svg><span class="lw-vh">Search sheets</span><input class="lw-input" type="search" placeholder="Search sheets"></label>
+      </form>
+      <div class="blk-actions"><a class="lw-btn lw-btn--primary" href="#">Go to the overview</a><a class="lw-btn lw-btn--quiet" href="#">Report a broken link</a></div>
+    </div>
+  </div>
+</section>
+```
