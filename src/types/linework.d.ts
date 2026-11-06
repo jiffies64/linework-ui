@@ -64,6 +64,22 @@ export interface LwMeterElement extends HTMLElement {
   level: number;
 }
 
+export interface LwComboboxElement extends HTMLElement {
+  /** The data-value (or label) of the chosen option, or an empty string. */
+  readonly value: string;
+}
+
+export interface LwCommandElement extends HTMLElement {
+  open(): void;
+  close(): void;
+  readonly isOpen: boolean;
+}
+
+export interface LwCalendarElement extends HTMLElement {
+  /** Selected date as YYYY-MM-DD, or an empty string. */
+  value: string;
+}
+
 export interface LwToastStackElement extends HTMLElement {
   show(options?: ToastOptions | string): HTMLElement | null;
 }
@@ -76,6 +92,25 @@ export interface LwTabsChangeDetail {
   index: number;
   tab: HTMLElement;
   panel: HTMLElement | undefined;
+}
+
+export interface LwComboboxChangeDetail {
+  value: string;
+  option: HTMLElement;
+}
+
+export interface LwCalendarChangeDetail {
+  value: string;
+  date: Date;
+}
+
+export interface LwCommandSelectDetail {
+  item: HTMLElement;
+}
+
+export interface LwSortDetail {
+  column: number;
+  direction: 'ascending' | 'descending';
 }
 
 export interface LwPadEventDetail {
@@ -105,7 +140,10 @@ declare global {
   interface HTMLElementEventMap {
     'lw-open': CustomEvent<LwDrawerEventDetail | null>;
     'lw-close': CustomEvent<LwDrawerEventDetail>;
-    'lw-change': CustomEvent<LwTabsChangeDetail>;
+    'lw-change': CustomEvent<LwTabsChangeDetail | LwComboboxChangeDetail | LwCalendarChangeDetail>;
+    'lw-select': CustomEvent<LwCommandSelectDetail>;
+    'lw-sort': CustomEvent<LwSortDetail>;
+    'lw-dismiss': CustomEvent<null>;
     'lw-press': CustomEvent<LwPadEventDetail>;
     'lw-menu': CustomEvent<LwPadMenuDetail>;
     'lw-play': CustomEvent<LwPadPlayDetail>;
@@ -123,6 +161,9 @@ declare global {
     'lw-tabs': LwTabsElement;
     'lw-pad': LwPadElement;
     'lw-meter': LwMeterElement;
+    'lw-combobox': LwComboboxElement;
+    'lw-command': LwCommandElement;
+    'lw-calendar': LwCalendarElement;
     'lw-toast-stack': LwToastStackElement;
   }
 }

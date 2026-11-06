@@ -469,3 +469,27 @@
     transform: rotate(360deg);
   }
 }
+
+.lw-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--lw-space-12);
+  padding: var(--lw-space-8) var(--lw-space-8) var(--lw-space-8) var(--lw-space-16);
+  border: var(--lw-hairline) solid var(--lw-border);
+  border-left: 3px solid var(--lw-ink);
+  background: var(--lw-paper-lit);
+  color: var(--lw-ink);
+}
+
+.lw-banner__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.lw-banner--redline {
+  border-left-color: var(--lw-redline);
+}
+
+.lw-banner--blue {
+  border-left-color: var(--lw-blueprint);
+}

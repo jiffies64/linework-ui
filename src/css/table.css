@@ -4,6 +4,10 @@
   overflow-x: auto;
 }
 
+.lw-table-wrap > .lw-table {
+  min-width: 30rem;
+}
+
 .lw-table {
   width: 100%;
   border-collapse: collapse;
@@ -159,7 +163,13 @@
   color: var(--lw-text-faint);
   font-family: var(--lw-font-narrow);
   font-size: var(--lw-text-sm);
+  /* The label shares the value's line box so both first baselines sit together. */
+  line-height: calc(var(--lw-text-base) * var(--lw-leading-normal));
   letter-spacing: 0.02em;
+}
+
+.lw-spec--mono dt {
+  line-height: inherit;
 }
 
 .lw-spec dd {
@@ -170,4 +180,92 @@
 .lw-spec--mono dd {
   font-family: var(--lw-font-mono);
   font-size: var(--lw-text-sm);
+}
+
+.lw-table th[aria-sort] {
+  padding: 0;
+}
+
+.lw-table__sort {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--lw-space-6);
+  padding: var(--lw-space-8) var(--lw-space-12);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.lw-table__sort::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 5px solid var(--lw-line);
+}
+
+.lw-table th[aria-sort="ascending"] .lw-table__sort::after {
+  border-top: 0;
+  border-bottom: 5px solid var(--lw-ink);
+}
+
+.lw-table th[aria-sort="descending"] .lw-table__sort::after {
+  border-top-color: var(--lw-ink);
+}
+
+.lw-table__sort:hover {
+  color: var(--lw-ink);
+}
+
+.lw-table__sort:focus-visible {
+  outline: var(--lw-focus-width) dashed var(--lw-focus);
+  outline-offset: -3px;
+}
+
+.lw-files {
+  margin: 0;
+  padding: 0;
+  border: var(--lw-hairline) solid var(--lw-border);
+  list-style: none;
+}
+
+.lw-file {
+  display: grid;
+  margin: 0;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--lw-space-12);
+  padding: var(--lw-space-10) var(--lw-space-12);
+  border-bottom: var(--lw-hairline) solid var(--lw-border-quiet);
+}
+
+.lw-file:last-child {
+  border-bottom: 0;
+}
+
+.lw-file__name {
+  overflow: hidden;
+  color: var(--lw-ink);
+  font-weight: var(--lw-weight-semibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lw-file__meta {
+  display: block;
+  color: var(--lw-text-faint);
+  font-family: var(--lw-font-narrow);
+  font-size: var(--lw-text-sm);
+  font-weight: var(--lw-weight-regular);
+}
+
+.lw-file .lw-progress {
+  grid-column: 2 / -1;
 }

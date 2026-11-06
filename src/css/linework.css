@@ -14,6 +14,7 @@
 @import "./navigation.css";
 @import "./table.css";
 @import "./feedback.css";
+@import "./picker.css";
 
 /* Keep the sheet out of the page until the component has moved its content
    into a native dialog; otherwise its content flashes in place. */
@@ -52,6 +53,8 @@ lw-toast-stack {
     background: CanvasText;
   }
 
+  .lw-option.is-active,
+  .lw-calendar__day[aria-pressed="true"],
   .lw-segments__item[aria-pressed="true"],
   .lw-segments__item[aria-current="true"],
   .lw-segments__item.is-active,
@@ -60,6 +63,16 @@ lw-toast-stack {
     forced-color-adjust: none;
     background: Highlight;
     color: HighlightText;
+  }
+
+  .lw-calendar__day.is-today {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .lw-table th[aria-sort="none"] .lw-table__sort::after {
+    forced-color-adjust: none;
+    border-top-color: GrayText;
   }
 
   .lw-lamp.is-on .lw-lamp__dot,

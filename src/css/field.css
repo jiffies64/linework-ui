@@ -254,3 +254,51 @@
   font-weight: var(--lw-weight-semibold);
   color: var(--lw-ink);
 }
+
+.lw-stepper {
+  display: inline-flex;
+  width: max-content;
+  align-items: stretch;
+  border: var(--lw-hairline) solid var(--lw-border);
+  background: var(--lw-paper);
+}
+
+.lw-stepper > .lw-input {
+  width: 7ch;
+  min-height: calc(var(--lw-control-height) - 2 * var(--lw-hairline));
+  border: 0;
+  border-inline: var(--lw-hairline) solid var(--lw-border-quiet);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+
+.lw-stepper > .lw-input::-webkit-inner-spin-button,
+.lw-stepper > .lw-input::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.lw-stepper__key {
+  display: grid;
+  width: var(--lw-control-height);
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--lw-ink);
+  cursor: pointer;
+}
+
+.lw-stepper__key:hover {
+  background: var(--lw-paper-lit);
+}
+
+.lw-stepper__key:disabled {
+  color: var(--lw-text-faint);
+  cursor: not-allowed;
+}
+
+.lw-stepper__key:focus-visible {
+  outline: var(--lw-focus-width) dashed var(--lw-focus);
+  outline-offset: -3px;
+}
