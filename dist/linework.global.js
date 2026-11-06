@@ -30,6 +30,7 @@ const ICONS = {
     '<rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 21V9"/>',
   check: '<path d="m4 12 5 5L20 6"/>',
   'chevron-down': '<path d="m6 9 6 6 6-6"/>',
+  'chevron-left': '<path d="m15 6-6 6 6 6"/>',
   'chevron-right': '<path d="m9 6 6 6-6 6"/>',
   clock:
     '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/>',
@@ -53,6 +54,7 @@ const ICONS = {
   link:
     '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l2-2a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-2 2a4.5 4.5 0 0 0 6.4 6.4l1-1"/>',
   menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  minus: '<path d="M5 12h14"/>',
   mic:
     '<rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7"/>',
   more: '<circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/>',
@@ -825,7 +827,7 @@ class LwPad extends BaseElement {
   }
 
   set progress(value) {
-    this._applyProgress(value, null);
+    this.setAttribute('progress', String(clamp(Number(value) || 0, 0, 1)));
   }
 }
 
@@ -943,6 +945,720 @@ class LwMeter extends BaseElement {
   }
 }
 
+let pickerSequence = 0;
+const nextId = (prefix) => `${prefix}-${++pickerSequence}`;
+
+function optionLabel(option) {
+  if (option.dataset.label) return option.dataset.label;
+  const label = option.querySelector('.lw-option__label');
+  return (label || option).textContent.trim();
+}
+
+class LwCombobox extends BaseElement {
+  connectedCallback() {
+    if (this._built) return;
+    const input = this.querySelector('input');
+    const list = this.querySelector('.lw-listbox');
+    if (!input || !list) return;
+    this._built = true;
+    this._input = input;
+    this._list = list;
+    this._active = null;
+    this.classList.add('lw-combobox');
+
+    if (!list.id) list.id = nextId('lw-listbox');
+    list.setAttribute('role', 'listbox');
+    list.hidden = true;
+    input.setAttribute('role', 'combobox');
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-expanded', 'false');
+    input.setAttribute('aria-controls', list.id);
+    input.setAttribute('autocomplete', 'off');
+
+    this._empty = document.createElement('li');
+    this._empty.className = 'lw-listbox__empty';
+    this._empty.setAttribute('role', 'presentation');
+    this._empty.textContent = this.getAttribute('empty') || 'No matches';
+    this._empty.hidden = true;
+    list.appendChild(this._empty);
+
+    this._status = document.createElement('span');
+    this._status.className = 'lw-vh';
+    this._status.setAttribute('role', 'status');
+    this.appendChild(this._status);
+
+    input.addEventListener('input', () => {
+      const selected = this._options().find((item) => item.getAttribute('aria-selected') === 'true');
+      if (selected && optionLabel(selected) !== input.value) selected.setAttribute('aria-selected', 'false');
+      this._filter();
+      this._show();
+    });
+    input.addEventListener('click', () => {
+      if (!this._list.hidden) return;
+      this._filter();
+      this._show();
+    });
+    input.addEventListener('keydown', (event) => this._onKeydown(event));
+    input.addEventListener('blur', () => this._hide());
+    list.addEventListener('mousedown', (event) => event.preventDefault());
+    list.addEventListener('click', (event) => {
+      const option = event.target.closest('.lw-option');
+      if (option) this._choose(option);
+    });
+  }
+
+  _options() {
+    const options = Array.from(this._list.querySelectorAll('li:not(.lw-listbox__empty)'));
+    options.forEach((option) => {
+      if (option.getAttribute('role') === 'option') return;
+      option.classList.add('lw-option');
+      option.setAttribute('role', 'option');
+      if (!option.id) option.id = nextId('lw-option');
+      if (!option.hasAttribute('aria-selected')) option.setAttribute('aria-selected', 'false');
+    });
+    return options;
+  }
+
+  _filter() {
+    if (this._empty.parentNode !== this._list) this._list.appendChild(this._empty);
+    const query = this._input.value.trim().toLowerCase();
+    let shown = 0;
+    this._options().forEach((option) => {
+      const match = !query || optionLabel(option).toLowerCase().includes(query);
+      option.hidden = !match;
+      if (match) shown += 1;
+    });
+    this._empty.hidden = shown > 0;
+    this._status.textContent = shown > 0 ? `${shown} ${shown === 1 ? 'result' : 'results'}` : this._empty.textContent;
+    this._setActive(null);
+  }
+
+  _show() {
+    this._list.hidden = false;
+    this._input.setAttribute('aria-expanded', 'true');
+  }
+
+  _hide() {
+    this._list.hidden = true;
+    this._input.setAttribute('aria-expanded', 'false');
+    this._status.textContent = '';
+    this._setActive(null);
+  }
+
+  _setActive(option) {
+    this._options().forEach((item) => item.classList.toggle('is-active', item === option));
+    if (option) {
+      this._input.setAttribute('aria-activedescendant', option.id);
+      option.scrollIntoView({ block: 'nearest' });
+    } else {
+      this._input.removeAttribute('aria-activedescendant');
+    }
+    this._active = option;
+  }
+
+  _onKeydown(event) {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (this._list.hidden) {
+        this._filter();
+        this._show();
+      }
+      const items = this._options().filter((option) => !option.hidden);
+      if (items.length === 0) return;
+      const index = items.indexOf(this._active);
+      let next;
+      if (event.key === 'ArrowDown') next = items[(index + 1) % items.length];
+      else next = index <= 0 ? items[items.length - 1] : items[index - 1];
+      this._setActive(next);
+    } else if (event.key === 'Enter' && this._active && !this._list.hidden) {
+      event.preventDefault();
+      this._choose(this._active);
+    } else if (event.key === 'Escape') {
+      if (!this._list.hidden) {
+        event.preventDefault();
+        this._hide();
+      } else if (this._input.value) {
+        event.preventDefault();
+        this._input.value = '';
+      }
+    }
+  }
+
+  _choose(option) {
+    this._options().forEach((item) => item.setAttribute('aria-selected', String(item === option)));
+    const label = optionLabel(option);
+    this._input.value = label;
+    this._hide();
+    this.dispatchEvent(
+      new CustomEvent('lw-change', {
+        bubbles: true,
+        detail: { value: option.dataset.value || label, option },
+      })
+    );
+  }
+
+  get value() {
+    const option = this._built
+      ? this._options().find((item) => item.getAttribute('aria-selected') === 'true')
+      : null;
+    return option ? option.dataset.value || optionLabel(option) : '';
+  }
+}
+
+class LwCommand extends BaseElement {
+  constructor() {
+    super();
+    this._onShortcut = this._onShortcut.bind(this);
+  }
+
+  connectedCallback() {
+    document.addEventListener('keydown', this._onShortcut);
+    if (this._built) return;
+    this._built = true;
+    this.classList.add('lw-command');
+
+    const dialog = document.createElement('dialog');
+    dialog.className = 'lw-dialog lw-command__dialog';
+    dialog.setAttribute('aria-label', this.getAttribute('label') || 'Command palette');
+
+    const listId = nextId('lw-command-list');
+    const search = document.createElement('div');
+    search.className = 'lw-command__search';
+    search.innerHTML = `<label class="lw-search">${icon('search')}<input class="lw-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="${listId}" autocomplete="off" spellcheck="false"></label>`;
+    const input = search.querySelector('input');
+    input.setAttribute('aria-label', 'Search commands');
+    input.placeholder = this.getAttribute('placeholder') || 'Type a command';
+
+    const list = document.createElement('ul');
+    list.className = 'lw-command__list';
+    list.id = listId;
+    list.setAttribute('role', 'listbox');
+
+    const empty = document.createElement('li');
+    empty.className = 'lw-listbox__empty';
+    empty.setAttribute('role', 'presentation');
+    empty.textContent = this.getAttribute('empty') || 'No matching commands';
+    empty.hidden = true;
+
+    const foot = document.createElement('div');
+    foot.className = 'lw-command__foot';
+    foot.setAttribute('aria-hidden', 'true');
+    foot.innerHTML = '<span>↑ ↓ move</span><span>Enter run</span><span>Esc close</span>';
+
+    dialog.append(search, list, foot);
+    this.append(dialog);
+
+    this._dialog = dialog;
+    this._input = input;
+    this._list = list;
+    this._empty = empty;
+    this._active = null;
+    this._buildOptions();
+    new MutationObserver(() => this._buildOptions()).observe(this, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributeFilter: ['data-group', 'data-shortcut', 'disabled', 'aria-disabled'],
+    });
+
+    input.addEventListener('input', () => this._filter());
+    input.addEventListener('keydown', (event) => this._onKeydown(event));
+    list.addEventListener('mousedown', (event) => event.preventDefault());
+    list.addEventListener('click', (event) => {
+      const option = event.target.closest('.lw-option');
+      if (option) this._run(option);
+    });
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) this.close();
+    });
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this._onShortcut);
+  }
+
+  _items() {
+    return Array.from(this.querySelectorAll(':scope > .lw-command__item'));
+  }
+
+  _buildOptions() {
+    const disabled = (item) => item.disabled || item.getAttribute('aria-disabled') === 'true';
+    const signature = this._items()
+      .map((item) => [item.dataset.group, item.textContent.trim(), item.dataset.shortcut, disabled(item)].join('|'))
+      .join(' / ');
+    if (signature === this._signature) return;
+    this._signature = signature;
+
+    const groups = new Map();
+    this._items().forEach((item) => {
+      const name = item.dataset.group || '';
+      if (!groups.has(name)) groups.set(name, []);
+      groups.get(name).push(item);
+    });
+    const nodes = [];
+    groups.forEach((members, name) => {
+      let section = null;
+      let options = nodes;
+      if (name) {
+        const heading = document.createElement('div');
+        heading.className = 'lw-command__group';
+        heading.id = nextId('lw-command-group');
+        heading.textContent = name;
+        const body = document.createElement('ul');
+        body.setAttribute('role', 'presentation');
+        section = document.createElement('li');
+        section.className = 'lw-command__section';
+        section.setAttribute('role', 'group');
+        section.setAttribute('aria-labelledby', heading.id);
+        section.append(heading, body);
+        nodes.push(section);
+        options = { push: (option) => body.appendChild(option) };
+      }
+      members.forEach((item) => {
+        const option = document.createElement('li');
+        option.className = 'lw-option';
+        option.id = nextId('lw-command-option');
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', 'false');
+        if (disabled(item)) option.setAttribute('aria-disabled', 'true');
+        const label = document.createElement('span');
+        label.className = 'lw-option__label';
+        label.textContent = item.textContent.trim();
+        option.appendChild(label);
+        if (item.dataset.shortcut) {
+          const meta = document.createElement('span');
+          meta.className = 'lw-option__meta';
+          meta.setAttribute('aria-hidden', 'true');
+          meta.textContent = item.dataset.shortcut;
+          option.appendChild(meta);
+          option.setAttribute('aria-keyshortcuts', item.dataset.shortcut);
+        }
+        option._lwItem = item;
+        option._lwSection = section;
+        options.push(option);
+      });
+    });
+    this._list.replaceChildren(...nodes, this._empty);
+    if (this.isOpen) this._filter();
+  }
+
+  _onShortcut(event) {
+    const key = this.getAttribute('shortcut');
+    if (
+      !key ||
+      !(event.ctrlKey || event.metaKey) ||
+      event.shiftKey ||
+      event.altKey ||
+      event.repeat ||
+      event.key.toLowerCase() !== key.toLowerCase() ||
+      event.target?.isContentEditable
+    ) {
+      return;
+    }
+    const otherModal = Array.from(document.querySelectorAll('dialog[open]')).some(
+      (dialog) => dialog !== this._dialog && dialog.matches(':modal')
+    );
+    if (otherModal) return;
+    event.preventDefault();
+    if (this.isOpen) this.close();
+    else this.open();
+  }
+
+  _options() {
+    return Array.from(this._list.querySelectorAll('.lw-option'));
+  }
+
+  _filter() {
+    const query = this._input.value.trim().toLowerCase();
+    const visibleSections = new Set();
+    let first = null;
+    this._options().forEach((option) => {
+      const match = !query || optionLabel(option).toLowerCase().includes(query);
+      option.hidden = !match;
+      if (match) {
+        if (!first && option.getAttribute('aria-disabled') !== 'true') first = option;
+        if (option._lwSection) visibleSections.add(option._lwSection);
+      }
+    });
+    this._list.querySelectorAll('.lw-command__section').forEach((section) => {
+      section.hidden = !visibleSections.has(section);
+    });
+    this._empty.hidden = Boolean(first);
+    this._setActive(first);
+  }
+
+  _setActive(option) {
+    this._options().forEach((item) => {
+      const active = item === option;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
+    if (option) {
+      this._input.setAttribute('aria-activedescendant', option.id);
+      option.scrollIntoView({ block: 'nearest' });
+    } else {
+      this._input.removeAttribute('aria-activedescendant');
+    }
+    this._active = option;
+  }
+
+  _onKeydown(event) {
+    const items = this._options().filter(
+      (option) => !option.hidden && option.getAttribute('aria-disabled') !== 'true'
+    );
+    const index = items.indexOf(this._active);
+    if (event.key === 'ArrowDown' && items.length) {
+      event.preventDefault();
+      this._setActive(items[(index + 1) % items.length]);
+    } else if (event.key === 'ArrowUp' && items.length) {
+      event.preventDefault();
+      this._setActive(index <= 0 ? items[items.length - 1] : items[index - 1]);
+    } else if (event.key === 'Home' && items.length) {
+      event.preventDefault();
+      this._setActive(items[0]);
+    } else if (event.key === 'End' && items.length) {
+      event.preventDefault();
+      this._setActive(items[items.length - 1]);
+    } else if (event.key === 'Enter' && this._active) {
+      event.preventDefault();
+      this._run(this._active);
+    }
+  }
+
+  _run(option) {
+    if (option.getAttribute('aria-disabled') === 'true') return;
+    const item = option._lwItem;
+    this.close();
+    const proceed = this.dispatchEvent(
+      new CustomEvent('lw-select', { bubbles: true, cancelable: true, detail: { item } })
+    );
+    if (proceed) item.click();
+  }
+
+  open() {
+    if (!this._built || this._dialog.open) return;
+    this._dialog.showModal();
+    this._input.value = '';
+    this._filter();
+    this._input.focus();
+  }
+
+  close() {
+    if (this._built && this._dialog.open) this._dialog.close();
+  }
+
+  get isOpen() {
+    return Boolean(this._dialog?.open);
+  }
+}
+
+const pad2 = (value) => String(value).padStart(2, '0');
+const isoDate = (date) => `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`;
+
+function parseIsoDate(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value || '');
+  if (!match) return null;
+  const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  return date.getMonth() === Number(match[2]) - 1 && date.getDate() === Number(match[3]) ? date : null;
+}
+
+function firstWeekday(locale) {
+  try {
+    const info = new Intl.Locale(locale || navigator.language);
+    const week = info.getWeekInfo?.() ?? info.weekInfo;
+    if (week?.firstDay) return week.firstDay % 7;
+  } catch {
+    return 1;
+  }
+  return 1;
+}
+
+function addDays(date, days) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function addMonths(date, months) {
+  const next = new Date(date.getFullYear(), date.getMonth() + months, 1);
+  const last = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
+  next.setDate(Math.min(date.getDate(), last));
+  return next;
+}
+
+class LwCalendar extends BaseElement {
+  static get observedAttributes() {
+    return ['value', 'min', 'max'];
+  }
+
+  connectedCallback() {
+    if (this._built) return;
+    this._built = true;
+    this.classList.add('lw-calendar');
+    const titleId = nextId('lw-calendar-title');
+
+    const head = document.createElement('div');
+    head.className = 'lw-calendar__head';
+    head.innerHTML = `
+      <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-step="-1" aria-label="Previous month">${icon('chevron-left')}</button>
+      <div class="lw-calendar__title" id="${titleId}" aria-live="polite"></div>
+      <button type="button" class="lw-btn lw-btn--quiet lw-btn--icon lw-btn--sm" data-step="1" aria-label="Next month">${icon('chevron-right')}</button>`;
+
+    const table = document.createElement('table');
+    table.className = 'lw-calendar__grid';
+    table.setAttribute('aria-labelledby', titleId);
+
+    this.replaceChildren(head, table);
+    this._title = head.querySelector('.lw-calendar__title');
+    this._table = table;
+
+    head.addEventListener('click', (event) => {
+      const step = event.target.closest('[data-step]');
+      if (!step) return;
+      this._moveFocus(addMonths(this._focus, Number(step.dataset.step)), false);
+      if (step.disabled) head.querySelector('[data-step]:not(:disabled)')?.focus();
+    });
+    table.addEventListener('click', (event) => {
+      const day = event.target.closest('.lw-calendar__day');
+      if (day && !day.disabled) this._select(parseIsoDate(day.dataset.date));
+    });
+    table.addEventListener('keydown', (event) => this._onKeydown(event));
+
+    const today = new Date();
+    this._focus = this._clampDate(parseIsoDate(this.getAttribute('value')) || today);
+    this._render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (!this._built || oldValue === newValue) return;
+    const date = name === 'value' ? parseIsoDate(newValue) : null;
+    this._focus = this._clampDate(date || this._focus);
+    this._render();
+  }
+
+  get value() {
+    return this.getAttribute('value') || '';
+  }
+
+  set value(value) {
+    if (value) this.setAttribute('value', value);
+    else this.removeAttribute('value');
+  }
+
+  _locale() {
+    return this.getAttribute('locale') || undefined;
+  }
+
+  _clampDate(date) {
+    const min = parseIsoDate(this.getAttribute('min'));
+    const max = parseIsoDate(this.getAttribute('max'));
+    if (min && date < min) return min;
+    if (max && date > max) return max;
+    return date;
+  }
+
+  _inRange(date) {
+    const min = parseIsoDate(this.getAttribute('min'));
+    const max = parseIsoDate(this.getAttribute('max'));
+    return !(min && date < min) && !(max && date > max);
+  }
+
+  _render() {
+    const locale = this._locale();
+    const view = this._focus;
+    this._title.textContent = view.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+
+    const first = new Date(view.getFullYear(), view.getMonth(), 1);
+    this._weekStart = firstWeekday(locale);
+    const start = addDays(first, -((first.getDay() - this._weekStart + 7) % 7));
+    const min = parseIsoDate(this.getAttribute('min'));
+    const max = parseIsoDate(this.getAttribute('max'));
+    this._title.parentNode.querySelector('[data-step="-1"]').disabled = Boolean(min && first <= min);
+    this._title.parentNode.querySelector('[data-step="1"]').disabled = Boolean(
+      max && new Date(view.getFullYear(), view.getMonth() + 1, 0) >= max
+    );
+    const selected = this.getAttribute('value');
+    const today = isoDate(new Date());
+    const focusIso = isoDate(view);
+
+    const weekdays = Array.from({ length: 7 }, (_, index) => addDays(start, index));
+    let html = '<thead><tr>';
+    weekdays.forEach((day) => {
+      const full = day.toLocaleDateString(locale, { weekday: 'long' });
+      const short = day.toLocaleDateString(locale, { weekday: 'short' });
+      html += `<th scope="col" abbr="${escapeHtml(full)}">${escapeHtml(short)}</th>`;
+    });
+    html += '</tr></thead><tbody>';
+    for (let week = 0; week < 6; week += 1) {
+      html += '<tr>';
+      for (let weekday = 0; weekday < 7; weekday += 1) {
+        const day = addDays(start, week * 7 + weekday);
+        const iso = isoDate(day);
+        const classes = ['lw-calendar__day'];
+        if (day.getMonth() !== view.getMonth()) classes.push('is-outside');
+        if (iso === today) classes.push('is-today');
+        const label = day.toLocaleDateString(locale, {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        });
+        html += `<td><button type="button" class="${classes.join(' ')}" data-date="${iso}" tabindex="${iso === focusIso ? 0 : -1}" aria-pressed="${iso === selected}" aria-label="${escapeHtml(label)}"${iso === today ? ' aria-current="date"' : ''}${this._inRange(day) ? '' : ' disabled'}>${day.getDate()}</button></td>`;
+      }
+      html += '</tr>';
+    }
+    html += '</tbody>';
+    this._table.innerHTML = html;
+  }
+
+  _moveFocus(date, focus = true) {
+    this._focus = this._clampDate(date);
+    this._render();
+    if (focus) this._table.querySelector(`[data-date="${isoDate(this._focus)}"]`)?.focus();
+  }
+
+  _onKeydown(event) {
+    const day = event.target.closest('.lw-calendar__day');
+    if (!day) return;
+    const current = parseIsoDate(day.dataset.date);
+    const offset = (current.getDay() - this._weekStart + 7) % 7;
+    const moves = {
+      ArrowLeft: () => addDays(current, -1),
+      ArrowRight: () => addDays(current, 1),
+      ArrowUp: () => addDays(current, -7),
+      ArrowDown: () => addDays(current, 7),
+      Home: () => addDays(current, -offset),
+      End: () => addDays(current, 6 - offset),
+      PageUp: () => addMonths(current, event.shiftKey ? -12 : -1),
+      PageDown: () => addMonths(current, event.shiftKey ? 12 : 1),
+    };
+    const move = moves[event.key];
+    if (!move) return;
+    event.preventDefault();
+    this._moveFocus(move());
+  }
+
+  _select(date) {
+    if (!date || !this._inRange(date)) return;
+    const iso = isoDate(date);
+    this._focus = date;
+    this.setAttribute('value', iso);
+    this._table.querySelector(`[data-date="${iso}"]`)?.focus();
+    this.dispatchEvent(new CustomEvent('lw-change', { bubbles: true, detail: { value: iso, date } }));
+  }
+}
+
+function sortKey(cell) {
+  return (cell?.dataset.sortValue ?? cell?.textContent ?? '').trim();
+}
+
+function sortNumber(key) {
+  if (!/^-?[$€£¥₹]?\s?-?[\d,]*\.?\d+\s?%?$/.test(key)) return NaN;
+  const negative = key.includes('-');
+  const value = Number(key.replace(/[^\d.]/g, ''));
+  return negative ? -value : value;
+}
+
+function enhanceSortTables(root = document) {
+  root.querySelectorAll('table[data-lw-sort] thead th').forEach((th) => {
+    if (th.querySelector('.lw-table__sort') || th.dataset.sort === 'none') return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'lw-table__sort';
+    while (th.firstChild) button.appendChild(th.firstChild);
+    th.appendChild(button);
+    if (!th.hasAttribute('aria-sort')) th.setAttribute('aria-sort', 'none');
+  });
+}
+
+function sortTable(th) {
+  const table = th.closest('table');
+  const body = table?.tBodies[0];
+  if (!body) return;
+  const direction = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+  table.querySelectorAll('thead th[aria-sort]').forEach((header) => {
+    header.setAttribute('aria-sort', header === th ? direction : 'none');
+  });
+  const column = th.cellIndex;
+  const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+  const rows = Array.from(body.rows);
+  rows.sort((a, b) => {
+    const left = sortKey(a.cells[column]);
+    const right = sortKey(b.cells[column]);
+    const numeric = sortNumber(left) - sortNumber(right);
+    const result = Number.isNaN(numeric) ? collator.compare(left, right) : numeric;
+    return direction === 'ascending' ? result : -result;
+  });
+  rows.forEach((row) => body.appendChild(row));
+  table.dispatchEvent(new CustomEvent('lw-sort', { bubbles: true, detail: { column, direction } }));
+}
+
+function dismiss(trigger) {
+  const spec = trigger.getAttribute('data-lw-dismiss');
+  const target = spec ? resolveElement(spec) : trigger.closest('.lw-chip, .lw-banner, .lw-file');
+  if (!target) return;
+  const proceed = target.dispatchEvent(new CustomEvent('lw-dismiss', { bubbles: true, cancelable: true }));
+  if (!proceed) return;
+  const hadFocus = target.contains(document.activeElement);
+  const focusable = '[data-lw-dismiss], a[href], button:not(:disabled), input:not(:disabled), [tabindex]:not([tabindex="-1"])';
+  const neighbour = [target.nextElementSibling, target.previousElementSibling]
+    .map((element) => (element?.matches(focusable) ? element : element?.querySelector(focusable)))
+    .find(Boolean);
+  const parent = target.parentElement;
+  target.remove();
+  if (!hadFocus) return;
+  if (neighbour) {
+    neighbour.focus();
+  } else if (parent) {
+    if (!parent.hasAttribute('tabindex')) parent.setAttribute('tabindex', '-1');
+    parent.focus();
+  }
+}
+
+function syncStepper(stepper) {
+  const input = stepper.querySelector('input');
+  if (!input) return;
+  const value = Number(input.value);
+  const min = input.min === '' ? -Infinity : Number(input.min);
+  const max = input.max === '' ? Infinity : Number(input.max);
+  stepper.querySelectorAll('[data-lw-step]').forEach((key) => {
+    const up = Number(key.getAttribute('data-lw-step')) > 0;
+    key.disabled = input.disabled || input.readOnly || (up ? value >= max : value <= min);
+  });
+}
+
+function syncSteppers(root = document) {
+  root.querySelectorAll('.lw-stepper').forEach(syncStepper);
+}
+
+function step(trigger) {
+  const stepper = trigger.closest('.lw-stepper');
+  const input = stepper?.querySelector('input');
+  if (!input || input.disabled || input.readOnly) return;
+  const direction = Number(trigger.getAttribute('data-lw-step')) > 0 ? 1 : -1;
+  if (input.step === 'any') {
+    const min = input.min === '' ? -Infinity : Number(input.min);
+    const max = input.max === '' ? Infinity : Number(input.max);
+    input.value = String(Math.min(max, Math.max(min, (Number(input.value) || 0) + direction)));
+  } else if (direction > 0) {
+    input.stepUp();
+  } else {
+    input.stepDown();
+  }
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+  syncStepper(stepper);
+  let status = stepper.querySelector(':scope > [role="status"]');
+  if (!status) {
+    status = document.createElement('span');
+    status.className = 'lw-vh';
+    status.setAttribute('role', 'status');
+    stepper.appendChild(status);
+  }
+  status.textContent = input.value;
+  if (trigger.disabled) input.focus();
+}
+
 async function copyText(text) {
   if (!isBrowser) return false;
   try {
@@ -1016,7 +1732,7 @@ function resolveElement(target) {
 function openTarget(target) {
   const element = resolveElement(target);
   if (!element) return null;
-  if (element.tagName === 'LW-DRAWER' && typeof element.open === 'function') {
+  if (['LW-DRAWER', 'LW-COMMAND'].includes(element.tagName) && typeof element.open === 'function') {
     element.open();
   } else if (element instanceof HTMLDialogElement) {
     if (!element.open) element.showModal();
@@ -1031,7 +1747,7 @@ function openTarget(target) {
 function closeTarget(target) {
   const element = resolveElement(target);
   if (!element) return null;
-  if (element.tagName === 'LW-DRAWER' && typeof element.close === 'function') {
+  if (['LW-DRAWER', 'LW-COMMAND'].includes(element.tagName) && typeof element.close === 'function') {
     element.close();
   } else if (element instanceof HTMLDialogElement) {
     element.close();
@@ -1234,6 +1950,8 @@ function toast(options = {}) {
 function refresh(root = document) {
   if (!isBrowser) return;
   paintRanges(root);
+  enhanceSortTables(root);
+  syncSteppers(root);
   document.querySelectorAll('[data-lw-theme-current]').forEach((node) => {
     node.textContent = getTheme();
   });
@@ -1303,6 +2021,15 @@ function onDocumentClick(event) {
     }
   }
 
+  const sorter = target.closest('.lw-table__sort');
+  if (sorter) sortTable(sorter.closest('th'));
+
+  const dismisser = target.closest('[data-lw-dismiss]');
+  if (dismisser) dismiss(dismisser);
+
+  const stepKey = target.closest('[data-lw-step]');
+  if (stepKey && !stepKey.disabled) step(stepKey);
+
   const segment = target.closest('.lw-segments__item[aria-pressed]');
   if (segment && !segment.disabled) {
     segment
@@ -1327,6 +2054,8 @@ function onDocumentScroll(event) {
 function onDocumentInput(event) {
   const range = event.target.closest?.('.lw-range');
   if (range) paintRange(range);
+  const stepper = event.target.closest?.('.lw-stepper');
+  if (stepper) syncStepper(stepper);
 }
 
 function syncLed(input) {
@@ -1373,6 +2102,9 @@ function registerElements() {
   if (!registry.get('lw-tabs')) registry.define('lw-tabs', LwTabs);
   if (!registry.get('lw-pad')) registry.define('lw-pad', LwPad);
   if (!registry.get('lw-meter')) registry.define('lw-meter', LwMeter);
+  if (!registry.get('lw-combobox')) registry.define('lw-combobox', LwCombobox);
+  if (!registry.get('lw-command')) registry.define('lw-command', LwCommand);
+  if (!registry.get('lw-calendar')) registry.define('lw-calendar', LwCalendar);
   if (!registry.get('lw-toast-stack')) {
     registry.define('lw-toast-stack', LwToastStack);
   }

@@ -1,7 +1,7 @@
 {
   "name": "linework-ui",
   "version": "1.0.0",
-  "description": "A drafting-table design system for the web: 35 components, 10 copy-paste blocks and three papers. Zero-dependency CSS, Web Components and design tokens.",
+  "description": "A UI kit in the style of technical drawings: 51 components, 25 copy-paste blocks and three themes. Plain CSS, Web Components, design tokens and typed React wrappers.",
   "keywords": [
     "design-system",
     "ui",
@@ -9,6 +9,7 @@
     "components",
     "blocks",
     "web-components",
+    "react",
     "design-tokens",
     "accessibility",
     "architecture",
@@ -27,27 +28,50 @@
       "import": "./dist/linework.js",
       "default": "./dist/linework.js"
     },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "default": "./dist/react.js"
+    },
+    "./package.json": "./package.json",
     "./global": "./dist/linework.global.js",
     "./style.css": "./dist/linework.css",
     "./blocks.css": "./dist/linework-blocks.css",
     "./tokens.css": "./dist/tokens.css",
-    "./min.css": "./dist/linework.min.css"
+    "./min.css": "./dist/linework.min.css",
+    "./blocks.min.css": "./dist/linework-blocks.min.css",
+    "./fonts/*": "./dist/fonts/*"
   },
   "files": [
     "dist",
     "README.md",
+    "llms.txt",
+    "llms-full.txt",
     "LICENSE"
   ],
   "sideEffects": [
     "*.css",
     "./dist/linework.js",
-    "./dist/linework.global.js"
+    "./dist/linework.global.js",
+    "./dist/react.js"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node scripts/serve.mjs",
     "dev": "node scripts/serve.mjs",
     "capture": "node scripts/capture.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">=18"

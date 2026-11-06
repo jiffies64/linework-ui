@@ -2,9 +2,10 @@
 /** Capture the marketing screenshots and preview cards. */
 import { withPage, fileUrl } from './lib/browser.mjs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { mkdir } from 'node:fs/promises';
 
-const root = path.resolve(import.meta.dirname, '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const docs = path.join(root, 'docs');
 const out = (relative) => path.join(docs, relative);
 
@@ -25,6 +26,21 @@ const blocks = [
   ['auth', 'Sign in'],
   ['settings', 'Settings'],
   ['footer', 'Footer'],
+  ['header', 'Site header'],
+  ['logos', 'Logo strip'],
+  ['stats', 'Measured band'],
+  ['process', 'Three steps'],
+  ['comparison', 'Plan comparison'],
+  ['team', 'Studio team'],
+  ['blog', 'Journal'],
+  ['changelog', 'Revision log'],
+  ['contact', 'Contact sheet'],
+  ['newsletter', 'Monthly sheet'],
+  ['onboarding', 'First sheet setup'],
+  ['billing', 'Billing'],
+  ['members', 'Members'],
+  ['inbox', 'Review inbox'],
+  ['error', 'Not found'],
 ];
 
 for (const [id, label] of blocks) {

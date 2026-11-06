@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /** Resolve CSS @imports, copy the JS module, emit a global build and report sizes. */
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, cp } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildLlmsFull } from './llms.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const src = path.join(root, 'src');
@@ -63,6 +64,7 @@ await writeFile(path.join(dist, 'linework.css'), css, 'utf8');
 await writeFile(path.join(dist, 'linework.min.css'), cssMin + '\n', 'utf8');
 await writeFile(path.join(dist, 'tokens.css'), tokens, 'utf8');
 await writeFile(path.join(dist, 'linework-blocks.css'), blocksCss, 'utf8');
+await cp(path.join(src, 'fonts'), path.join(dist, 'fonts'), { recursive: true });
 await writeFile(path.join(dist, 'linework-blocks.min.css'), blocksMin + '\n', 'utf8');
 
 const jsSource = await readFile(path.join(src, 'js', 'linework.js'), 'utf8');
@@ -73,6 +75,30 @@ await writeFile(path.join(dist, 'linework.js'), js, 'utf8');
 const body = jsSource.replace(/^export\s+.*$/gm, '').trim();
 const global = `${banner}(function () {\n'use strict';\n${body}\n\nwindow.Linework = Linework;\n})();\n`;
 await writeFile(path.join(dist, 'linework.global.js'), global, 'utf8');
+
+const reactSource = await readFile(path.join(src, 'react', 'index.js'), 'utf8');
+await writeFile(
+  path.join(dist, 'react.js'),
+  "'use client';\n" +
+    banner +
+    reactSource
+      .replace("'use client';\n", '')
+      .replace("from '../js/linework.js'", "from './linework.js'")
+      .trim() +
+    '\n',
+  'utf8'
+);
+await cp(path.join(src, 'react', 'index.d.ts'), path.join(dist, 'react.d.ts'));
+
+const llmsIndex = await readFile(path.join(root, 'llms.txt'), 'utf8');
+const llmsFull = await buildLlmsFull(root);
+await writeFile(path.join(root, 'llms-full.txt'), llmsFull.text, 'utf8');
+/* The site serves docs/ as its root, so links in the copies are rewritten relative to it. */
+const forDocs = (text) => text.replace(/\]\((?!https?:|#)(docs\/)?([^)]+)\)/g, (match, inDocs, target) =>
+  inDocs || target.startsWith('llms') ? `](${target})` : `](../${target})`
+);
+await writeFile(path.join(root, 'docs', 'llms.txt'), forDocs(llmsIndex), 'utf8');
+await writeFile(path.join(root, 'docs', 'llms-full.txt'), forDocs(llmsFull.text), 'utf8');
 
 try {
   const dts = await readFile(path.join(src, 'types', 'linework.d.ts'), 'utf8');
@@ -88,6 +114,7 @@ const rows = [
   ['linework-blocks.min.css', blocksMin],
   ['linework.js', js],
   ['linework.global.js', global],
+  ['react.js', await readFile(path.join(dist, 'react.js'), 'utf8')],
 ];
 
 const kb = (n) => `${(n / 1024).toFixed(1)} kB`;
