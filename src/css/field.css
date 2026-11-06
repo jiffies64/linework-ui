@@ -67,7 +67,7 @@
 .lw-select {
   width: 100%;
   min-height: var(--lw-control-height);
-  padding: var(--lw-space-6) var(--lw-space-10) var(--lw-space-8);
+  padding: var(--lw-space-6) var(--lw-space-10);
   border: var(--lw-hairline) solid var(--lw-border);
   border-radius: var(--lw-radius);
   background: var(--lw-paper);

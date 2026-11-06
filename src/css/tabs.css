@@ -17,11 +17,14 @@
 
 .lw-tab {
   position: relative;
-  display: inline-flex;
+  display: inline-grid;
+  grid-auto-flow: column;
   align-items: baseline;
+  align-content: center;
+  justify-content: start;
   gap: var(--lw-space-6);
   min-height: 34px;
-  padding: var(--lw-space-6) var(--lw-space-14) var(--lw-space-8);
+  padding: var(--lw-space-6) var(--lw-space-14);
   border: 0;
   border-right: var(--lw-hairline) solid var(--lw-border);
   border-radius: 0;

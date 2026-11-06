@@ -14,7 +14,7 @@ Linework uses the visual language of architectural drawings: trace paper, a 24 p
 
 | Piece | Detail |
 | --- | --- |
-| **CSS** | `linework.css`: tokens, base, layout, 35 components and utilities. 11.8 kB gzipped (minified). |
+| **CSS** | `linework.css`: tokens, base, layout, 35 components and utilities. 11.9 kB gzipped (minified). |
 | **Blocks CSS** | `linework-blocks.css`: layout for the ten blocks. 3.7 kB gzipped (minified). |
 | **Behaviour** | `linework.js`: five Web Components, icons, menus, toasts, themes and copy buttons. 10.3 kB gzipped. |
 | **Themes** | Trace (light, default), Blueprint (dark) and Vellum (warm), defined entirely in tokens. |
@@ -103,7 +103,7 @@ Token groups:
 
 - Surfaces: `--lw-paper`, `--lw-paper-lit`, `--lw-paper-deep`
 - Ink: `--lw-ink`, `--lw-pencil`, `--lw-faint`
-- Structure: `--lw-rule`, `--lw-grid`, `--lw-border`, `--lw-border-quiet`
+- Structure: `--lw-rule`, `--lw-line`, `--lw-grid`, `--lw-border`, `--lw-border-quiet`
 - Signal: `--lw-redline`, `--lw-redline-deep`, used only for live, playing, destructive or focused states
 - Type: `--lw-font-ui`, `--lw-font-display`, `--lw-font-narrow`, `--lw-font-mono`
 - Space: `--lw-space-*`, named in pixels (`--lw-space-8` is 8 px)

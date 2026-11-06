@@ -160,7 +160,7 @@
   order: -1;
   min-width: 16px;
   margin-left: 0;
-  font-size: 9px;
+  font-size: var(--lw-text-2xs);
   letter-spacing: 0;
 }
 
@@ -299,7 +299,7 @@
 .demo-plate__tag {
   color: var(--lw-text-faint);
   font-family: var(--lw-font-mono);
-  font-size: 10px;
+  font-size: var(--lw-text-2xs);
   letter-spacing: 0;
   text-transform: none;
   white-space: nowrap;
@@ -394,7 +394,7 @@
   padding: var(--lw-space-12);
   overflow: auto;
   font-family: var(--lw-font-mono);
-  font-size: 11px;
+  font-size: var(--lw-text-sm);
   line-height: 1.7;
   white-space: pre;
 }
@@ -889,7 +889,7 @@
   overflow: hidden;
   color: var(--lw-text-faint);
   font-family: var(--lw-font-mono);
-  font-size: 9px;
+  font-size: var(--lw-text-2xs);
   text-overflow: ellipsis;
   white-space: nowrap;
 }

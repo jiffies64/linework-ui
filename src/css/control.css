@@ -307,7 +307,7 @@
 
 .lw-segments__item {
   min-height: 32px;
-  padding: var(--lw-space-4) var(--lw-space-12) var(--lw-space-6);
+  padding: var(--lw-space-4) var(--lw-space-12);
   border: 0;
   border-right: var(--lw-hairline) solid var(--lw-border);
   border-radius: 0;

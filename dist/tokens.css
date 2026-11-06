@@ -4,15 +4,36 @@
  * Themes: trace (default), blueprint, vellum. Set data-theme on <html> or any container.
  */
 
+@font-face {
+  font-family: "Linework Bahnschrift";
+  src: local("Bahnschrift");
+  font-weight: 300 700;
+  font-stretch: 75% 100%;
+  ascent-override: 85.95%;
+  descent-override: 14.05%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Linework Bahnschrift Narrow";
+  src: local("Bahnschrift");
+  font-weight: 300 700;
+  font-stretch: 87.5%;
+  ascent-override: 85.95%;
+  descent-override: 14.05%;
+  line-gap-override: 0%;
+}
+
 :root {
   color-scheme: light;
 
   --lw-paper: #eef0ec;
   --lw-paper-lit: #f8f9f6;
   --lw-paper-deep: #e4e7e1;
-  --lw-grid: #dfe3dd;
-  --lw-grid-major: #d5dad2;
+  --lw-grid: #e6e9e4;
+  --lw-grid-major: #e0e4de;
   --lw-rule: #bcc1ba;
+  --lw-line: #828586;
   --lw-led-off: #c2c7c0;
   --lw-scrim: rgba(238, 240, 236, 0.82);
 
@@ -35,7 +56,7 @@
   --lw-text-faint: var(--lw-faint);
   --lw-surface: var(--lw-paper);
   --lw-surface-raised: var(--lw-paper-lit);
-  --lw-border: var(--lw-ink);
+  --lw-border: var(--lw-line);
   --lw-border-quiet: var(--lw-rule);
   --lw-accent: var(--lw-redline);
   --lw-success: #39644a;
@@ -45,16 +66,16 @@
   --lw-on-ink: var(--lw-paper);
   --lw-focus: var(--lw-ink);
 
-  --lw-font-ui: Bahnschrift, "DIN Alternate", "Barlow Semi Condensed", "Segoe UI",
-    system-ui, sans-serif;
-  --lw-font-display: Bahnschrift, "DIN Alternate", "Segoe UI Light", "Helvetica Neue",
-    Arial, sans-serif;
-  --lw-font-narrow: "Bahnschrift SemiCondensed", "Bahnschrift Semi Condensed", Bahnschrift,
-    "Arial Narrow", "Segoe UI", sans-serif;
+  --lw-font-ui: "Linework Bahnschrift", Bahnschrift, "DIN Alternate", "Barlow Semi Condensed",
+    "Segoe UI", system-ui, sans-serif;
+  --lw-font-display: "Linework Bahnschrift", Bahnschrift, "DIN Alternate", "Segoe UI Light",
+    "Helvetica Neue", Arial, sans-serif;
+  --lw-font-narrow: "Linework Bahnschrift Narrow", "Bahnschrift SemiCondensed",
+    "Bahnschrift Semi Condensed", Bahnschrift, "Arial Narrow", "Segoe UI", sans-serif;
   --lw-font-mono: "Cascadia Mono", "Cascadia Code", Consolas, "SFMono-Regular", Menlo,
     monospace;
 
-  --lw-text-2xs: 10px;
+  --lw-text-2xs: 11px;
   --lw-text-xs: 11px;
   --lw-text-sm: 12px;
   --lw-text-md: 13px;
@@ -155,9 +176,10 @@
   --lw-paper: #101b24;
   --lw-paper-lit: #162430;
   --lw-paper-deep: #0b141b;
-  --lw-grid: #1e303d;
-  --lw-grid-major: #273c4b;
+  --lw-grid: #182732;
+  --lw-grid-major: #1d2d39;
   --lw-rule: #3a5263;
+  --lw-line: #6a737a;
   --lw-led-off: #415b6c;
   --lw-scrim: rgba(6, 12, 17, 0.78);
 
@@ -184,9 +206,10 @@
   --lw-paper: #f2ede2;
   --lw-paper-lit: #faf7ef;
   --lw-paper-deep: #e9e2d3;
-  --lw-grid: #e2dbcb;
-  --lw-grid-major: #d7cebb;
+  --lw-grid: #e9e3d5;
+  --lw-grid-major: #e3dccd;
   --lw-rule: #c8bfac;
+  --lw-line: #88837b;
   --lw-led-off: #c7bead;
   --lw-scrim: rgba(242, 237, 226, 0.82);
 
@@ -219,7 +242,7 @@
   --lw-text-faint: var(--lw-faint);
   --lw-surface: var(--lw-paper);
   --lw-surface-raised: var(--lw-paper-lit);
-  --lw-border: var(--lw-ink);
+  --lw-border: var(--lw-line);
   --lw-border-quiet: var(--lw-rule);
   --lw-accent: var(--lw-redline);
   --lw-info: var(--lw-blueprint);

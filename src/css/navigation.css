@@ -309,18 +309,14 @@
 }
 
 .lw-avatars .lw-avatar + .lw-avatar {
-  margin-left: -6px;
-}
-
-.lw-avatars .lw-avatar {
-  box-shadow: 0 0 0 2px var(--lw-paper);
+  margin-left: calc(-1 * var(--lw-hairline));
 }
 
 .lw-avatars__more {
   display: inline-grid;
   width: 26px;
   height: 26px;
-  margin-left: -6px;
+  margin-left: calc(-1 * var(--lw-hairline));
   place-items: center;
   border: 1px solid var(--lw-border);
   background: var(--lw-paper-lit);

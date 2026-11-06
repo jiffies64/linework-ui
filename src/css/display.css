@@ -3,7 +3,7 @@
   align-items: center;
   gap: var(--lw-space-4);
   min-height: 20px;
-  padding: 1px 6px 2px;
+  padding: 1px 6px;
   border: var(--lw-hairline) solid var(--lw-pencil);
   border-radius: 0;
   background: var(--lw-paper);
@@ -167,7 +167,7 @@ button.lw-lamp:active {
   align-items: center;
   gap: var(--lw-space-6);
   padding: 2px 7px 3px;
-  border: var(--lw-hairline) solid currentColor;
+  border: var(--lw-hairline) solid var(--lw-border);
   border-radius: 0;
   background: transparent;
   color: var(--lw-ink);
@@ -278,7 +278,7 @@ button.lw-lamp:active {
   height: 34px;
   flex: none;
   place-items: center;
-  border: var(--lw-hairline) solid var(--lw-ink);
+  border: var(--lw-hairline) solid var(--lw-border);
   border-radius: 0;
   background: var(--lw-paper-lit);
   color: var(--lw-ink);
