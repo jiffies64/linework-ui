@@ -43,7 +43,7 @@
             <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-theme"></use></svg>
             <span class="site-theme__label" data-theme-label>Trace</span>
           </button>
-          <a class="lw-btn lw-btn--sm" href="docs.html#install">
+          <a class="lw-btn lw-btn--sm" href="docs.html#files">
             Get started
             <svg class="lw-icon" aria-hidden="true"><use href="#lw-i-arrow-right"></use></svg>
           </a>
@@ -58,7 +58,7 @@
                     `<a href="${href}"${page === key ? ' aria-current="page"' : ''}>${label}<span class="lw-mono">${key === 'showroom' ? 'APP' : 'SHEET'}</span></a>`
                 )
                 .join('')}
-              <a href="docs.html#install">Install<span class="lw-mono">DOC</span></a>
+              <a href="docs.html#files">Install<span class="lw-mono">DOC</span></a>
             </div>
           </details>
         </div>
