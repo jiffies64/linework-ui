@@ -77,8 +77,8 @@ Wrappers: `Drawer`, `Tabs`, `Pad`, `Meter`, `Combobox`, `Command`, `Calendar`. T
 
 - [Full reference](llms-full.txt): every component with its markup, every class, every token, the complete types and all 25 blocks in one file
 - [README](../README.md): install, themes, elements and API
-- [Element and API types](../src/types/linework.d.ts): elements, event details and the `Linework` object
-- [React types](../src/react/index.d.ts): wrapper props
+- [Element and API types](../dist/linework.d.ts): elements, event details and the `Linework` object
+- [React types](../dist/react.d.ts): wrapper props
 
 ## Optional
 
