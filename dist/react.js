@@ -1,5 +1,5 @@
 'use client';
-/*! Linework UI v1.0.0 | MIT | drafting-table design system */
+/*! Linework UI v1.0.1 | MIT | drafting-table design system */
 import {
   createElement,
   forwardRef,

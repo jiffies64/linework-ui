@@ -1,6 +1,6 @@
 {
   "name": "linework-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A UI kit in the style of technical drawings: 51 components, 25 copy-paste blocks and three themes. Plain CSS, Web Components, design tokens and typed React wrappers.",
   "keywords": [
     "design-system",
@@ -17,6 +17,14 @@
   ],
   "license": "MIT",
   "author": "Linework contributors",
+  "homepage": "https://jiffies64.github.io/linework-ui/docs/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiffies64/linework-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jiffies64/linework-ui/issues"
+  },
   "type": "module",
   "main": "./dist/linework.js",
   "module": "./dist/linework.js",

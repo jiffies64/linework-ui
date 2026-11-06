@@ -1,4 +1,4 @@
-/*! Linework UI v1.0.0 | MIT | drafting-table design system */
+/*! Linework UI v1.0.1 | MIT | drafting-table design system */
 (function () {
 'use strict';
 /*!
@@ -1958,7 +1958,7 @@ function refresh(root = document) {
 }
 
 const Linework = {
-  version: '1.0.0',
+  version: '1.0.1',
   themes: [...THEMES],
   getTheme,
   setTheme,

@@ -2,11 +2,11 @@
 
 A UI kit in the style of technical drawings: 51 components, 25 copy-paste blocks and three themes. Plain CSS and Web Components with no runtime dependencies and no build step, plus typed React wrappers.
 
-![The Linework landing page](docs/assets/docs-img/final-home.png)
+![The Linework landing page](https://raw.githubusercontent.com/jiffies64/linework-ui/main/docs/assets/docs-img/final-home.png)
 
-![The blocks gallery](docs/assets/docs-img/final-home-blocks.png)
+![The blocks gallery](https://raw.githubusercontent.com/jiffies64/linework-ui/main/docs/assets/docs-img/final-home-blocks.png)
 
-![The project console showroom](docs/assets/docs-img/final-console.png)
+![The project console showroom](https://raw.githubusercontent.com/jiffies64/linework-ui/main/docs/assets/docs-img/final-console.png)
 
 Linework uses the visual language of architectural drawings: trace paper, a 24 px grid, hairline rules, dimension lines and title blocks. It ships as a CSS library, eight Web Components, 25 composed blocks, React wrappers and a documentation site built from the library itself.
 
