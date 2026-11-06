@@ -6,6 +6,7 @@
 }
 
 .lw-pad {
+  position: relative;
   display: block;
   min-width: 0;
   height: 100%;

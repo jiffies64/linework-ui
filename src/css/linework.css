@@ -44,12 +44,46 @@ lw-toast-stack {
   --lw-range-fill: 50%;
 }
 
+@media (forced-colors: active) {
+  .lw-led__fill,
+  .lw-meter__bar.is-lit,
+  .lw-progress__bar {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  .lw-segments__item[aria-pressed="true"],
+  .lw-segments__item[aria-current="true"],
+  .lw-segments__item.is-active,
+  .lw-lamp.is-on,
+  .lw-lamp[data-on="true"] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .lw-lamp.is-on .lw-lamp__dot,
+  .lw-lamp[data-on="true"] .lw-lamp__dot {
+    forced-color-adjust: none;
+    background: HighlightText;
+  }
+}
+
 @media print {
-  :root {
+  :root,
+  [data-theme] {
+    color-scheme: light;
     --lw-paper: #ffffff;
     --lw-paper-lit: #ffffff;
+    --lw-paper-deep: #f2f2f2;
     --lw-grid: #e6e6e6;
     --lw-rule: #cccccc;
+    --lw-line: #767676;
+    --lw-ink: #000000;
+    --lw-ink-soft: #222222;
+    --lw-pencil: #444444;
+    --lw-faint: #555555;
+    --lw-on-ink: #ffffff;
   }
 
   body {

@@ -69,7 +69,11 @@
   font-family: var(--lw-font-mono);
   font-size: var(--lw-text-2xs);
   font-weight: var(--lw-weight-regular);
-  opacity: 0.65;
+  color: var(--lw-text-faint);
+}
+
+.lw-tab[aria-selected="true"] .lw-tab__num {
+  color: inherit;
 }
 
 .lw-tabpanel {

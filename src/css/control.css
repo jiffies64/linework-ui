@@ -4,6 +4,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--lw-space-8);
+  min-height: 24px;
   color: var(--lw-pencil);
   font-size: var(--lw-text-base);
   font-weight: var(--lw-weight-semibold);
@@ -352,4 +353,10 @@
 .lw-segments--block .lw-segments__item {
   flex: 1 1 0;
   text-align: center;
+}
+
+@media (pointer: coarse) {
+  .lw-led {
+    min-height: 44px;
+  }
 }

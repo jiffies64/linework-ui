@@ -35,6 +35,7 @@
 
 .lw-btn:hover {
   box-shadow: inset 0 -2px 0 0 var(--lw-btn-raise);
+  color: var(--lw-btn-fg);
 }
 
 .lw-btn:active {
@@ -188,7 +189,6 @@
   font-size: var(--lw-text-xs);
   font-weight: var(--lw-weight-regular);
   letter-spacing: 0.03em;
-  opacity: 0.78;
 }
 
 .lw-btn-group {

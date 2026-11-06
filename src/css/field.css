@@ -9,6 +9,8 @@
   display: flex;
   align-items: baseline;
   gap: var(--lw-space-6);
+  color: var(--lw-text);
+  font-family: var(--lw-font-ui);
   font-size: var(--lw-text-base);
   font-weight: var(--lw-weight-semibold);
   line-height: 1.3;

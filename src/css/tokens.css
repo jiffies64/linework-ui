@@ -121,6 +121,7 @@
   --lw-space-32: 32px;
   --lw-space-40: 40px;
   --lw-space-48: 48px;
+  --lw-space-56: 56px;
   --lw-space-64: 64px;
   --lw-space-80: 80px;
   --lw-space-96: 96px;
@@ -188,7 +189,7 @@
   --lw-faint: #8599a6;
 
   --lw-redline: #ff6f61;
-  --lw-redline-deep: #e85346;
+  --lw-redline-deep: #ff8a7e;
   --lw-redline-wash: rgba(255, 111, 97, 0.12);
   --lw-on-redline: #101b24;
 
@@ -262,5 +263,6 @@
 }
 
 [data-theme] {
+  background-color: var(--lw-paper);
   color: var(--lw-text);
 }
